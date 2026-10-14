@@ -41,7 +41,15 @@ function formatFaIconClass(iconStr, defaultClass = 'fa fa-bolt') {
     return clean ? `fa fa-${clean}` : defaultClass;
 }
 
-function renderSafeIcon(iconStr, defaultIcon = 'fa fa-bolt') {
+const KNOWN_OI_ICONS = new Set([
+    'person', 'group', 'search', 'menu', 'dashboard', 'notifications', 'notifications_active',
+    'campaign', 'chat', 'forum', 'email', 'event', 'calendar_month', 'task_alt',
+    'check_circle', 'cancel', 'delete', 'edit', 'add', 'close', 'refresh', 'download',
+    'upload', 'attach_file', 'folder', 'description', 'business', 'lock', 'help',
+    'favorite', 'schedule', 'progress_activity'
+]);
+
+function renderSafeIcon(iconStr, defaultIcon = '<i class="oi" data-icon="task_alt"></i>') {
     if (!iconStr) iconStr = defaultIcon;
     const str = String(iconStr).trim();
     if (str.startsWith('<svg') || str.startsWith('<img') || str.startsWith('data:image')) {
@@ -50,7 +58,26 @@ function renderSafeIcon(iconStr, defaultIcon = 'fa fa-bolt') {
     if (str.startsWith('http://') || str.startsWith('https://') || str.endsWith('.png') || str.endsWith('.svg') || str.endsWith('.jpg') || str.endsWith('.webp')) {
         return `<img src="${str}" alt="icon" style="width: 24px; height: 24px; object-fit: contain; vertical-align: middle;">`;
     }
-    const faClass = formatFaIconClass(str, defaultIcon);
+    // If it's already an HTML element e.g. <i class="oi" data-icon="person"></i> or <i class="fa ..."></i>
+    if (/^<i\s+[^>]*>/i.test(str)) {
+        return str;
+    }
+    // If it has data-icon attribute in text e.g. data-icon="person"
+    const dataIconMatch = str.match(/data-icon=["']([^"']+)["']/i);
+    if (dataIconMatch) {
+        return `<i class="oi" data-icon="${dataIconMatch[1]}" style="font-size: 24px; vertical-align: middle; color: inherit;"></i>`;
+    }
+    // If it's prefixed with oi: or oi- e.g. oi:person or oi-person
+    const oiPrefixMatch = str.match(/^oi[:\s-]+([\w-]+)/i);
+    if (oiPrefixMatch) {
+        return `<i class="oi" data-icon="${oiPrefixMatch[1]}" style="font-size: 24px; vertical-align: middle; color: inherit;"></i>`;
+    }
+    // If it's one of the known OI icons
+    const cleanLower = str.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+    if (KNOWN_OI_ICONS.has(cleanLower)) {
+        return `<i class="oi" data-icon="${cleanLower}" style="font-size: 24px; vertical-align: middle; color: inherit;"></i>`;
+    }
+    const faClass = formatFaIconClass(str, 'fa fa-bolt');
     return `<i class="${faClass}" style="font-size: 22px; vertical-align: middle; color: inherit;"></i>`;
 }
 
@@ -529,6 +556,10 @@ function compileFinalAppStoreHTML(forPreview = false) {
     });
 
     const fragmentHTML = `<div class="container-fluid p-0" style="color: #1e293b; background-color: #f8f9fa;">
+<style>
+.oi, i.oi { display: inline-block; font-family: 'Material Symbols Outlined' !important; font-style: normal; font-weight: 400 !important; line-height: 1; letter-spacing: normal; text-transform: none; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; vertical-align: middle; }
+.oi:before, .oi::before, i.oi:before, i.oi::before { display: inline-block; content: attr(data-icon); text-rendering: geometricPrecision; word-break: keep-all; }
+</style>
 ${sections}
 </div>`;
 
@@ -549,8 +580,31 @@ ${sections}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
     <!-- Font Awesome for App Store Compatibility -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <!-- Material Symbols for Odoo Icons (.oi) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     ${previewFaLinks}
     <style>
+        .oi, i.oi {
+            display: inline-block;
+            font-family: 'Material Symbols Outlined' !important;
+            font-style: normal;
+            font-weight: 400 !important;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            vertical-align: middle;
+        }
+        .oi:before, .oi::before, i.oi:before, i.oi::before {
+            display: inline-block;
+            content: attr(data-icon);
+            text-rendering: geometricPrecision;
+            word-break: keep-all;
+        }
         body {
             margin: 0;
             padding: 0;

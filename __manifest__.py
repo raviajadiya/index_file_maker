@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Odoo AppStore Index File Maker',
-    'version': '20.0.1.0.10',
+    'version': '20.0.1.0.12',
     'category': 'Extra Tools',
     'summary': 'Visual Drag & Drop Builder to Create Odoo App Store Compatible index.html',
     'sequence': 10,

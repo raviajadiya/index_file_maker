@@ -22,6 +22,29 @@
             font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
         }
 
+        /* Odoo Icons (.oi) support with Google Material Symbols */
+        .oi, i.oi {
+            display: inline-block;
+            font-family: 'Material Symbols Outlined' !important;
+            font-style: normal;
+            font-weight: 400 !important;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            vertical-align: middle;
+        }
+        .oi:before, .oi::before, i.oi:before, i.oi::before {
+            display: inline-block;
+            content: attr(data-icon);
+            text-rendering: geometricPrecision;
+            word-break: keep-all;
+        }
+
         html, body {
             height: 100%;
             width: 100%;
@@ -417,6 +440,47 @@
             position: relative;
         }
 
+        /* Container & Grid inside Canvas for 100% Preview parity */
+        .canvas-wrapper .container {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding-right: 20px !important;
+            padding-left: 20px !important;
+            margin-right: auto !important;
+            margin-left: auto !important;
+        }
+
+        .canvas-wrapper .card {
+            border-radius: 12px !important;
+        }
+
+        /* Viewport switching styles (Desktop, Tablet, Mobile) */
+        .canvas-wrapper.tablet {
+            max-width: 768px !important;
+        }
+
+        .canvas-wrapper.tablet .col-md-3,
+        .canvas-wrapper.tablet .col-sm-6.col-md-3,
+        .canvas-wrapper.tablet .col-md-4 {
+            flex: 0 0 50% !important;
+            max-width: 50% !important;
+        }
+
+        .canvas-wrapper.mobile {
+            max-width: 400px !important;
+        }
+
+        .canvas-wrapper.mobile .col-md-3,
+        .canvas-wrapper.mobile .col-sm-6.col-md-3,
+        .canvas-wrapper.mobile .col-md-4,
+        .canvas-wrapper.mobile .col-md-6,
+        .canvas-wrapper.mobile .col-lg-6,
+        .canvas-wrapper.mobile .col-lg-8,
+        .canvas-wrapper.mobile .col-lg-10 {
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+        }
+
         /* Drop indicator line */
         .drop-target-line {
             height: 6px;
@@ -455,14 +519,6 @@
             border-color: var(--primary);
             color: var(--primary);
             box-shadow: 0 4px 16px rgba(113, 75, 103, 0.1);
-        }
-
-        .canvas-wrapper.tablet {
-            max-width: 768px;
-        }
-
-        .canvas-wrapper.mobile {
-            max-width: 400px;
         }
 
         .canvas-empty {

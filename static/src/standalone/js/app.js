@@ -752,23 +752,38 @@
                 `;
 
                 const PRESET_ICONS = [
-                    { name: 'fa fa-home', label: '🏠 Home' },
-                    { name: 'fa fa-bolt', label: '⚡ Bolt' },
-                    { name: 'fa fa-building', label: '🏢 Company' },
-                    { name: 'fa fa-shield', label: '🛡️ Security' },
-                    { name: 'fa fa-cogs', label: '⚙️ Settings' },
-                    { name: 'fa fa-star', label: '⭐ Star' },
-                    { name: 'fa fa-rocket', label: '🚀 Rocket' },
-                    { name: 'fa fa-users', label: '👥 Team' },
-                    { name: 'fa fa-lock', label: '🔒 Lock' },
-                    { name: 'fa fa-check-circle', label: '✅ Check' },
-                    { name: 'fa fa-line-chart', label: '📊 Chart' },
-                    { name: 'fa fa-cloud', label: '☁️ Cloud' },
-                    { name: 'fa fa-mobile', label: '📱 Mobile' },
-                    { name: 'fa fa-heart', label: '💖 Heart' },
-                    { name: 'fa fa-clock-o', label: '🕒 Realtime' },
-                    { name: 'fa fa-headphones', label: '🎧 Support' },
-                    { name: 'fa fa-database', label: '🗄️ Database' }
+                    { name: 'person', label: '👤 User', html: '<i class="oi" data-icon="person"></i>' },
+                    { name: 'group', label: '👥 Users / Team', html: '<i class="oi" data-icon="group"></i>' },
+                    { name: 'search', label: '🔍 Search', html: '<i class="oi" data-icon="search"></i>' },
+                    { name: 'menu', label: '☰ Menu', html: '<i class="oi" data-icon="menu"></i>' },
+                    { name: 'dashboard', label: '📊 Dashboard', html: '<i class="oi" data-icon="dashboard"></i>' },
+                    { name: 'notifications', label: '🔔 Notifications', html: '<i class="oi" data-icon="notifications"></i>' },
+                    { name: 'notifications_active', label: '🔔 Active Alerts', html: '<i class="oi" data-icon="notifications_active"></i>' },
+                    { name: 'campaign', label: '📢 Announcement', html: '<i class="oi" data-icon="campaign"></i>' },
+                    { name: 'chat', label: '💬 Chat', html: '<i class="oi" data-icon="chat"></i>' },
+                    { name: 'forum', label: '🗨️ Discussion', html: '<i class="oi" data-icon="forum"></i>' },
+                    { name: 'email', label: '✉️ Email', html: '<i class="oi" data-icon="email"></i>' },
+                    { name: 'event', label: '📅 Event', html: '<i class="oi" data-icon="event"></i>' },
+                    { name: 'calendar_month', label: '🗓️ Calendar', html: '<i class="oi" data-icon="calendar_month"></i>' },
+                    { name: 'task_alt', label: '✅ Completed Task', html: '<i class="oi" data-icon="task_alt"></i>' },
+                    { name: 'check_circle', label: '✅ Success', html: '<i class="oi" data-icon="check_circle"></i>' },
+                    { name: 'cancel', label: '❌ Cancel', html: '<i class="oi" data-icon="cancel"></i>' },
+                    { name: 'delete', label: '🗑️ Delete', html: '<i class="oi" data-icon="delete"></i>' },
+                    { name: 'edit', label: '✏️ Edit', html: '<i class="oi" data-icon="edit"></i>' },
+                    { name: 'add', label: '➕ Add', html: '<i class="oi" data-icon="add"></i>' },
+                    { name: 'close', label: '✖️ Close', html: '<i class="oi" data-icon="close"></i>' },
+                    { name: 'refresh', label: '🔄 Refresh', html: '<i class="oi" data-icon="refresh"></i>' },
+                    { name: 'download', label: '⬇️ Download', html: '<i class="oi" data-icon="download"></i>' },
+                    { name: 'upload', label: '⬆️ Upload', html: '<i class="oi" data-icon="upload"></i>' },
+                    { name: 'attach_file', label: '📎 Attachment', html: '<i class="oi" data-icon="attach_file"></i>' },
+                    { name: 'folder', label: '📁 Folder', html: '<i class="oi" data-icon="folder"></i>' },
+                    { name: 'description', label: '📄 Document', html: '<i class="oi" data-icon="description"></i>' },
+                    { name: 'business', label: '🏢 Business', html: '<i class="oi" data-icon="business"></i>' },
+                    { name: 'lock', label: '🔒 Lock', html: '<i class="oi" data-icon="lock"></i>' },
+                    { name: 'help', label: '❓ Help', html: '<i class="oi" data-icon="help"></i>' },
+                    { name: 'favorite', label: '❤️ Favorite', html: '<i class="oi" data-icon="favorite"></i>' },
+                    { name: 'schedule', label: '🕒 Schedule', html: '<i class="oi" data-icon="schedule"></i>' },
+                    { name: 'progress_activity', label: '⏳ Loading', html: '<i class="oi" data-icon="progress_activity"></i>' }
                 ];
 
                 const list = grp.querySelector('#highlights-items-list');
@@ -777,12 +792,18 @@
                     itemBox.className = 'item-card';
                     itemBox.style.cssText = 'background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.03);';
                     
-                    const curIcon = (item.icon || 'fa fa-bolt').toLowerCase().trim();
+                    const curIcon = (item.icon || '').toLowerCase().trim();
                     const presetBtns = PRESET_ICONS.map(p => {
-                        const isSel = curIcon === p.name || curIcon === p.name.replace(/^fa\s+fa-/, '') || curIcon === `fa-${p.name.replace(/^fa\s+fa-/, '')}`;
+                        const isSel = curIcon === p.html.toLowerCase() ||
+                                      curIcon === p.name ||
+                                      curIcon.includes(`data-icon="${p.name}"`) ||
+                                      curIcon.includes(`data-icon='${p.name}'`);
                         return `
-                            <button type="button" class="icon-preset-btn" data-icon="${p.name}" style="font-size: 10px; padding: 4px 6px; border: 1px solid ${isSel ? 'var(--primary)' : '#cbd5e1'}; border-radius: 4px; background: ${isSel ? '#f5eff4' : '#f8fafc'}; color: ${isSel ? 'var(--primary)' : '#475569'}; cursor: pointer; font-weight: ${isSel ? '700' : '500'};">
-                                ${p.label}
+                            <button type="button" class="icon-preset-btn" data-icon='${escapeHTML(p.html)}' data-name="${p.name}" data-search="${p.name} ${p.label.toLowerCase()}" title="${p.label}" style="font-size: 11px; padding: 6px 8px; border: 1px solid ${isSel ? 'var(--primary)' : '#e2e8f0'}; border-radius: 6px; background: ${isSel ? '#f5eff4' : '#ffffff'}; color: ${isSel ? 'var(--primary)' : '#334155'}; cursor: pointer; font-weight: ${isSel ? '700' : '500'}; display: flex; align-items: center; gap: 6px; text-align: left; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.02); transition: all 0.15s ease;">
+                                <span style="font-size: 16px; display: inline-flex; align-items: center; justify-content: center; width: 20px; color: ${isSel ? 'var(--primary)' : '#00A09D'}; flex-shrink: 0;">
+                                    ${p.html}
+                                </span>
+                                <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10.5px;">${p.label}</span>
                             </button>
                         `;
                     }).join('');
@@ -807,22 +828,27 @@
                             <textarea class="form-textarea card-desc-input" placeholder="Highlight Description" style="font-size: 12px; padding: 5px 8px; min-height: 48px;">${escapeHTML(item.desc || '')}</textarea>
                         </div>
 
-                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px; margin-top: 8px;">
-                            <label style="font-size: 10px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                                <span>Icon Selection</span>
-                                <span class="hl-icon-preview-box" style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: ${d.iconBgColor || 'rgba(113,75,103,0.1)'}; color: ${d.accentColor || '#714B67'}; border-radius: 6px;">
-                                    ${item.iconUrl ? `<img src="${item.iconUrl}" style="width: 18px; height: 18px; object-fit: contain;">` : renderSafeIcon(item.icon, 'fa fa-bolt')}
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-top: 8px;">
+                            <label style="font-size: 11px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="display: flex; align-items: center; gap: 5px;">
+                                    <i class="oi" data-icon="star" style="color: var(--primary); font-size: 14px;"></i> Icon Selection
+                                </span>
+                                <span class="hl-icon-preview-box" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; background: ${d.iconBgColor || 'rgba(113,75,103,0.1)'}; color: ${d.accentColor || '#714B67'}; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); font-size: 20px;">
+                                    ${item.iconUrl ? `<img src="${item.iconUrl}" style="width: 20px; height: 20px; object-fit: contain;">` : renderSafeIcon(item.icon, '<i class="oi" data-icon="task_alt"></i>')}
                                 </span>
                             </label>
 
-                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">Preset Icons:</div>
-                            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px;">
+                            <div style="margin-bottom: 6px;">
+                                <input type="text" class="form-input icon-search-input" placeholder="🔍 Search icons (e.g. user, task, mail, date)..." style="font-size: 11px; padding: 5px 8px; width: 100%; border-radius: 6px;">
+                            </div>
+
+                            <div class="preset-icons-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; max-height: 190px; overflow-y: auto; padding: 4px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 8px;">
                                 ${presetBtns}
                             </div>
 
                             <div style="margin-bottom: 6px;">
-                                <label style="font-size: 9px; color: var(--text-muted); display: block; margin-bottom: 2px;">FontAwesome Icon Class (e.g. fa fa-home)</label>
-                                <input type="text" class="form-input card-icon-input" value="${escapeHTML(item.icon || 'fa fa-bolt')}" placeholder="e.g. fa fa-home, fa-star, fa fa-check" style="font-size: 11px; padding: 4px 8px;">
+                                <label style="font-size: 9px; color: var(--text-muted); display: block; margin-bottom: 2px;">Odoo Icon Tag / Class</label>
+                                <input type="text" class="form-input card-icon-input" value="${escapeHTML(item.icon || '<i class=\"oi\" data-icon=\"task_alt\"></i>')}" placeholder='<i class="oi" data-icon="person"></i>' style="font-size: 11px; padding: 4px 8px; font-family: monospace;">
                             </div>
 
                             <div>
@@ -897,11 +923,26 @@
                         const previewBox = itemBox.querySelector('.hl-icon-preview-box');
                         if (previewBox) {
                             if (item.iconUrl) {
-                                previewBox.innerHTML = `<img src="${item.iconUrl}" style="width: 18px; height: 18px; object-fit: contain;">`;
+                                previewBox.innerHTML = `<img src="${item.iconUrl}" style="width: 20px; height: 20px; object-fit: contain;">`;
                             } else {
-                                previewBox.innerHTML = renderSafeIcon(item.icon, 'fa fa-bolt');
+                                previewBox.innerHTML = renderSafeIcon(item.icon, '<i class="oi" data-icon="task_alt"></i>');
                             }
                         }
+                    }
+
+                    const searchInput = itemBox.querySelector('.icon-search-input');
+                    if (searchInput) {
+                        searchInput.addEventListener('input', (e) => {
+                            const query = e.target.value.toLowerCase().trim();
+                            itemBox.querySelectorAll('.icon-preset-btn').forEach(btn => {
+                                const searchData = (btn.getAttribute('data-search') || '').toLowerCase();
+                                if (!query || searchData.includes(query)) {
+                                    btn.style.display = 'flex';
+                                } else {
+                                    btn.style.display = 'none';
+                                }
+                            });
+                        });
                     }
 
                     itemBox.querySelectorAll('.icon-preset-btn').forEach(btn => {
@@ -912,15 +953,19 @@
                             iconInput.value = selectedIcon;
                             iconUrlInput.value = '';
                             itemBox.querySelectorAll('.icon-preset-btn').forEach(b => {
-                                b.style.borderColor = '#cbd5e1';
-                                b.style.background = '#f8fafc';
-                                b.style.color = '#475569';
+                                b.style.borderColor = '#e2e8f0';
+                                b.style.background = '#ffffff';
+                                b.style.color = '#334155';
                                 b.style.fontWeight = '500';
+                                const s = b.querySelector('span:first-child');
+                                if (s) s.style.color = '#00A09D';
                             });
                             btn.style.borderColor = 'var(--primary)';
                             btn.style.background = '#f5eff4';
                             btn.style.color = 'var(--primary)';
                             btn.style.fontWeight = '700';
+                            const selSpan = btn.querySelector('span:first-child');
+                            if (selSpan) selSpan.style.color = 'var(--primary)';
                             updateCanvasLive();
                             updateCardIconPreview();
                         });

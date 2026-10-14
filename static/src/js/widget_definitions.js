@@ -39,10 +39,10 @@ export const STARTER_WIDGETS = [
             accentColor: '#714B67',
             cardBgColor: '#ffffff',
             items: [
-                { title: '100% Automated', desc: 'Zero manual calculation errors with real-time formula triggers.', icon: 'fa fa-bolt' },
-                { title: 'Multi-Company Ready', desc: 'Seamless support for multiple companies, currencies, and branches.', icon: 'fa fa-building' },
-                { title: 'Role-Based Security', desc: 'Dedicated portal for sales reps and granular manager approvals.', icon: 'fa fa-shield' },
-                { title: 'Plug & Play Setup', desc: 'Configure commission rules and start operating in under 5 minutes.', icon: 'fa fa-cogs' },
+                { title: '100% Automated', desc: 'Zero manual calculation errors with real-time formula triggers.', icon: '<i class="oi" data-icon="task_alt"></i>' },
+                { title: 'Multi-Company Ready', desc: 'Seamless support for multiple companies, currencies, and branches.', icon: '<i class="oi" data-icon="business"></i>' },
+                { title: 'Role-Based Security', desc: 'Dedicated portal for sales reps and granular manager approvals.', icon: '<i class="oi" data-icon="lock"></i>' },
+                { title: 'Plug & Play Setup', desc: 'Configure commission rules and start operating in under 5 minutes.', icon: '<i class="oi" data-icon="schedule"></i>' },
             ]
         }
     },
@@ -235,10 +235,10 @@ export const WIDGET_CATALOG = [
                     accentColor: '#714B67',
                     cardBgColor: '#ffffff',
                     items: [
-                        { title: 'Lightning Fast', desc: 'Optimized for high-volume transactions.', icon: 'bolt' },
-                        { title: 'Multi-Company', desc: 'Full support for multiple branches and currencies.', icon: 'building' },
-                        { title: 'Enterprise Security', desc: 'Granular access controls and audit trails.', icon: 'lock' },
-                        { title: 'Instant Setup', desc: 'No complex configurations needed.', icon: 'magic' }
+                        { title: 'Lightning Fast', desc: 'Optimized for high-volume transactions.', icon: '<i class="oi" data-icon="task_alt"></i>' },
+                        { title: 'Multi-Company', desc: 'Full support for multiple branches and currencies.', icon: '<i class="oi" data-icon="business"></i>' },
+                        { title: 'Enterprise Security', desc: 'Granular access controls and audit trails.', icon: '<i class="oi" data-icon="lock"></i>' },
+                        { title: 'Instant Setup', desc: 'No complex configurations needed.', icon: '<i class="oi" data-icon="schedule"></i>' }
                     ]
                 }
             },

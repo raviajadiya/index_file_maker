@@ -75,10 +75,10 @@ const WIDGET_CATALOG = [
                     cardBgColor: '#ffffff',
                     cardBorderColor: '#e2e8f0',
                     items: [
-                        { title: '100% Automated', desc: 'Zero manual calculation errors with real-time formula triggers.', icon: 'fa fa-bolt', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
-                        { title: 'Multi-Company Ready', desc: 'Seamless support for multiple companies, currencies, and branches.', icon: 'fa fa-building', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
-                        { title: 'Role-Based Security', desc: 'Dedicated portal for sales reps and granular manager approvals.', icon: 'fa fa-shield', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
-                        { title: 'Plug & Play Setup', desc: 'Configure commission rules and start operating in under 5 minutes.', icon: 'fa fa-cogs', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: '100% Automated', desc: 'Zero manual calculation errors with real-time formula triggers.', icon: '<i class="oi" data-icon="task_alt"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: 'Multi-Company Ready', desc: 'Seamless support for multiple companies, currencies, and branches.', icon: '<i class="oi" data-icon="business"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: 'Role-Based Security', desc: 'Dedicated portal for sales reps and granular manager approvals.', icon: '<i class="oi" data-icon="lock"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: 'Plug & Play Setup', desc: 'Configure commission rules and start operating in under 5 minutes.', icon: '<i class="oi" data-icon="schedule"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
                     ]
                 }
             },
