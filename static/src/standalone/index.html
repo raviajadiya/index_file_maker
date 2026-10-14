@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odoo AppStore Index File Maker</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Modular Stylesheet -->
+    <link rel="stylesheet" href="css/builder.css?v=20.0.10">
+</head>
+
+<body>
+    <!-- TOP HEADER -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <button class="btn btn-outline" id="btn-back-to-odoo" onclick="goBackToOdoo()" title="Go Back to Odoo"
+                style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; margin-right: 12px; font-size: 12px; font-weight: 600; color: #475569; border-color: #cbd5e1; background: #ffffff;">
+                <i class="fa fa-arrow-left"></i> Back to Odoo
+            </button>
+            <i class="fa fa-cubes" style="color: #00A09D; font-size: 20px;"></i>
+            <span>Odoo AppStore Index Maker</span>
+            <span class="brand-badge">ODOO 20</span>
+        </div>
+
+        <div class="topbar-center">
+            <button class="viewport-btn active" id="view-desktop" onclick="setViewport('desktop')">
+                <i class="fa fa-desktop"></i> Desktop
+            </button>
+            <button class="viewport-btn" id="view-tablet" onclick="setViewport('tablet')">
+                <i class="fa fa-tablet"></i> Tablet
+            </button>
+            <button class="viewport-btn" id="view-mobile" onclick="setViewport('mobile')">
+                <i class="fa fa-mobile"></i> Mobile
+            </button>
+        </div>
+
+        <div class="topbar-actions">
+            <button class="btn btn-outline" onclick="openTemplatesModal()">
+                <i class="fa fa-folder-open-o"></i> Templates
+            </button>
+            <button class="btn btn-outline" onclick="openCodeModal()">
+                <i class="fa fa-code"></i> View HTML
+            </button>
+            <button class="btn btn-primary" onclick="openPreviewModal()">
+                <i class="fa fa-eye"></i> Preview
+            </button>
+            <button class="btn btn-success" onclick="downloadIndexFile()">
+                <i class="fa fa-download"></i> Download index.html
+            </button>
+        </div>
+    </header>
+
+    <!-- 3-COLUMN WORKSPACE -->
+    <main class="workspace">
+        <!-- left PANEL: WIDGETS LIBRARY -->
+        <aside class="panel-left">
+            <div class="panel-header">
+                <span class="panel-title"><i class="fa fa-th-large" style="color: var(--primary);"></i> Add
+                    Widgets</span>
+                <span style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Drag or click +</span>
+            </div>
+
+            <div class="search-box">
+                <input type="text" class="form-input" id="widget-search" placeholder="Filter widgets..."
+                    onkeyup="filterWidgets(this.value)">
+            </div>
+
+            <div class="panel-content" id="widgets-catalog-container">
+                <!-- Populated dynamically from catalog -->
+            </div>
+        </aside>
+
+
+        <!-- CENTER: CANVAS -->
+        <section class="panel-center" id="canvas-area">
+            <div class="canvas-wrapper" id="canvas-root">
+                <!-- Live sections rendered here -->
+            </div>
+
+        </section>
+        <!-- right PANEL: PROPERTIES -->
+        <aside class="panel-right">
+            <div class="panel-tabs">
+                <div class="panel-tab active" id="tab-props" onclick="switchLeftTab('props')">
+                    <i class="fa fa-sliders"></i> Widget Properties
+                </div>
+                <div class="panel-tab" id="tab-global" onclick="switchLeftTab('global')">
+                    <i class="fa fa-cog"></i> Global Settings
+                </div>
+            </div>
+
+            <div class="panel-content" id="props-container">
+                <!-- Dynamically populated by JS -->
+            </div>
+        </aside>
+
+
+    </main>
+
+    <!-- PREVIEW MODAL -->
+    <div class="modal-overlay" id="preview-modal">
+        <div class="modal-card" style="max-width: 1100px; height: 90vh;">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa fa-eye" style="color: var(--primary);"></i>
+                    <h3 style="font-size: 16px; font-weight: 700;">Odoo App Store Live Simulator</h3>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-success" onclick="downloadIndexFile()">
+                        <i class="fa fa-download"></i> Download index.html
+                    </button>
+                    <button class="btn btn-outline" style="color: #64748b; border-color: #cbd5e1;"
+                        onclick="closeModal('preview-modal')">
+                        <i class="fa fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body" style="padding: 0; background: #f8fafc;">
+                <iframe id="preview-iframe"
+                    style="width: 100%; height: 100%; border: none; min-height: 600px;"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- CODE VIEW MODAL -->
+    <div class="modal-overlay" id="code-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa fa-code" style="color: var(--primary);"></i>
+                    <h3 style="font-size: 16px; font-weight: 700;">Generated Odoo App Store HTML</h3>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn btn-primary" onclick="copyHTMLCode()">
+                        <i class="fa fa-copy"></i> Copy Code
+                    </button>
+                    <button class="btn btn-outline" style="color: #64748b; border-color: #cbd5e1;"
+                        onclick="closeModal('code-modal')">
+                        <i class="fa fa-times"></i> Close
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="code-box" id="code-display"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEMPLATES MODAL -->
+    <div class="modal-overlay" id="templates-modal">
+        <div class="modal-card" style="max-width: 650px;">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa fa-folder-open-o" style="color: var(--primary);"></i>
+                    <h3 style="font-size: 16px; font-weight: 700;">Starter Templates</h3>
+                </div>
+                <button class="btn btn-outline" style="color: #64748b; border-color: #cbd5e1;"
+                    onclick="closeModal('templates-modal')">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">Choose a pre-designed layout to
+                    jumpstart your Odoo App Store description:</p>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div class="item-card" style="cursor: pointer; padding: 16px;" onclick="loadTemplate('full')">
+                        <h4 style="font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">🚀
+                            Comprehensive Pro App</h4>
+                        <p style="font-size: 13px; color: #64748b; margin: 0;">Full layout with Hero Banner, Highlights,
+                            Split Features, Screenshots, FAQ, and Support.</p>
+                    </div>
+                    <div class="item-card" style="cursor: pointer; padding: 16px;" onclick="loadTemplate('utility')">
+                        <h4 style="font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">⚡
+                            Lightweight Utility Module</h4>
+                        <p style="font-size: 13px; color: #64748b; margin: 0;">Minimal header, 3 feature cards,
+                            configuration screenshot, and contact card.</p>
+                    </div>
+                    <div class="item-card" style="cursor: pointer; padding: 16px;" onclick="loadTemplate('blank')">
+                        <h4 style="font-size: 15px; font-weight: 700; color: #ef4444; margin-bottom: 4px;">🗑 Blank
+                            Canvas</h4>
+                        <p style="font-size: 13px; color: #64748b; margin: 0;">Start fresh and build your description
+                            from scratch.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast-notify">
+        <i class="fa fa-check-circle" style="color: #10b981; font-size: 18px;"></i>
+        <span id="toast-msg">Action completed</span>
+    </div>
+
+
+    <script>
+        function goBackToOdoo() {
+            if (window.top && window.top !== window) {
+                try {
+                    if (window.top.history && window.top.history.length > 1) {
+                        window.top.history.back();
+                    } else {
+                        window.top.location.href = '/odoo';
+                    }
+                } catch (e) {
+                    window.top.location.href = '/odoo';
+                }
+            } else {
+                window.history.back();
+            }
+        }
+    </script>
+    <!-- Modular JavaScript Files -->
+    <script src="js/widgets.js?v=20.0.10"></script>
+    <script src="js/generator.js?v=20.0.12"></script>
+    <script src="js/app.js?v=20.0.10"></script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Client Action for OWL Drag & Drop Builder -->
+    <record id="action_index_builder" model="ir.actions.client">
+        <field name="name">AppStore Index Maker</field>
+        <field name="tag">index_file_maker.builder</field>
+    </record>
+
+    <!-- Root Menu -->
+    <menuitem id="menu_index_maker_root"
+              name="Index Maker"
+              web_icon="index_file_maker,static/description/icon.png"
+              sequence="20"/>
+
+    <!-- Submenus -->
+    <menuitem id="menu_index_maker_builder"
+              name="Drag &amp; Drop Builder"
+              parent="menu_index_maker_root"
+              action="action_index_builder"
+              sequence="10"/>
+
+    <menuitem id="menu_index_maker_templates"
+              name="Saved Templates"
+              parent="menu_index_maker_root"
+              action="action_appstore_index_template"
+              sequence="20"/>
+</odoo>

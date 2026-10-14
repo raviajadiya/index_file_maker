@@ -1,0 +1,26 @@
+.o_action_manager:has(.o_index_maker_action_container),
+.o_content:has(.o_index_maker_action_container) {
+    overflow: hidden !important;
+    height: 100% !important;
+    max-height: 100% !important;
+}
+
+.o_index_maker_action_container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden !important;
+    background-color: #cbd5e1;
+
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        display: block;
+        overflow: hidden;
+    }
+}
