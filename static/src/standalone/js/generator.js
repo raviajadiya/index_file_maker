@@ -93,9 +93,13 @@ function renderWidgetHtml(widget) {
             const bg = d.bgColor || globalBrand || '#714B67';
             const textCol = d.textColor || '#ffffff';
             const accent = d.accentColor || globalAccent || '#00A09D';
-            const badgeBg = d.badgeBgColor && !d.badgeBgColor.includes('rgba') ? d.badgeBgColor : '#f5efff';
-            const badgeColor = d.badgeTextColor || '#714B67';
-            const badgeBorder = d.badgeBorderColor && !d.badgeBorderColor.includes('rgba') ? d.badgeBorderColor : '#ffffff';
+            const badgeBg = d.badgeBgColor || '#ffffff';
+            let badgeColor = d.badgeTextColor || '#714B67';
+            // Auto-heal white on white legacy issue
+            if ((badgeBg.toLowerCase() === '#ffffff' || badgeBg.toLowerCase() === '#f5efff') && (!d.badgeTextColor || d.badgeTextColor.toLowerCase() === '#ffffff')) {
+                badgeColor = d.bgColor || globalBrand || '#714B67';
+            }
+            const badgeBorder = d.badgeBorderColor || (badgeBg.toLowerCase() === '#ffffff' ? '#e2e8f0' : 'transparent');
             const badgesHTML = (d.badges || []).map(b =>
                 `<span class="mx-1 my-1" style="background-color: ${badgeBg}; color: ${badgeColor}; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-block; border: 1px solid ${badgeBorder};">${escapeHTML(b)}</span>`
             ).join(' ');

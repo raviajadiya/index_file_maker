@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
     <t t-name="index_file_maker.IndexMakerAction">
         <div class="o_index_maker_action_container" style="display: flex; flex-direction: column; width: 100%; height: 100%; flex: 1 1 auto; overflow: hidden; position: relative;">
-            <iframe src="/index_file_maker/static/src/standalone/index.html?v=20.0.12" style="width: 100%; height: 100%; border: none; display: block; flex: 1;" allow="clipboard-read; clipboard-write"/>
+            <iframe src="/index_file_maker/static/src/standalone/index.html?v=20.0.13" style="width: 100%; height: 100%; border: none; display: block; flex: 1;" allow="clipboard-read; clipboard-write"/>
         </div>
     </t>
 </templates>

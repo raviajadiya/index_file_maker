@@ -400,6 +400,18 @@
 
             const d = widget.data;
 
+            // Auto-heal legacy white-on-white badge colors
+            if (d.badges !== undefined) {
+                if (!d.badgeBgColor || (d.badgeBgColor === '#f5efff' && d.badgeTextColor === '#ffffff')) {
+                    d.badgeBgColor = '#ffffff';
+                    d.badgeTextColor = '#714B67';
+                    d.badgeBorderColor = '#e2e8f0';
+                }
+                if (d.badgeBorderColor === undefined) {
+                    d.badgeBorderColor = '#e2e8f0';
+                }
+            }
+
             // Widget Header Banner
             const head = document.createElement('div');
             head.style.marginBottom = '20px';
@@ -582,12 +594,93 @@
                 form.appendChild(badgeGroup);
             }
 
-            // Badge Colors
-            if (d.badgeBgColor !== undefined) {
-                form.appendChild(createInputField('Badge Background (CSS / RGBA)', d.badgeBgColor, (val) => { d.badgeBgColor = val; updateCanvasLive(); }));
-            }
-            if (d.badgeTextColor !== undefined) {
-                form.appendChild(createColorField('Badge Text Color', d.badgeTextColor, (val) => { d.badgeTextColor = val; updateCanvasLive(); }));
+            // Badge / Chip Colors & Appearance (Dynamic Color Controls & Presets)
+            if (d.badges !== undefined || d.badgeBgColor !== undefined) {
+                if (d.badgeBgColor === undefined) d.badgeBgColor = '#ffffff';
+                if (d.badgeTextColor === undefined) d.badgeTextColor = '#714B67';
+                if (d.badgeBorderColor === undefined) d.badgeBorderColor = '#e2e8f0';
+
+                const badgeColorCard = document.createElement('div');
+                badgeColorCard.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                badgeColorCard.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="display: flex; align-items: center; gap: 6px;">
+                            <i class="fa fa-paint-brush" style="color: var(--primary);"></i> Badge / Chip Colors
+                        </span>
+                        <span style="font-size: 10px; color: var(--text-muted); font-weight: normal;">Live Preview</span>
+                    </div>
+                    <div style="text-align: center; margin-bottom: 12px; padding: 10px; background: ${d.bgColor || '#714B67'}; border-radius: 6px;">
+                        <span id="badge-chip-live-preview" style="background-color: ${d.badgeBgColor}; color: ${d.badgeTextColor}; border: 1px solid ${d.badgeBorderColor}; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-block;">
+                            Odoo 20 &bull; Enterprise
+                        </span>
+                    </div>
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">Quick Presets:</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px;" id="badge-presets-container">
+                        <button type="button" class="btn btn-outline" data-preset="white" style="font-size: 10px; padding: 3px 8px; background: #ffffff; color: #714B67; border: 1px solid #cbd5e1; cursor: pointer;">⚪ Clean White</button>
+                        <button type="button" class="btn btn-outline" data-preset="purple" style="font-size: 10px; padding: 3px 8px; background: #f5efff; color: #714B67; border: 1px solid #d8b4fe; cursor: pointer;">🟣 Soft Purple</button>
+                        <button type="button" class="btn btn-outline" data-preset="mint" style="font-size: 10px; padding: 3px 8px; background: #e6f6f6; color: #008480; border: 1px solid #99f6e4; cursor: pointer;">🟢 Teal Accent</button>
+                        <button type="button" class="btn btn-outline" data-preset="glass" style="font-size: 10px; padding: 3px 8px; background: rgba(255,255,255,0.20); color: #ffffff; border: 1px solid rgba(255,255,255,0.40); cursor: pointer;">💎 Glass Frost</button>
+                        <button type="button" class="btn btn-outline" data-preset="dark" style="font-size: 10px; padding: 3px 8px; background: #1e1b4b; color: #ffffff; border: 1px solid #4338ca; cursor: pointer;">⬛ Dark Pill</button>
+                    </div>
+                    <div id="badge-color-fields-wrapper"></div>
+                `;
+
+                const previewSpan = badgeColorCard.querySelector('#badge-chip-live-preview');
+                const updateBadgePreview = () => {
+                    if (previewSpan) {
+                        previewSpan.style.backgroundColor = d.badgeBgColor;
+                        previewSpan.style.color = d.badgeTextColor;
+                        previewSpan.style.borderColor = d.badgeBorderColor;
+                    }
+                };
+
+                const fieldsWrapper = badgeColorCard.querySelector('#badge-color-fields-wrapper');
+                fieldsWrapper.appendChild(createColorField('Badge Background Color', d.badgeBgColor, (val) => {
+                    d.badgeBgColor = val;
+                    updateBadgePreview();
+                    updateCanvasLive();
+                }));
+                fieldsWrapper.appendChild(createColorField('Badge Text Color', d.badgeTextColor, (val) => {
+                    d.badgeTextColor = val;
+                    updateBadgePreview();
+                    updateCanvasLive();
+                }));
+                fieldsWrapper.appendChild(createColorField('Badge Border Color', d.badgeBorderColor, (val) => {
+                    d.badgeBorderColor = val;
+                    updateBadgePreview();
+                    updateCanvasLive();
+                }));
+
+                badgeColorCard.querySelectorAll('#badge-presets-container button').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const pr = btn.getAttribute('data-preset');
+                        if (pr === 'white') {
+                            d.badgeBgColor = '#ffffff';
+                            d.badgeTextColor = d.bgColor || '#714B67';
+                            d.badgeBorderColor = '#e2e8f0';
+                        } else if (pr === 'purple') {
+                            d.badgeBgColor = '#f5efff';
+                            d.badgeTextColor = '#714B67';
+                            d.badgeBorderColor = '#d8b4fe';
+                        } else if (pr === 'mint') {
+                            d.badgeBgColor = '#e6f6f6';
+                            d.badgeTextColor = '#008480';
+                            d.badgeBorderColor = '#99f6e4';
+                        } else if (pr === 'glass') {
+                            d.badgeBgColor = 'rgba(255, 255, 255, 0.20)';
+                            d.badgeTextColor = '#ffffff';
+                            d.badgeBorderColor = 'rgba(255, 255, 255, 0.40)';
+                        } else if (pr === 'dark') {
+                            d.badgeBgColor = '#1e1b4b';
+                            d.badgeTextColor = '#ffffff';
+                            d.badgeBorderColor = '#4338ca';
+                        }
+                        renderPropertyInspector();
+                        updateCanvasLive();
+                    });
+                });
+
+                form.appendChild(badgeColorCard);
             }
 
             // Announcement Ribbon / Banner text & buttons
@@ -1143,11 +1236,22 @@
         function createColorField(label, value, onInput) {
             const grp = document.createElement('div');
             grp.className = 'form-group';
+            
+            // Convert to valid 7-character hex for native input[type="color"]
+            let safeHex = '#714B67';
+            if (typeof value === 'string') {
+                const hexMatch = value.trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+                if (hexMatch) {
+                    const h = hexMatch[1];
+                    safeHex = h.length === 3 ? '#' + h[0] + h[0] + h[1] + h[1] + h[2] + h[2] : '#' + h;
+                }
+            }
+
             grp.innerHTML = `
                 <label class="form-label">${escapeHTML(label)}</label>
                 <div class="color-row">
-                    <input type="color" class="color-picker-input" value="${value || '#714B67'}">
-                    <input type="text" class="form-input" value="${value || '#714B67'}">
+                    <input type="color" class="color-picker-input" value="${safeHex}">
+                    <input type="text" class="form-input" value="${escapeHTML(value || '')}">
                 </div>
             `;
             const picker = grp.querySelector('input[type="color"]');
@@ -1157,8 +1261,13 @@
                 onInput(e.target.value);
             });
             text.addEventListener('input', (e) => {
-                picker.value = e.target.value;
-                onInput(e.target.value);
+                const val = e.target.value.trim();
+                const hexMatch = val.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+                if (hexMatch) {
+                    const h = hexMatch[1];
+                    picker.value = h.length === 3 ? '#' + h[0] + h[0] + h[1] + h[1] + h[2] + h[2] : '#' + h;
+                }
+                onInput(val);
             });
             return grp;
         }
