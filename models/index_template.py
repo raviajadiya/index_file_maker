@@ -32,5 +32,9 @@ class AppstoreIndexTemplate(models.Model):
                 'template_id': self.id,
                 'template_name': self.name,
                 'technical_name': self.technical_name or '',
+            },
+            'context': {
+                'active_id': self.id,
+                'template_id': self.id,
             }
         }

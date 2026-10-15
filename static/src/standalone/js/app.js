@@ -1,28 +1,58 @@
 // Odoo AppStore Index Maker - Core Application Logic
 
 // State variables
-        let selectedWidgetId = null;
-        let activeLeftTab = 'props';
-        let currentViewport = 'desktop';
+let currentTemplateId = null;
+let currentTemplateName = 'Advanced Sales Commission Pro';
+let selectedWidgetId = null;
+let activeLeftTab = 'props';
+let currentViewport = 'desktop';
 
-        let pageSettings = {
-            appName: 'Advanced Sales Commission Pro',
-            technicalName: 'sale_commission_pro',
-            odooVersion: '20.0',
-            brandColor: '#714B67',
-            accentColor: '#00A09D',
-            fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
-        };
+let pageSettings = {
+    appName: 'Advanced Sales Commission Pro',
+    technicalName: 'sale_commission_pro',
+    odooVersion: '20.0',
+    brandColor: '#714B67',
+    accentColor: '#00A09D',
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+};
 
 // Active widget list in canvas
-        let activeWidgets = [];
+let activeWidgets = [];
 
-        // INITIALIZE APP
-        document.addEventListener('DOMContentLoaded', () => {
-            renderWidgetCatalog();
-            loadTemplate('full');
-            renderGlobalSettingsPanel();
-        });
+// INITIALIZE APP
+function initApp() {
+    let tId = null;
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        tId = urlParams.get('template_id');
+
+        if (!tId && window.top && window.top !== window) {
+            const topHash = window.top.location.hash || '';
+            const topSearch = window.top.location.search || '';
+            const m = (topSearch + '&' + topHash).match(/(?:template_id|active_id)=(\d+)/);
+            if (m) {
+                tId = m[1];
+            }
+        }
+    } catch (e) {
+        console.warn('Could not read template_id from URL:', e);
+    }
+
+    if (tId) {
+        loadTemplateFromBackend(tId);
+    } else {
+        renderWidgetCatalog();
+        loadTemplate('full');
+        renderGlobalSettingsPanel();
+        updateTemplateHeaderDisplay();
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
 
         // RENDER RIGHT WIDGET CATALOG
         function renderWidgetCatalog(filter = '') {
@@ -1308,7 +1338,7 @@
                 </div>
             `;
 
-            document.getElementById('g-app-name').addEventListener('input', (e) => { pageSettings.appName = e.target.value; });
+            document.getElementById('g-app-name').addEventListener('input', (e) => { pageSettings.appName = e.target.value; updateTemplateHeaderDisplay(); });
             document.getElementById('g-tech-name').addEventListener('input', (e) => { pageSettings.technicalName = e.target.value; });
             
             const bp = document.getElementById('g-brand-picker');
@@ -1391,4 +1421,253 @@
                 name: found.name,
                 data: JSON.parse(JSON.stringify(found.defaultData))
             };
+        }
+
+        // ==========================================
+        // TEMPLATE PERSISTENCE & BACKEND INTEGRATION
+        // ==========================================
+
+        function updateTemplateHeaderDisplay() {
+            const statusTag = document.getElementById('template-status-tag');
+            const nameDisplay = document.getElementById('template-name-display');
+            if (statusTag) {
+                if (currentTemplateId) {
+                    statusTag.textContent = `#${currentTemplateId} SAVED`;
+                    statusTag.style.background = '#dcfce7';
+                    statusTag.style.color = '#15803d';
+                } else {
+                    statusTag.textContent = 'NEW';
+                    statusTag.style.background = '#e0f2fe';
+                    statusTag.style.color = '#0369a1';
+                }
+            }
+            if (nameDisplay) {
+                nameDisplay.textContent = (pageSettings.appName || 'My Custom App').trim();
+            }
+        }
+
+        async function saveCurrentTemplate() {
+            const saveBtn = document.getElementById('btn-save-template');
+            if (saveBtn) {
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving...';
+            }
+
+            try {
+                const payload = {
+                    jsonrpc: "2.0",
+                    method: "call",
+                    params: {
+                        template_id: currentTemplateId ? parseInt(currentTemplateId) : null,
+                        name: (pageSettings.appName || 'My Awesome App').trim(),
+                        technical_name: (pageSettings.technicalName || '').trim(),
+                        odoo_version: pageSettings.odooVersion || '20.0',
+                        schema_json: JSON.stringify(activeWidgets),
+                        html_content: compileFinalAppStoreHTML(false)
+                    }
+                };
+
+                const response = await fetch('/index_file_maker/save_template', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const resData = await response.json();
+                const result = resData.result;
+
+                if (result && result.status === 'success') {
+                    currentTemplateId = result.id;
+                    currentTemplateName = result.name;
+                    updateTemplateHeaderDisplay();
+                    if (result.is_new) {
+                        showToast(`Saved as new template: "${result.name}" (ID: #${result.id})`);
+                    } else {
+                        showToast(`Template "${result.name}" updated successfully!`);
+                    }
+                } else {
+                    const errMsg = (resData.error && resData.error.message) || 'Could not save template';
+                    showToast('Save error: ' + errMsg);
+                }
+            } catch (err) {
+                console.error('Save failed:', err);
+                showToast('Error saving template: ' + err.message);
+            } finally {
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = '<i class="fa fa-floppy-o"></i> Save';
+                }
+            }
+        }
+
+        async function loadTemplateFromBackend(id) {
+            try {
+                showToast(`Loading template #${id}...`);
+                const payload = {
+                    jsonrpc: "2.0",
+                    method: "call",
+                    params: { template_id: parseInt(id) }
+                };
+
+                const response = await fetch('/index_file_maker/get_template', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const resData = await response.json();
+                const t = resData.result;
+
+                if (t && !t.error) {
+                    currentTemplateId = t.id;
+                    currentTemplateName = t.name;
+                    pageSettings.appName = t.name || 'Untitled App';
+                    pageSettings.technicalName = t.technical_name || '';
+                    pageSettings.odooVersion = t.odoo_version || '20.0';
+
+                    if (t.schema_json && t.schema_json.trim() !== '[]') {
+                        try {
+                            activeWidgets = JSON.parse(t.schema_json);
+                            selectedWidgetId = (activeWidgets && activeWidgets.length > 0) ? activeWidgets[0].id : null;
+                        } catch (e) {
+                            console.warn('Could not parse schema JSON, loading full starter', e);
+                            loadTemplate('full');
+                        }
+                    } else {
+                        loadTemplate('full');
+                    }
+
+                    renderWidgetCatalog();
+                    renderCanvas();
+                    renderPropertyInspector();
+                    renderGlobalSettingsPanel();
+                    updateTemplateHeaderDisplay();
+                    showToast(`Loaded template: "${t.name}"`);
+                } else {
+                    showToast('Template not found or error loading.');
+                    renderWidgetCatalog();
+                    loadTemplate('full');
+                    renderGlobalSettingsPanel();
+                    updateTemplateHeaderDisplay();
+                }
+            } catch (err) {
+                console.error('Error fetching template:', err);
+                showToast('Failed to load template from Odoo.');
+                renderWidgetCatalog();
+                loadTemplate('full');
+                renderGlobalSettingsPanel();
+                updateTemplateHeaderDisplay();
+            }
+        }
+
+        function startNewTemplate() {
+            currentTemplateId = null;
+            currentTemplateName = 'My Custom Odoo 20 App';
+            pageSettings.appName = 'My Custom Odoo 20 App';
+            pageSettings.technicalName = 'my_custom_app';
+            loadTemplate('blank');
+            updateTemplateHeaderDisplay();
+            renderGlobalSettingsPanel();
+            showToast('New blank template created. Start dragging widgets from the library!');
+        }
+
+        async function openSavedTemplatesModal() {
+            openModal('saved-templates-modal');
+            const container = document.getElementById('saved-templates-list-container');
+            if (!container) return;
+            container.innerHTML = `
+                <div style="text-align: center; padding: 30px; color: #94a3b8;">
+                    <i class="fa fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 8px; display: block; color: var(--primary);"></i>
+                    Loading saved templates from Odoo...
+                </div>
+            `;
+
+            try {
+                const payload = {
+                    jsonrpc: "2.0",
+                    method: "call",
+                    params: {}
+                };
+                const response = await fetch('/index_file_maker/list_templates', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const resData = await response.json();
+                const templates = (resData.result && resData.result.templates) || [];
+
+                if (templates.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 30px; color: #64748b; background: #f8fafc; border-radius: 8px; border: 1px dashed #cbd5e1;">
+                            <i class="fa fa-folder-open-o" style="font-size: 32px; color: #94a3b8; margin-bottom: 8px; display: block;"></i>
+                            <p style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">No saved templates yet</p>
+                            <p style="font-size: 12px; color: #94a3b8; margin: 0;">Click "Save" on the top bar to save your current design into Odoo!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = '';
+                templates.forEach(t => {
+                    const isCurrent = currentTemplateId && parseInt(currentTemplateId) === parseInt(t.id);
+                    const card = document.createElement('div');
+                    card.className = 'item-card';
+                    card.style.cssText = `display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: ${isCurrent ? '#f0fdf4' : '#ffffff'}; border: 1px solid ${isCurrent ? '#86efac' : '#e2e8f0'}; border-radius: 8px;`;
+                    card.innerHTML = `
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <span style="font-size: 11px; font-weight: 700; color: #64748b; background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">#${t.id}</span>
+                                <strong style="font-size: 14px; color: var(--text-main); text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${escapeHTML(t.name)}</strong>
+                                ${isCurrent ? `<span style="font-size: 10px; font-weight: 700; background: #22c55e; color: #ffffff; padding: 2px 6px; border-radius: 10px;">ACTIVE</span>` : ''}
+                            </div>
+                            <div style="display: flex; gap: 12px; font-size: 11px; color: #64748b;">
+                                <span><i class="fa fa-cube" style="color: #94a3b8;"></i> ${escapeHTML(t.technical_name || 'custom_module')}</span>
+                                <span><i class="fa fa-calendar" style="color: #94a3b8;"></i> ${escapeHTML((t.write_date || '').slice(0, 16))}</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 6px; margin-left: 12px;">
+                            <button class="btn btn-primary" style="font-size: 12px; padding: 5px 12px; white-space: nowrap;" onclick="loadTemplateFromBackend(${t.id}); closeModal('saved-templates-modal');">
+                                <i class="fa fa-pencil"></i> Open in Builder
+                            </button>
+                            <button class="btn btn-outline" style="font-size: 12px; padding: 5px 8px; color: #ef4444; border-color: #fca5a5;" title="Delete Template" onclick="deleteTemplateFromBackend(${t.id}, '${escapeHTML(t.name)}')">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error('Failed to list templates:', err);
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #ef4444;">
+                        <i class="fa fa-exclamation-triangle"></i> Failed to load templates from Odoo.
+                    </div>
+                `;
+            }
+        }
+
+        async function deleteTemplateFromBackend(id, name) {
+            if (!confirm(`Are you sure you want to delete template "${name}" (ID #${id})?`)) {
+                return;
+            }
+            try {
+                const payload = {
+                    jsonrpc: "2.0",
+                    method: "call",
+                    params: { template_id: parseInt(id) }
+                };
+                await fetch('/index_file_maker/delete_template', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                showToast(`Template #${id} deleted.`);
+                if (currentTemplateId && parseInt(currentTemplateId) === parseInt(id)) {
+                    currentTemplateId = null;
+                    updateTemplateHeaderDisplay();
+                }
+                openSavedTemplatesModal();
+            } catch (e) {
+                showToast('Error deleting template.');
+            }
         }
