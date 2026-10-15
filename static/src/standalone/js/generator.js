@@ -255,6 +255,112 @@ function renderWidgetHtml(widget) {
 </section>`;
         }
 
+        case 'mobile_showcase': {
+            const bg = d.bgColor || '#ffffff';
+            const globalBrand = (window.pageSettings && window.pageSettings.brandColor) || '#714B67';
+            const globalAccent = (window.pageSettings && window.pageSettings.accentColor) || '#00A09D';
+
+            const accent = d.accentColor || globalAccent || '#007bff';
+            const badgeBg = d.badgeBgColor || accent || '#007bff';
+            const badgeText = d.badgeTextColor || '#ffffff';
+            const badgeBorder = d.badgeBorderColor || badgeBg;
+            const titleCol = d.titleColor || '#1e293b';
+            const descCol = d.descColor || '#64748b';
+            const pointBg = d.pointBgColor || '#f0f7ff';
+            const pointBorder = d.pointBorderColor || '#d0e4ff';
+            const pointText = d.pointTextColor || '#1e293b';
+            const frameCol = d.frameColor || '#1e293b';
+            const isImageLeft = d.layoutPosition !== 'image_right';
+            const isDualImage = String(d.imageCount) === '2';
+
+            const points = d.points || d.bulletItems || [];
+            const pointsHTML = points.map(pt => `
+                <div class="d-flex align-items-center p-3 mb-2" style="background-color: ${pointBg}; border: 1px solid ${pointBorder}; border-radius: 10px;">
+                    <span class="me-3" style="color: ${accent} !important; font-size: 20px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <i class="oi" data-icon="check_circle"></i>
+                    </span>
+                    <span style="font-size: 15px; font-weight: 500; color: ${pointText} !important; line-height: 1.4;">${escapeHTML(pt)}</span>
+                </div>
+            `).join('');
+
+            const renderPhoneScreen = (imgUrl) => {
+                if (imgUrl) {
+                    return `<img src="${imgUrl}" alt="Mobile Screen" style="width: 100%; height: auto; display: block; border-radius: 24px;">`;
+                }
+                return `
+                <div style="width: 100%; min-height: 380px; background-color: #0f172a; border-radius: 24px; padding: 20px 14px; color: #94a3b8; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box;">
+                    <div class="d-flex justify-content-between" style="font-size: 11px; color: #94a3b8;">
+                        <span>9:41</span>
+                        <span><i class="fa fa-wifi me-1"></i><i class="fa fa-battery-full"></i></span>
+                    </div>
+                    <div class="text-center py-4">
+                        <i class="fa fa-mobile" style="font-size: 44px; color: ${accent}; margin-bottom: 10px; display: block;"></i>
+                        <span style="font-size: 13px; font-weight: 600; color: #ffffff; display: block; margin-bottom: 4px;">App Screen Preview</span>
+                        <span style="font-size: 11px; color: #64748b; display: block;">Upload mobile screenshot</span>
+                    </div>
+                    <div style="height: 12px;"></div>
+                </div>`;
+            };
+
+            const renderPhoneFrame = (imgUrl, maxW = '230px') => `
+                <div style="background-color: ${frameCol}; border-radius: 34px; padding: 8px; box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.25); max-width: ${maxW}; width: 100%; margin: 0 auto; box-sizing: border-box;">
+                    <div style="width: 44px; height: 5px; background-color: #334155; border-radius: 3px; margin: 3px auto 7px auto;"></div>
+                    <div style="background-color: #0f172a; border-radius: 24px; overflow: hidden;">
+                        ${renderPhoneScreen(imgUrl)}
+                    </div>
+                    <div style="width: 60px; height: 4px; background-color: #475569; border-radius: 2px; margin: 8px auto 3px auto;"></div>
+                </div>
+            `;
+
+            let phonesHTML = '';
+            if (isDualImage) {
+                phonesHTML = `
+                <div class="row justify-content-center g-3 align-items-center">
+                    <div class="col-6 text-center">
+                        ${renderPhoneFrame(d.image1Url, '230px')}
+                        ${d.image1Caption ? `<div style="font-size: 12px; color: #64748b; margin-top: 8px; font-weight: 500;">${escapeHTML(d.image1Caption)}</div>` : ''}
+                    </div>
+                    <div class="col-6 text-center">
+                        ${renderPhoneFrame(d.image2Url, '230px')}
+                        ${d.image2Caption ? `<div style="font-size: 12px; color: #64748b; margin-top: 8px; font-weight: 500;">${escapeHTML(d.image2Caption)}</div>` : ''}
+                    </div>
+                </div>`;
+            } else {
+                phonesHTML = `
+                <div class="text-center">
+                    ${renderPhoneFrame(d.image1Url, '270px')}
+                    ${d.image1Caption ? `<div style="font-size: 12px; color: #64748b; margin-top: 8px; font-weight: 500;">${escapeHTML(d.image1Caption)}</div>` : ''}
+                </div>`;
+            }
+
+            const contentColHTML = `
+            <div class="col-12 col-lg-6 d-flex flex-column justify-content-center">
+                ${(d.badgeNumber || d.badgeText) ? `
+                <div class="d-flex align-items-center mb-3">
+                    ${d.badgeNumber ? `<span style="background-color: ${badgeBg}; color: ${badgeText} !important; border: 1px solid ${badgeBorder}; padding: 4px 14px; border-radius: 10px; font-weight: 700; font-size: 18px; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 38px; margin-right: 12px; line-height: 1; flex-shrink: 0;">${escapeHTML(d.badgeNumber)}</span>` : ''}
+                    ${d.badgeText ? `<span style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 1.2;">${escapeHTML(d.badgeText)}</span>` : ''}
+                </div>` : ''}
+                <h2 style="font-size: 26px; font-weight: 600; color: ${titleCol} !important; margin: 0 0 12px 0; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
+                ${d.desc ? `<p style="font-size: 15px; font-weight: 400; color: ${descCol} !important; line-height: 1.6; margin-bottom: 22px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${escapeHTML(d.desc)}</p>` : ''}
+                <div>${pointsHTML}</div>
+            </div>`;
+
+            const imageColHTML = `
+            <div class="col-12 col-lg-6 mb-4 mb-lg-0 d-flex align-items-center justify-content-center">
+                <div style="width: 100%;">
+                    ${phonesHTML}
+                </div>
+            </div>`;
+
+            return `<section class="py-5" style="background-color: ${bg};">
+    <div class="container py-3">
+        <div class="row align-items-center">
+            ${isImageLeft ? `${imageColHTML}\n            ${contentColHTML}` : `${contentColHTML}\n            ${imageColHTML}`}
+        </div>
+    </div>
+</section>`;
+        }
+
         case 'feature_split_right': {
             const bg = d.bgColor || '#f8f9fa';
             const accent = d.accentColor || globalBrand || '#714B67';

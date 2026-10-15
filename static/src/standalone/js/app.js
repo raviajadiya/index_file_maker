@@ -461,12 +461,12 @@ if (document.readyState === 'loading') {
             const form = document.createElement('div');
 
             // Title
-            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter') {
+            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase') {
                 form.appendChild(createInputField('Title', d.title, (val) => { d.title = val; updateCanvasLive(); }));
             }
 
             // Subtitle
-            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter') {
+            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase') {
                 form.appendChild(createTextareaField('Subtitle / Tagline', d.subtitle, (val) => { d.subtitle = val; updateCanvasLive(); }));
             }
 
@@ -517,7 +517,7 @@ if (document.readyState === 'loading') {
             }
 
             // Single Badge Text (for minimal_header)
-            if (d.badge !== undefined) {
+            if (d.badge !== undefined && widget.type !== 'mobile_showcase') {
                 form.appendChild(createInputField('Badge Text', d.badge, (val) => { d.badge = val; updateCanvasLive(); }));
             }
 
@@ -626,9 +626,44 @@ if (document.readyState === 'loading') {
 
             // Badge / Chip Colors & Appearance (Dynamic Color Controls & Presets)
             if (d.badges !== undefined || d.badgeBgColor !== undefined) {
-                if (d.badgeBgColor === undefined) d.badgeBgColor = '#ffffff';
-                if (d.badgeTextColor === undefined) d.badgeTextColor = '#714B67';
-                if (d.badgeBorderColor === undefined) d.badgeBorderColor = '#e2e8f0';
+                if (d.badgeBgColor === undefined) d.badgeBgColor = (widget.type === 'mobile_showcase' ? '#007bff' : '#ffffff');
+                if (d.badgeTextColor === undefined) d.badgeTextColor = (widget.type === 'mobile_showcase' ? '#ffffff' : '#714B67');
+                if (d.badgeBorderColor === undefined) d.badgeBorderColor = (widget.type === 'mobile_showcase' ? '#007bff' : '#e2e8f0');
+
+                // Determine active preset
+                let activePreset = d.badgePreset || '';
+                const mobilePresets = [
+                    { id: 'blue', label: '🔵 Vibrant Blue', bg: '#007bff', text: '#ffffff', border: '#007bff', accent: '#007bff', ptBg: '#f0f7ff', ptBorder: '#d0e4ff' },
+                    { id: 'purple', label: '🟣 Brand Purple', bg: '#714B67', text: '#ffffff', border: '#714B67', accent: '#714B67', ptBg: '#faf5ff', ptBorder: '#e9d5ff' },
+                    { id: 'teal', label: '🟢 Teal Accent', bg: '#00A09D', text: '#ffffff', border: '#00A09D', accent: '#00A09D', ptBg: '#f0fdfa', ptBorder: '#ccfbf1' },
+                    { id: 'dark', label: '⬛ Sleek Dark', bg: '#1e293b', text: '#ffffff', border: '#1e293b', accent: '#1e293b', ptBg: '#f8fafc', ptBorder: '#cbd5e1' },
+                    { id: 'amber', label: '🟠 Amber Gold', bg: '#f59e0b', text: '#ffffff', border: '#d97706', accent: '#d97706', ptBg: '#fffbeb', ptBorder: '#fde68a' },
+                    { id: 'white', label: '⚪ Clean White', bg: '#ffffff', text: '#007bff', border: '#007bff', accent: '#007bff', ptBg: '#f8fafc', ptBorder: '#e2e8f0' }
+                ];
+                const standardPresets = [
+                    { id: 'white', label: '⚪ Clean White', bg: '#ffffff', text: d.bgColor || '#714B67', border: '#cbd5e1' },
+                    { id: 'purple', label: '🟣 Soft Purple', bg: '#f5efff', text: '#714B67', border: '#d8b4fe' },
+                    { id: 'mint', label: '🟢 Teal Accent', bg: '#e6f6f6', text: '#008480', border: '#99f6e4' },
+                    { id: 'glass', label: '💎 Glass Frost', bg: 'rgba(255, 255, 255, 0.20)', text: '#ffffff', border: 'rgba(255, 255, 255, 0.40)' },
+                    { id: 'dark', label: '⬛ Dark Pill', bg: '#1e1b4b', text: '#ffffff', border: '#4338ca' }
+                ];
+
+                const currentPresets = (widget.type === 'mobile_showcase') ? mobilePresets : standardPresets;
+
+                if (!activePreset) {
+                    const match = currentPresets.find(p => p.bg.toLowerCase() === (d.badgeBgColor || '').toLowerCase());
+                    if (match) activePreset = match.id;
+                }
+
+                const presetsHTML = currentPresets.map(p => {
+                    const isSel = (activePreset === p.id);
+                    const selStyles = isSel 
+                        ? 'border: 2px solid var(--primary, #007bff) !important; background: #eff6ff !important; box-shadow: 0 0 0 2px rgba(0,123,255,0.25) !important; font-weight: 700 !important; color: #1d4ed8 !important;' 
+                        : 'border: 1px solid #cbd5e1; background: #ffffff; color: var(--text-main); font-weight: 500;';
+                    return `<button type="button" class="btn btn-outline" data-preset="${p.id}" style="font-size: 10px; padding: 4px 8px; cursor: pointer; transition: all 0.15s ease; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; ${selStyles}">
+                        ${isSel ? '<i class="fa fa-check" style="color: #007bff; font-weight: bold;"></i>' : ''}${p.label}
+                    </button>`;
+                }).join('');
 
                 const badgeColorCard = document.createElement('div');
                 badgeColorCard.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
@@ -639,18 +674,30 @@ if (document.readyState === 'loading') {
                         </span>
                         <span style="font-size: 10px; color: var(--text-muted); font-weight: normal;">Live Preview</span>
                     </div>
+
+                    ${widget.type === 'mobile_showcase' ? `
+                    <div style="text-align: center; margin-bottom: 12px; padding: 12px 10px; background: ${d.bgColor || '#ffffff'}; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        <div style="display: inline-flex; align-items: center; justify-content: center; gap: 12px;">
+                            <span id="badge-chip-live-preview" style="background-color: ${d.badgeBgColor}; color: ${d.badgeTextColor} !important; border: 1px solid ${d.badgeBorderColor || d.badgeBgColor}; padding: 4px 14px; border-radius: 10px; font-size: 18px; font-weight: 700; min-width: 44px; height: 38px; display: inline-flex; align-items: center; justify-content: center; line-height: 1; flex-shrink: 0;">
+                                ${escapeHTML(d.badgeNumber || '03')}
+                            </span>
+                            <span id="badge-chip-category-preview" style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 1.2;">
+                                ${escapeHTML(d.badgeText || 'Conversation')}
+                            </span>
+                        </div>
+                    </div>` : `
                     <div style="text-align: center; margin-bottom: 12px; padding: 10px; background: ${d.bgColor || '#714B67'}; border-radius: 6px;">
                         <span id="badge-chip-live-preview" style="background-color: ${d.badgeBgColor}; color: ${d.badgeTextColor}; border: 1px solid ${d.badgeBorderColor}; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-block;">
                             Odoo 20 &bull; Enterprise
                         </span>
+                    </div>`}
+
+                    <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center;">
+                        <span>Quick Presets:</span>
+                        ${activePreset && activePreset !== 'custom' ? `<span style="font-size: 10px; color: var(--primary); font-weight: 700;"><i class="fa fa-check-circle"></i> Active Preset</span>` : ''}
                     </div>
-                    <div style="font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">Quick Presets:</div>
                     <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px;" id="badge-presets-container">
-                        <button type="button" class="btn btn-outline" data-preset="white" style="font-size: 10px; padding: 3px 8px; background: #ffffff; color: #714B67; border: 1px solid #cbd5e1; cursor: pointer;">⚪ Clean White</button>
-                        <button type="button" class="btn btn-outline" data-preset="purple" style="font-size: 10px; padding: 3px 8px; background: #f5efff; color: #714B67; border: 1px solid #d8b4fe; cursor: pointer;">🟣 Soft Purple</button>
-                        <button type="button" class="btn btn-outline" data-preset="mint" style="font-size: 10px; padding: 3px 8px; background: #e6f6f6; color: #008480; border: 1px solid #99f6e4; cursor: pointer;">🟢 Teal Accent</button>
-                        <button type="button" class="btn btn-outline" data-preset="glass" style="font-size: 10px; padding: 3px 8px; background: rgba(255,255,255,0.20); color: #ffffff; border: 1px solid rgba(255,255,255,0.40); cursor: pointer;">💎 Glass Frost</button>
-                        <button type="button" class="btn btn-outline" data-preset="dark" style="font-size: 10px; padding: 3px 8px; background: #1e1b4b; color: #ffffff; border: 1px solid #4338ca; cursor: pointer;">⬛ Dark Pill</button>
+                        ${presetsHTML}
                     </div>
                     <div id="badge-color-fields-wrapper"></div>
                 `;
@@ -660,50 +707,50 @@ if (document.readyState === 'loading') {
                     if (previewSpan) {
                         previewSpan.style.backgroundColor = d.badgeBgColor;
                         previewSpan.style.color = d.badgeTextColor;
-                        previewSpan.style.borderColor = d.badgeBorderColor;
+                        previewSpan.style.borderColor = d.badgeBorderColor || d.badgeBgColor;
+                        if (widget.type === 'mobile_showcase') {
+                            previewSpan.innerText = d.badgeNumber || '03';
+                            const catSpan = badgeColorCard.querySelector('#badge-chip-category-preview');
+                            if (catSpan) catSpan.innerText = d.badgeText || 'Conversation';
+                        }
                     }
                 };
 
                 const fieldsWrapper = badgeColorCard.querySelector('#badge-color-fields-wrapper');
-                fieldsWrapper.appendChild(createColorField('Badge Background Color', d.badgeBgColor, (val) => {
+                fieldsWrapper.appendChild(createColorField(widget.type === 'mobile_showcase' ? 'Badge Number Background' : 'Badge Background Color', d.badgeBgColor, (val) => {
                     d.badgeBgColor = val;
+                    const match = currentPresets.find(p => p.bg.toLowerCase() === val.toLowerCase());
+                    d.badgePreset = match ? match.id : 'custom';
                     updateBadgePreview();
                     updateCanvasLive();
                 }));
-                fieldsWrapper.appendChild(createColorField('Badge Text Color', d.badgeTextColor, (val) => {
+                fieldsWrapper.appendChild(createColorField(widget.type === 'mobile_showcase' ? 'Badge Number Text Color' : 'Badge Text Color', d.badgeTextColor, (val) => {
                     d.badgeTextColor = val;
+                    d.badgePreset = 'custom';
                     updateBadgePreview();
                     updateCanvasLive();
                 }));
-                fieldsWrapper.appendChild(createColorField('Badge Border Color', d.badgeBorderColor, (val) => {
+                fieldsWrapper.appendChild(createColorField(widget.type === 'mobile_showcase' ? 'Badge Border Color' : 'Badge Border Color', d.badgeBorderColor, (val) => {
                     d.badgeBorderColor = val;
+                    d.badgePreset = 'custom';
                     updateBadgePreview();
                     updateCanvasLive();
                 }));
 
                 badgeColorCard.querySelectorAll('#badge-presets-container button').forEach(btn => {
                     btn.addEventListener('click', () => {
-                        const pr = btn.getAttribute('data-preset');
-                        if (pr === 'white') {
-                            d.badgeBgColor = '#ffffff';
-                            d.badgeTextColor = d.bgColor || '#714B67';
-                            d.badgeBorderColor = '#e2e8f0';
-                        } else if (pr === 'purple') {
-                            d.badgeBgColor = '#f5efff';
-                            d.badgeTextColor = '#714B67';
-                            d.badgeBorderColor = '#d8b4fe';
-                        } else if (pr === 'mint') {
-                            d.badgeBgColor = '#e6f6f6';
-                            d.badgeTextColor = '#008480';
-                            d.badgeBorderColor = '#99f6e4';
-                        } else if (pr === 'glass') {
-                            d.badgeBgColor = 'rgba(255, 255, 255, 0.20)';
-                            d.badgeTextColor = '#ffffff';
-                            d.badgeBorderColor = 'rgba(255, 255, 255, 0.40)';
-                        } else if (pr === 'dark') {
-                            d.badgeBgColor = '#1e1b4b';
-                            d.badgeTextColor = '#ffffff';
-                            d.badgeBorderColor = '#4338ca';
+                        const prId = btn.getAttribute('data-preset');
+                        d.badgePreset = prId;
+                        const found = currentPresets.find(p => p.id === prId);
+                        if (found) {
+                            d.badgeBgColor = found.bg;
+                            d.badgeTextColor = found.text;
+                            d.badgeBorderColor = found.border;
+                            if (widget.type === 'mobile_showcase') {
+                                if (found.accent) d.accentColor = found.accent;
+                                if (found.ptBg) d.pointBgColor = found.ptBg;
+                                if (found.ptBorder) d.pointBorderColor = found.ptBorder;
+                            }
                         }
                         renderPropertyInspector();
                         updateCanvasLive();
@@ -725,7 +772,7 @@ if (document.readyState === 'loading') {
             }
 
             // Description
-            if (d.desc !== undefined) {
+            if (d.desc !== undefined && widget.type !== 'mobile_showcase') {
                 form.appendChild(createTextareaField('Description', d.desc, (val) => { d.desc = val; updateCanvasLive(); }));
             }
 
@@ -787,8 +834,8 @@ if (document.readyState === 'loading') {
                 form.appendChild(imgGroup);
             }
 
-            // Colors (for widgets other than highlights_grid and stats_counter)
-            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter') {
+            // Colors (for widgets other than highlights_grid, stats_counter, and mobile_showcase)
+            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase') {
                 if (d.bgColor !== undefined) {
                     form.appendChild(createColorField('Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
                 }
@@ -1504,6 +1551,303 @@ if (document.readyState === 'loading') {
                 form.appendChild(grp);
             }
 
+            // Dedicated Mobile Showcase Full Custom Inspector
+            if (widget.type === 'mobile_showcase') {
+                if (d.badgeNumber === undefined) d.badgeNumber = '03';
+                if (d.badgeText === undefined) d.badgeText = 'Conversation';
+                if (d.title === undefined) d.title = 'Real-Time Direct Conversation';
+                if (d.desc === undefined) d.desc = 'Enjoy smooth, real-time messaging with instant message delivery, attachment previews, and one-tap voice/video calling buttons.';
+                if (d.layoutPosition === undefined) d.layoutPosition = 'image_left';
+                if (d.imageCount === undefined) d.imageCount = '2';
+                if (d.image1Url === undefined) d.image1Url = '';
+                if (d.image2Url === undefined) d.image2Url = '';
+                if (d.image1Caption === undefined) d.image1Caption = '';
+                if (d.image2Caption === undefined) d.image2Caption = '';
+                if (!Array.isArray(d.points)) d.points = [
+                    'Instant text messaging and message history loading',
+                    'Media, image, and document attachment support',
+                    'Direct header buttons for audio and video calls'
+                ];
+                if (d.bgColor === undefined) d.bgColor = '#ffffff';
+                if (d.accentColor === undefined) d.accentColor = '#007bff';
+                if (d.badgeBgColor === undefined) d.badgeBgColor = '#007bff';
+                if (d.badgeTextColor === undefined) d.badgeTextColor = '#ffffff';
+                if (d.titleColor === undefined) d.titleColor = '#1e293b';
+                if (d.descColor === undefined) d.descColor = '#64748b';
+                if (d.pointBgColor === undefined) d.pointBgColor = '#f0f7ff';
+                if (d.pointBorderColor === undefined) d.pointBorderColor = '#d0e4ff';
+                if (d.pointTextColor === undefined) d.pointTextColor = '#1e293b';
+                if (d.frameColor === undefined) d.frameColor = '#1e293b';
+
+                // 1. Header & Step Count Group
+                const badgeGroup = document.createElement('div');
+                badgeGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                badgeGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-tag" style="color: var(--primary);"></i> Count Badge &amp; Category Tag Text
+                    </div>
+                `;
+                badgeGroup.appendChild(createInputField('Count Number (e.g. 01, 02, 03)', d.badgeNumber, (val) => { 
+                    d.badgeNumber = val; 
+                    const prev = document.getElementById('badge-chip-live-preview');
+                    if (prev) prev.innerText = val || '01';
+                    updateCanvasLive(); 
+                }));
+                badgeGroup.appendChild(createInputField('Category / Tag Text (e.g. Conversation)', d.badgeText, (val) => { 
+                    d.badgeText = val; 
+                    const catPrev = document.getElementById('badge-chip-category-preview');
+                    if (catPrev) catPrev.innerText = val || '';
+                    updateCanvasLive(); 
+                }));
+                form.appendChild(badgeGroup);
+
+                // 2. Title & Short Description Group
+                const titleGroup = document.createElement('div');
+                titleGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                titleGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-header" style="color: var(--primary);"></i> Section Title &amp; Description
+                    </div>
+                `;
+                titleGroup.appendChild(createInputField('Heading Title', d.title, (val) => { d.title = val; updateCanvasLive(); }));
+                titleGroup.appendChild(createColorField('Title Color', d.titleColor, (val) => { d.titleColor = val; updateCanvasLive(); }));
+                titleGroup.appendChild(createTextareaField('Short Description (Max 2 lines)', d.desc, (val) => { d.desc = val; updateCanvasLive(); }));
+                titleGroup.appendChild(createColorField('Description Color', d.descColor, (val) => { d.descColor = val; updateCanvasLive(); }));
+                titleGroup.appendChild(createColorField('Section Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
+                form.appendChild(titleGroup);
+
+                // 3. Layout & Mobile Frame Position Group
+                const layoutGroup = document.createElement('div');
+                layoutGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                layoutGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-columns" style="color: var(--primary);"></i> Layout &amp; Phone Display
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Position / Alignment</label>
+                        <select class="form-input" id="ms-layout-select" style="font-size: 12px; padding: 6px 10px;">
+                            <option value="image_left" ${d.layoutPosition === 'image_left' ? 'selected' : ''}>Mobile Left, Points Right (Default)</option>
+                            <option value="image_right" ${d.layoutPosition === 'image_right' ? 'selected' : ''}>Points Left, Mobile Right</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Number of Mobile Screens</label>
+                        <select class="form-input" id="ms-count-select" style="font-size: 12px; padding: 6px 10px;">
+                            <option value="2" ${String(d.imageCount) === '2' ? 'selected' : ''}>Dual Phones (2 Screenshots Side-by-Side)</option>
+                            <option value="1" ${String(d.imageCount) === '1' ? 'selected' : ''}>Single Phone (1 Centered Screenshot)</option>
+                        </select>
+                    </div>
+                `;
+                layoutGroup.querySelector('#ms-layout-select').addEventListener('change', (e) => {
+                    d.layoutPosition = e.target.value;
+                    updateCanvasLive();
+                });
+                layoutGroup.querySelector('#ms-count-select').addEventListener('change', (e) => {
+                    d.imageCount = e.target.value;
+                    updateCanvasLive();
+                    renderPropertyInspector();
+                });
+                layoutGroup.appendChild(createColorField('Phone Frame Bezel Color', d.frameColor, (val) => { d.frameColor = val; updateCanvasLive(); }));
+                form.appendChild(layoutGroup);
+
+                // 4. Mobile Images Manager
+                const imagesGroup = document.createElement('div');
+                imagesGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                imagesGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-mobile" style="color: var(--primary); font-size: 16px;"></i> Mobile Screenshots (${String(d.imageCount) === '2' ? '2 Phones' : '1 Phone'})
+                    </div>
+                    
+                    <!-- Phone 1 -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; margin-bottom: 10px;">
+                        <label style="font-size: 11px; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Phone 1 Screenshot ${String(d.imageCount) === '2' ? '(Left Phone)' : ''}</label>
+                        <input type="text" class="form-input mb-1" id="ms-img1-input" placeholder="Image URL / Path..." value="${escapeHTML(d.image1Url)}" style="font-size: 12px; padding: 5px 8px;">
+                        <div style="display: flex; gap: 6px; margin-top: 6px; margin-bottom: 6px;">
+                            <label class="btn btn-outline" style="font-size: 10px; padding: 4px 8px; cursor: pointer; color: var(--primary); border-color: var(--primary);">
+                                <i class="fa fa-upload"></i> Upload Image
+                                <input type="file" accept="image/*" id="ms-file1-uploader" style="display: none;">
+                            </label>
+                            ${d.image1Url ? `<button type="button" class="btn btn-outline" id="btn-clear-ms-img1" style="font-size: 10px; padding: 4px 8px; color: #ef4444; border-color: #fca5a5;">Remove</button>` : ''}
+                        </div>
+                        <input type="text" class="form-input" id="ms-cap1-input" placeholder="Optional caption (e.g. Light Theme)" value="${escapeHTML(d.image1Caption)}" style="font-size: 11px; padding: 4px 8px;">
+                    </div>
+
+                    <!-- Phone 2 (if dual) -->
+                    ${String(d.imageCount) === '2' ? `
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                        <label style="font-size: 11px; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Phone 2 Screenshot (Right Phone)</label>
+                        <input type="text" class="form-input mb-1" id="ms-img2-input" placeholder="Image URL / Path..." value="${escapeHTML(d.image2Url)}" style="font-size: 12px; padding: 5px 8px;">
+                        <div style="display: flex; gap: 6px; margin-top: 6px; margin-bottom: 6px;">
+                            <label class="btn btn-outline" style="font-size: 10px; padding: 4px 8px; cursor: pointer; color: var(--primary); border-color: var(--primary);">
+                                <i class="fa fa-upload"></i> Upload Image
+                                <input type="file" accept="image/*" id="ms-file2-uploader" style="display: none;">
+                            </label>
+                            ${d.image2Url ? `<button type="button" class="btn btn-outline" id="btn-clear-ms-img2" style="font-size: 10px; padding: 4px 8px; color: #ef4444; border-color: #fca5a5;">Remove</button>` : ''}
+                        </div>
+                        <input type="text" class="form-input" id="ms-cap2-input" placeholder="Optional caption (e.g. Dark Theme)" value="${escapeHTML(d.image2Caption)}" style="font-size: 11px; padding: 4px 8px;">
+                    </div>` : ''}
+                `;
+
+                const img1Inp = imagesGroup.querySelector('#ms-img1-input');
+                img1Inp.addEventListener('input', (e) => { d.image1Url = e.target.value; updateCanvasLive(); });
+                const cap1Inp = imagesGroup.querySelector('#ms-cap1-input');
+                cap1Inp.addEventListener('input', (e) => { d.image1Caption = e.target.value; updateCanvasLive(); });
+
+                const file1 = imagesGroup.querySelector('#ms-file1-uploader');
+                if (file1) {
+                    file1.addEventListener('change', (e) => {
+                        const f = e.target.files[0];
+                        if (f) {
+                            const reader = new FileReader();
+                            reader.onload = (evt) => {
+                                d.image1Url = evt.target.result;
+                                img1Inp.value = '(Embedded Image)';
+                                updateCanvasLive();
+                                renderPropertyInspector();
+                                showToast('Phone 1 Image uploaded!');
+                            };
+                            reader.readAsDataURL(f);
+                        }
+                    });
+                }
+                const clear1 = imagesGroup.querySelector('#btn-clear-ms-img1');
+                if (clear1) {
+                    clear1.addEventListener('click', () => {
+                        d.image1Url = '';
+                        updateCanvasLive();
+                        renderPropertyInspector();
+                    });
+                }
+
+                if (String(d.imageCount) === '2') {
+                    const img2Inp = imagesGroup.querySelector('#ms-img2-input');
+                    img2Inp.addEventListener('input', (e) => { d.image2Url = e.target.value; updateCanvasLive(); });
+                    const cap2Inp = imagesGroup.querySelector('#ms-cap2-input');
+                    cap2Inp.addEventListener('input', (e) => { d.image2Caption = e.target.value; updateCanvasLive(); });
+
+                    const file2 = imagesGroup.querySelector('#ms-file2-uploader');
+                    if (file2) {
+                        file2.addEventListener('change', (e) => {
+                            const f = e.target.files[0];
+                            if (f) {
+                                const reader = new FileReader();
+                                reader.onload = (evt) => {
+                                    d.image2Url = evt.target.result;
+                                    img2Inp.value = '(Embedded Image)';
+                                    updateCanvasLive();
+                                    renderPropertyInspector();
+                                    showToast('Phone 2 Image uploaded!');
+                                };
+                                reader.readAsDataURL(f);
+                            }
+                        });
+                    }
+                    const clear2 = imagesGroup.querySelector('#btn-clear-ms-img2');
+                    if (clear2) {
+                        clear2.addEventListener('click', () => {
+                            d.image2Url = '';
+                            updateCanvasLive();
+                            renderPropertyInspector();
+                        });
+                    }
+                }
+                form.appendChild(imagesGroup);
+
+                // 5. Feature Points Manager
+                const ptsGroup = document.createElement('div');
+                ptsGroup.className = 'form-group';
+                ptsGroup.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label class="form-label" style="margin: 0; font-weight: 700; font-size: 13px; color: var(--text-main);">
+                            <i class="fa fa-check-circle" style="color: var(--primary); margin-right: 4px;"></i> Feature Points (${d.points.length})
+                        </label>
+                        <button type="button" class="btn btn-outline" id="btn-add-ms-point" style="font-size: 11px; padding: 4px 10px; color: var(--primary); border-color: var(--primary); cursor: pointer; font-weight: 600;">
+                            <i class="fa fa-plus"></i> Add Point
+                        </button>
+                    </div>
+                    <div class="items-list" id="ms-points-list" style="display: flex; flex-direction: column; gap: 8px;"></div>
+                    <button type="button" class="btn btn-outline" id="btn-add-ms-point-bottom" style="width: 100%; margin-top: 10px; font-size: 12px; padding: 7px; color: var(--primary); border-color: var(--primary); border-style: dashed; font-weight: 600; cursor: pointer;">
+                        <i class="fa fa-plus-circle"></i> + Add Another Point
+                    </button>
+                `;
+
+                const ptsList = ptsGroup.querySelector('#ms-points-list');
+                d.points.forEach((pt, idx) => {
+                    const ptBox = document.createElement('div');
+                    ptBox.className = 'item-card';
+                    ptBox.style.cssText = 'background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; position: relative;';
+                    ptBox.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 10.5px; font-weight: 700; color: var(--primary);">Point #${idx + 1}</span>
+                            <div style="display: flex; gap: 4px;">
+                                <button type="button" class="toolbar-btn btn-pt-up" title="Move Up" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === 0 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-up"></i></button>
+                                <button type="button" class="toolbar-btn btn-pt-down" title="Move Down" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === d.points.length - 1 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-down"></i></button>
+                                <button type="button" class="toolbar-btn btn-pt-del" title="Delete Point" style="padding: 2px 6px; font-size: 10px; color: #ef4444; cursor: pointer;"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <input type="text" class="form-input pt-text-input" value="${escapeHTML(pt)}" placeholder="Feature Point description..." style="font-size: 12px; padding: 6px 8px;">
+                    `;
+
+                    ptBox.querySelector('.pt-text-input').addEventListener('input', (e) => {
+                        d.points[idx] = e.target.value;
+                        updateCanvasLive();
+                    });
+
+                    const upBtn = ptBox.querySelector('.btn-pt-up');
+                    if (upBtn && idx > 0) {
+                        upBtn.addEventListener('click', () => {
+                            const temp = d.points[idx];
+                            d.points[idx] = d.points[idx - 1];
+                            d.points[idx - 1] = temp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+
+                    const downBtn = ptBox.querySelector('.btn-pt-down');
+                    if (downBtn && idx < d.points.length - 1) {
+                        downBtn.addEventListener('click', () => {
+                            const temp = d.points[idx];
+                            d.points[idx] = d.points[idx + 1];
+                            d.points[idx + 1] = temp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+
+                    ptBox.querySelector('.btn-pt-del').addEventListener('click', () => {
+                        d.points.splice(idx, 1);
+                        renderPropertyInspector();
+                        updateCanvasLive();
+                    });
+
+                    ptsList.appendChild(ptBox);
+                });
+
+                const addPtFn = () => {
+                    d.points.push('New interactive mobile feature capability');
+                    renderPropertyInspector();
+                    updateCanvasLive();
+                };
+                ptsGroup.querySelector('#btn-add-ms-point').addEventListener('click', addPtFn);
+                ptsGroup.querySelector('#btn-add-ms-point-bottom').addEventListener('click', addPtFn);
+                form.appendChild(ptsGroup);
+
+                // 6. Point Card & Checkmark Styling
+                const ptStyleGroup = document.createElement('div');
+                ptStyleGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                ptStyleGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-paint-brush" style="color: var(--primary);"></i> Point Card Styling
+                    </div>
+                `;
+                ptStyleGroup.appendChild(createColorField('Checkmark Icon Color', d.accentColor, (val) => { d.accentColor = val; updateCanvasLive(); }));
+                ptStyleGroup.appendChild(createColorField('Point Card Background', d.pointBgColor, (val) => { d.pointBgColor = val; updateCanvasLive(); }));
+                ptStyleGroup.appendChild(createColorField('Point Card Border Color', d.pointBorderColor, (val) => { d.pointBorderColor = val; updateCanvasLive(); }));
+                ptStyleGroup.appendChild(createColorField('Point Text Color', d.pointTextColor, (val) => { d.pointTextColor = val; updateCanvasLive(); }));
+                form.appendChild(ptStyleGroup);
+            }
+
             // Multi-item editors
             // 1. Bullets (feature split)
             if (d.bulletItems !== undefined) {
@@ -2056,7 +2400,7 @@ if (document.readyState === 'loading') {
                 activeWidgets = [
                     createWidgetInstance('hero_banner'),
                     createWidgetInstance('highlights_grid'),
-                    createWidgetInstance('feature_split_right'),
+                    createWidgetInstance('mobile_showcase'),
                     createWidgetInstance('feature_cards_3'),
                     createWidgetInstance('screenshot_showcase'),
                     createWidgetInstance('edition_matrix'),

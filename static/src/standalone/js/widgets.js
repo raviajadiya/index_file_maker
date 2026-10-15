@@ -114,44 +114,38 @@ const WIDGET_CATALOG = [
         category: 'Features & Benefits',
         widgets: [
             {
-                type: 'feature_split_right',
-                name: 'Showcase (Text Left, Image Right)',
-                desc: 'Detailed feature description with checkmarks and mockup',
-                icon: 'fa-columns',
+                type: 'mobile_showcase',
+                name: 'Mobile Showcase',
+                desc: 'Mobile mockup frame with step count badge, 1 or 2 phones, and feature point cards',
+                icon: 'fa-mobile',
                 defaultData: {
-                    badge: 'SMART RULE ENGINE',
-                    title: 'Flexible Multi-Tier Commission Structures',
-                    desc: 'Create highly adaptable commission schemes tailored to your exact business compensation models. Define commission rates based on turnover, gross margins, specific products, or timely invoice payments.',
-                    bulletItems: [
-                        'Tiered progressive commission rates based on target achievement',
-                        'Automatic commission calculations upon invoice validation or payment',
-                        'Manager approval workflows with audit logs and history',
-                        'Support for sales teams, individual agents, and external brokers'
+                    badgeNumber: '03',
+                    badgeText: 'Conversation',
+                    title: 'Real-Time Direct Conversation',
+                    desc: 'Enjoy smooth, real-time messaging with instant message delivery, attachment previews, and one-tap voice/video calling buttons.',
+                    layoutPosition: 'image_left',
+                    imageCount: '2',
+                    image1Url: '',
+                    image2Url: '',
+                    image1Caption: '',
+                    image2Caption: '',
+                    points: [
+                        'Instant text messaging and message history loading',
+                        'Media, image, and document attachment support',
+                        'Direct header buttons for audio and video calls'
                     ],
-                    imageUrl: '',
-                    imageCaption: 'Intuitive Commission Rule Builder',
-                    bgColor: '#f8fafc',
-                    accentColor: '#714B67',
-                }
-            },
-            {
-                type: 'feature_split_left',
-                name: 'Showcase (Image Left, Text Right)',
-                desc: 'Alternating feature row with mockup on the left',
-                icon: 'fa-align-left',
-                defaultData: {
-                    badge: 'REAL-TIME ANALYTICS',
-                    title: 'Executive Dashboards & Payout Statements',
-                    desc: 'Empower your sales reps with a transparent portal to track earnings in real-time, while giving managers deep analytics into compensation expenditures.',
-                    bulletItems: [
-                        'Interactive graphs with month-over-month comparisons',
-                        'Detailed payout ledger with invoice-level transparency',
-                        'Automatic scheduled email reports for management'
-                    ],
-                    imageUrl: '',
-                    imageCaption: 'Dashboard & Reports View',
                     bgColor: '#ffffff',
-                    accentColor: '#00A09D',
+                    accentColor: '#007bff',
+                    badgeBgColor: '#007bff',
+                    badgeTextColor: '#ffffff',
+                    badgeBorderColor: '#007bff',
+                    badgePreset: 'blue',
+                    titleColor: '#1e293b',
+                    descColor: '#64748b',
+                    pointBgColor: '#f0f7ff',
+                    pointBorderColor: '#d0e4ff',
+                    pointTextColor: '#1e293b',
+                    frameColor: '#1e293b'
                 }
             },
             {

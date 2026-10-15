@@ -275,44 +275,38 @@ export const WIDGET_CATALOG = [
         category: 'Features & Benefits',
         widgets: [
             {
-                type: 'feature_split_right',
-                name: 'Showcase (Text Left, Image Right)',
-                desc: 'Detailed feature description with checkmarks and mockup',
-                icon: 'fa-columns',
+                type: 'mobile_showcase',
+                name: 'Mobile Showcase',
+                desc: 'Mobile mockup frame with step count badge, 1 or 2 phones, and feature point cards',
+                icon: 'fa-mobile',
                 defaultData: {
-                    badge: 'ADVANCED CAPABILITY',
-                    title: 'Powerful Automated Operations',
-                    desc: 'Eliminate tedious manual repetitive tasks and gain complete visibility into every stage of your workflow.',
-                    bulletItems: [
-                        'Automatic calculation triggers on order confirmation',
-                        'Real-time validation against business rules',
-                        'Instant error notifications and suggested fixes',
-                        'Export summaries to PDF and Excel'
+                    badgeNumber: '03',
+                    badgeText: 'Conversation',
+                    title: 'Real-Time Direct Conversation',
+                    desc: 'Enjoy smooth, real-time messaging with instant message delivery, attachment previews, and one-tap voice/video calling buttons.',
+                    layoutPosition: 'image_left',
+                    imageCount: '2',
+                    image1Url: '',
+                    image2Url: '',
+                    image1Caption: '',
+                    image2Caption: '',
+                    points: [
+                        'Instant text messaging and message history loading',
+                        'Media, image, and document attachment support',
+                        'Direct header buttons for audio and video calls'
                     ],
-                    imageUrl: '',
-                    imageCaption: 'Feature Workflow Screenshot',
-                    bgColor: '#f8fafc',
-                    accentColor: '#714B67'
-                }
-            },
-            {
-                type: 'feature_split_left',
-                name: 'Showcase (Image Left, Text Right)',
-                desc: 'Alternating feature row with mockup on the left',
-                icon: 'fa-align-left',
-                defaultData: {
-                    badge: 'REAL-TIME ANALYTICS',
-                    title: 'Dynamic Reporting & Dashboards',
-                    desc: 'Track operational metrics, identify bottlenecks, and make data-driven decisions with built-in executive charts.',
-                    bulletItems: [
-                        'Visual KPI cards with monthly comparison',
-                        'Pivot and Graph views with custom group-by filters',
-                        'Automated scheduled report distribution via email'
-                    ],
-                    imageUrl: '',
-                    imageCaption: 'Dashboard & Reports View',
                     bgColor: '#ffffff',
-                    accentColor: '#00A09D'
+                    accentColor: '#007bff',
+                    badgeBgColor: '#007bff',
+                    badgeTextColor: '#ffffff',
+                    badgeBorderColor: '#007bff',
+                    badgePreset: 'blue',
+                    titleColor: '#1e293b',
+                    descColor: '#64748b',
+                    pointBgColor: '#f0f7ff',
+                    pointBorderColor: '#d0e4ff',
+                    pointTextColor: '#1e293b',
+                    frameColor: '#1e293b'
                 }
             },
             {
