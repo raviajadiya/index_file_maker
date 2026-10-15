@@ -2,14 +2,14 @@
 
 // State variables
 let currentTemplateId = null;
-let currentTemplateName = 'Advanced Sales Commission Pro';
+let currentTemplateName = 'My Custom Odoo App';
 let selectedWidgetId = null;
 let activeLeftTab = 'props';
 let currentViewport = 'desktop';
 
 let pageSettings = {
-    appName: 'Advanced Sales Commission Pro',
-    technicalName: 'sale_commission_pro',
+    appName: 'My Custom Odoo App',
+    technicalName: 'my_custom_app',
     odooVersion: '20.0',
     brandColor: '#714B67',
     accentColor: '#00A09D',
@@ -42,7 +42,7 @@ function initApp() {
         loadTemplateFromBackend(tId);
     } else {
         renderWidgetCatalog();
-        loadTemplate('full');
+        loadTemplate('blank', true);
         renderGlobalSettingsPanel();
         updateTemplateHeaderDisplay();
     }
@@ -256,7 +256,7 @@ if (document.readyState === 'loading') {
                     <div class="canvas-empty">
                         <div class="canvas-empty-icon"><i class="fa fa-mouse-pointer"></i></div>
                         <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">Your Canvas is Empty</h3>
-                        <p style="max-width: 420px; margin-bottom: 24px; font-size: 14px;">Drag widgets from the right library or choose a starter template to begin designing your Odoo App Store description.</p>
+                        <p style="max-width: 420px; margin-bottom: 24px; font-size: 14px;">Drag widgets from the left library or choose a starter template to begin designing your Odoo App Store description.</p>
                         <button class="btn btn-primary" onclick="openTemplatesModal()">
                             <i class="fa fa-folder-open-o"></i> Browse Starter Templates
                         </button>
@@ -1376,7 +1376,7 @@ if (document.readyState === 'loading') {
         }
 
         // LOAD STARTER TEMPLATES
-        function loadTemplate(name) {
+        function loadTemplate(name, silent = false) {
             closeModal('templates-modal');
             if (name === 'blank') {
                 activeWidgets = [];
@@ -1405,7 +1405,9 @@ if (document.readyState === 'loading') {
             }
             renderCanvas();
             renderPropertyInspector();
-            showToast(`Loaded template: ${name}`);
+            if (!silent) {
+                showToast(`Loaded template: ${name}`);
+            }
         }
 
         function createWidgetInstance(type) {
