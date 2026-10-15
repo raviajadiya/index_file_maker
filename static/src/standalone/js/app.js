@@ -792,6 +792,9 @@ if (document.readyState === 'loading') {
                 if (d.bgColor !== undefined) {
                     form.appendChild(createColorField('Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
                 }
+                if (d.titleColor !== undefined) {
+                    form.appendChild(createColorField('Title Color', d.titleColor, (val) => { d.titleColor = val; updateCanvasLive(); }));
+                }
                 if (d.textColor !== undefined) {
                     form.appendChild(createColorField('Text Color', d.textColor, (val) => { d.textColor = val; updateCanvasLive(); }));
                 }
@@ -801,6 +804,25 @@ if (document.readyState === 'loading') {
                 if (d.cardBgColor !== undefined) {
                     form.appendChild(createColorField('Card Background Color', d.cardBgColor, (val) => { d.cardBgColor = val; updateCanvasLive(); }));
                 }
+            }
+
+            // Columns selector for other_apps
+            if (widget.type === 'other_apps' && d.columns !== undefined) {
+                const colGroup = document.createElement('div');
+                colGroup.className = 'form-group';
+                colGroup.innerHTML = `
+                    <label class="form-label">Grid Columns</label>
+                    <select class="form-input" style="font-size: 12px; padding: 6px 10px;">
+                        <option value="2" ${String(d.columns) === '2' ? 'selected' : ''}>2 Columns (Wide)</option>
+                        <option value="3" ${String(d.columns) === '3' ? 'selected' : ''}>3 Columns (Standard - Like App Store)</option>
+                        <option value="4" ${String(d.columns) === '4' ? 'selected' : ''}>4 Columns (Compact)</option>
+                    </select>
+                `;
+                colGroup.querySelector('select').addEventListener('change', (e) => {
+                    d.columns = e.target.value;
+                    updateCanvasLive();
+                });
+                form.appendChild(colGroup);
             }
 
             // Dedicated Highlights Grid ("Why Choose This Solution?") Full Custom Inspector
@@ -1237,6 +1259,309 @@ if (document.readyState === 'loading') {
             if (d.whatsapp !== undefined) {
                 form.appendChild(createInputField('WhatsApp / Phone', d.whatsapp, (val) => { d.whatsapp = val; updateCanvasLive(); }));
             }
+            // 4. Other Apps List Manager (for other_apps)
+            if (Array.isArray(d.apps)) {
+                const grp = document.createElement('div');
+                grp.className = 'form-group';
+                grp.style.marginTop = '16px';
+                grp.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label class="form-label" style="margin: 0; font-weight: 700; font-size: 13px; color: var(--text-main);">
+                            <i class="fa fa-cubes" style="color: var(--primary); margin-right: 4px;"></i> Apps Showcase (${d.apps.length})
+                        </label>
+                        <button type="button" class="btn btn-outline" id="btn-add-app-card" style="font-size: 11px; padding: 4px 10px; color: var(--primary); border-color: var(--primary); cursor: pointer; font-weight: 600;">
+                            <i class="fa fa-plus"></i> Add App
+                        </button>
+                    </div>
+                    <div class="items-list" id="apps-items-list" style="display: flex; flex-direction: column; gap: 14px;"></div>
+                    <button type="button" class="btn btn-outline" id="btn-add-app-card-bottom" style="width: 100%; margin-top: 12px; font-size: 12px; padding: 8px; color: var(--primary); border-color: var(--primary); border-style: dashed; font-weight: 600; cursor: pointer;">
+                        <i class="fa fa-plus-circle"></i> + Add Another App
+                    </button>
+                `;
+
+                const list = grp.querySelector('#apps-items-list');
+                d.apps.forEach((app, idx) => {
+                    const itemBox = document.createElement('div');
+                    itemBox.className = 'item-card';
+                    itemBox.style.cssText = 'background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.03);';
+
+                    const hasBanner = !!app.bannerUrl;
+                    const isBase64 = app.bannerUrl && app.bannerUrl.startsWith('data:');
+                    const isNetwork = app.bannerUrl && (app.bannerUrl.startsWith('http://') || app.bannerUrl.startsWith('https://'));
+                    const isLocal = app.bannerUrl && !isBase64 && !isNetwork;
+
+                    let badgeHtml = '<span style="font-size: 10px; font-weight: 600; color: #64748b; background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">Placeholder</span>';
+                    if (isNetwork) {
+                        badgeHtml = '<span style="font-size: 10px; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 2px 6px; border-radius: 4px;"><i class="fa fa-globe"></i> Network Image</span>';
+                    } else if (isBase64) {
+                        badgeHtml = '<span style="font-size: 10px; font-weight: 700; color: #7c3aed; background: #ede9fe; padding: 2px 6px; border-radius: 4px;"><i class="fa fa-file-image-o"></i> Uploaded</span>';
+                    } else if (isLocal) {
+                        badgeHtml = '<span style="font-size: 10px; font-weight: 700; color: #d97706; background: #fef3c7; padding: 2px 6px; border-radius: 4px;"><i class="fa fa-folder-open"></i> Local Path</span>';
+                    }
+
+                    itemBox.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #f1f5f9;">
+                            <span style="font-size: 12px; font-weight: 800; color: var(--primary);">App #${idx + 1}</span>
+                            <div style="display: flex; gap: 4px; align-items: center;">
+                                <button type="button" class="toolbar-btn btn-app-up" title="Move Up" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === 0 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-up"></i></button>
+                                <button type="button" class="toolbar-btn btn-app-down" title="Move Down" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === d.apps.length - 1 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-down"></i></button>
+                                <button type="button" class="toolbar-btn btn-app-del" title="Delete App" style="padding: 2px 6px; font-size: 10px; color: #ef4444; cursor: pointer;"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Banner Image Container -->
+                        <div style="margin-bottom: 12px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                <label style="font-size: 11px; font-weight: 700; color: var(--text-main); margin: 0;">
+                                    <i class="fa fa-picture-o" style="color: var(--primary);"></i> Banner Image
+                                </label>
+                                <span class="banner-type-indicator">${badgeHtml}</span>
+                            </div>
+                            
+                            <!-- URL Input (supports Network URLs or paths) -->
+                            <div style="margin-bottom: 8px;">
+                                <input type="text" class="form-input app-banner-input" value="${escapeHTML(isBase64 ? '(Embedded Base64 Image)' : (app.bannerUrl || ''))}" placeholder="Paste Network URL (https://...) or image path" style="font-size: 11px; padding: 6px 8px;">
+                            </div>
+                            
+                            <!-- Action Buttons & Live Thumbnail -->
+                            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                                <button type="button" class="btn btn-outline btn-toggle-presets" style="font-size: 11px; padding: 4px 8px; color: #0284c7; border-color: #bae6fd; background: #f0f9ff;" title="Pick sample network banner">
+                                    <i class="fa fa-globe"></i> Web Presets
+                                </button>
+                                <label class="btn btn-outline" style="font-size: 11px; padding: 4px 8px; cursor: pointer; color: var(--primary); border-color: var(--primary); margin: 0;">
+                                    <i class="fa fa-upload"></i> Upload
+                                    <input type="file" accept="image/*" class="app-banner-uploader" style="display: none;">
+                                </label>
+                                <button type="button" class="btn btn-outline btn-clear-app-banner" style="font-size: 11px; padding: 4px 8px; color: #ef4444; border-color: #fca5a5; display: ${hasBanner ? 'inline-block' : 'none'};">
+                                    <i class="fa fa-trash"></i> Remove
+                                </button>
+                                <div class="banner-preview-box" style="margin-left: auto; width: 56px; height: 32px; border-radius: 4px; overflow: hidden; border: 1px solid #cbd5e1; background: #e2e8f0; display: flex; align-items: center; justify-content: center;">
+                                    ${hasBanner ? `<img src="${escapeHTML(app.bannerUrl)}" style="width: 100%; height: 100%; object-fit: cover;">` : `<i class="fa fa-picture-o" style="color: #94a3b8; font-size: 13px;"></i>`}
+                                </div>
+                            </div>
+
+                            <!-- Collapsible Network Presets Panel -->
+                            <div class="network-presets-panel" style="display: none; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #cbd5e1;">
+                                <div style="font-size: 10px; font-weight: 700; color: #475569; margin-bottom: 6px;">Choose a Network Banner:</div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+                                    <button type="button" class="btn btn-outline preset-url-btn" data-url="https://apps.odoocdn.com/apps/assets/16.0/evo_call_recording_transcript/banner.png" style="font-size: 10px; padding: 4px 6px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; grid-column: span 2; background: #eef2ff; color: #4338ca; font-weight: 700;">⭐ Odoo CDN (Evo Call Recording)</button>
+                                    <button type="button" class="btn btn-outline preset-url-btn" data-url="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80" style="font-size: 10px; padding: 4px 6px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">📊 CRM &amp; AI</button>
+                                    <button type="button" class="btn btn-outline preset-url-btn" data-url="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80" style="font-size: 10px; padding: 4px 6px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">📈 Lead Growth</button>
+                                    <button type="button" class="btn btn-outline preset-url-btn" data-url="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&auto=format&fit=crop&q=80" style="font-size: 10px; padding: 4px 6px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">📋 Project Portal</button>
+                                    <button type="button" class="btn btn-outline preset-url-btn" data-url="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=600&auto=format&fit=crop&q=80" style="font-size: 10px; padding: 4px 6px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">💬 Live Chat</button>
+                                    <button type="button" class="btn btn-outline preset-url-btn" data-url="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&auto=format&fit=crop&q=80" style="font-size: 10px; padding: 4px 6px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">📦 Inventory</button>
+                                    <button type="button" class="btn btn-outline preset-url-btn" data-url="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&auto=format&fit=crop&q=80" style="font-size: 10px; padding: 4px 6px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">💳 Accounting</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- App Title -->
+                        <div style="margin-bottom: 8px;">
+                            <label style="font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">App Title</label>
+                            <input type="text" class="form-input app-title-input" value="${escapeHTML(app.title || '')}" placeholder="e.g. AI Call Recording for CRM" style="font-size: 12px; padding: 5px 8px;">
+                        </div>
+
+                        <!-- Company & Price in 2 columns -->
+                        <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                            <div style="flex: 1;">
+                                <label style="font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">Company / Author</label>
+                                <input type="text" class="form-input app-company-input" value="${escapeHTML(app.company || '')}" placeholder="e.g. Evozard" style="font-size: 12px; padding: 5px 8px;">
+                            </div>
+                            <div style="width: 100px;">
+                                <label style="font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">Price</label>
+                                <input type="text" class="form-input app-price-input" value="${escapeHTML(app.price || '')}" placeholder="e.g. $ 139 / Free" style="font-size: 12px; padding: 5px 8px;">
+                            </div>
+                        </div>
+
+                        <!-- Odoo App Store URL -->
+                        <div style="margin-bottom: 4px;">
+                            <label style="font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">
+                                <i class="fa fa-external-link"></i> Odoo App Store Link
+                            </label>
+                            <input type="text" class="form-input app-url-input" value="${escapeHTML(app.appUrl || '')}" placeholder="https://apps.odoo.com/apps/modules/..." style="font-size: 12px; padding: 5px 8px;">
+                        </div>
+                    `;
+
+                    // Helper to update banner and live preview
+                    const bannerInput = itemBox.querySelector('.app-banner-input');
+                    const previewBox = itemBox.querySelector('.banner-preview-box');
+                    const clearBannerBtn = itemBox.querySelector('.btn-clear-app-banner');
+                    const badgeSpan = itemBox.querySelector('.banner-type-indicator');
+
+                    function updateBannerUI(newUrl) {
+                        if (newUrl && typeof newUrl === 'string') {
+                            newUrl = newUrl.trim();
+                            const srcMatch = newUrl.match(/src=["'](.*?)["']/i);
+                            if (srcMatch) {
+                                newUrl = srcMatch[1];
+                                if (bannerInput && bannerInput.value !== newUrl && !newUrl.startsWith('data:')) {
+                                    bannerInput.value = newUrl;
+                                }
+                            }
+                        }
+                        app.bannerUrl = newUrl;
+                        updateCanvasLive();
+
+                        if (newUrl) {
+                            previewBox.innerHTML = `<img src="${newUrl}" style="width: 100%; height: 100%; object-fit: cover;">`;
+                            if (clearBannerBtn) clearBannerBtn.style.display = 'inline-block';
+                        } else {
+                            previewBox.innerHTML = `<i class="fa fa-picture-o" style="color: #94a3b8; font-size: 13px;"></i>`;
+                            if (clearBannerBtn) clearBannerBtn.style.display = 'none';
+                        }
+
+                        const isNet = newUrl && (newUrl.startsWith('http://') || newUrl.startsWith('https://'));
+                        const isB64 = newUrl && newUrl.startsWith('data:');
+                        const isLoc = newUrl && !isNet && !isB64;
+
+                        if (badgeSpan) {
+                            if (isNet) {
+                                badgeSpan.innerHTML = `<span style="font-size: 10px; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 2px 6px; border-radius: 4px;"><i class="fa fa-globe"></i> Network Image</span>`;
+                            } else if (isB64) {
+                                badgeSpan.innerHTML = `<span style="font-size: 10px; font-weight: 700; color: #7c3aed; background: #ede9fe; padding: 2px 6px; border-radius: 4px;"><i class="fa fa-file-image-o"></i> Uploaded</span>`;
+                            } else if (isLoc) {
+                                badgeSpan.innerHTML = `<span style="font-size: 10px; font-weight: 700; color: #d97706; background: #fef3c7; padding: 2px 6px; border-radius: 4px;"><i class="fa fa-folder-open"></i> Local Path</span>`;
+                            } else {
+                                badgeSpan.innerHTML = `<span style="font-size: 10px; font-weight: 600; color: #64748b; background: #f1f5f9; padding: 2px 6px; border-radius: 4px;">Placeholder</span>`;
+                            }
+                        }
+                    }
+
+                    bannerInput.addEventListener('input', (e) => {
+                        updateBannerUI(e.target.value);
+                    });
+                    bannerInput.addEventListener('paste', () => {
+                        setTimeout(() => updateBannerUI(bannerInput.value), 0);
+                    });
+
+                    // Toggle Web Presets Panel
+                    const togglePresetsBtn = itemBox.querySelector('.btn-toggle-presets');
+                    const presetsPanel = itemBox.querySelector('.network-presets-panel');
+                    if (togglePresetsBtn && presetsPanel) {
+                        togglePresetsBtn.addEventListener('click', () => {
+                            presetsPanel.style.display = presetsPanel.style.display === 'none' ? 'block' : 'none';
+                        });
+                    }
+
+                    itemBox.querySelectorAll('.preset-url-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const url = btn.getAttribute('data-url');
+                            bannerInput.value = url;
+                            updateBannerUI(url);
+                            presetsPanel.style.display = 'none';
+                            showToast('Applied network banner image');
+                        });
+                    });
+
+                    const fileUploader = itemBox.querySelector('.app-banner-uploader');
+                    if (fileUploader) {
+                        fileUploader.addEventListener('change', (e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onload = (evt) => {
+                                    bannerInput.value = '(Embedded Base64 Image)';
+                                    updateBannerUI(evt.target.result);
+                                    showToast('Banner uploaded & embedded');
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        });
+                    }
+
+                    if (clearBannerBtn) {
+                        clearBannerBtn.addEventListener('click', () => {
+                            bannerInput.value = '';
+                            updateBannerUI('');
+                        });
+                    }
+
+                    const titleInput = itemBox.querySelector('.app-title-input');
+                    titleInput.addEventListener('input', (e) => {
+                        app.title = e.target.value;
+                        updateCanvasLive();
+                    });
+
+                    const companyInput = itemBox.querySelector('.app-company-input');
+                    companyInput.addEventListener('input', (e) => {
+                        app.company = e.target.value;
+                        updateCanvasLive();
+                    });
+
+                    const priceInput = itemBox.querySelector('.app-price-input');
+                    priceInput.addEventListener('input', (e) => {
+                        app.price = e.target.value;
+                        updateCanvasLive();
+                    });
+
+                    const urlInput = itemBox.querySelector('.app-url-input');
+                    urlInput.addEventListener('input', (e) => {
+                        app.appUrl = e.target.value;
+                        updateCanvasLive();
+                    });
+
+                    // Up / Down / Delete listeners
+                    const upBtn = itemBox.querySelector('.btn-app-up');
+                    if (upBtn && idx > 0) {
+                        upBtn.addEventListener('click', () => {
+                            const temp = d.apps[idx];
+                            d.apps[idx] = d.apps[idx - 1];
+                            d.apps[idx - 1] = temp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+
+                    const downBtn = itemBox.querySelector('.btn-app-down');
+                    if (downBtn && idx < d.apps.length - 1) {
+                        downBtn.addEventListener('click', () => {
+                            const temp = d.apps[idx];
+                            d.apps[idx] = d.apps[idx + 1];
+                            d.apps[idx + 1] = temp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+
+                    const delBtn = itemBox.querySelector('.btn-app-del');
+                    delBtn.addEventListener('click', () => {
+                        d.apps.splice(idx, 1);
+                        renderPropertyInspector();
+                        updateCanvasLive();
+                    });
+
+                    list.appendChild(itemBox);
+                });
+
+                const sampleBanners = [
+                    'https://apps.odoocdn.com/apps/assets/16.0/evo_call_recording_transcript/banner.png',
+                    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80',
+                    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80',
+                    'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&auto=format&fit=crop&q=80',
+                    'https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=600&auto=format&fit=crop&q=80',
+                    'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=600&auto=format&fit=crop&q=80',
+                    'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&auto=format&fit=crop&q=80'
+                ];
+
+                const addAppFn = () => {
+                    const defaultBanner = sampleBanners[d.apps.length % sampleBanners.length];
+                    d.apps.push({
+                        bannerUrl: defaultBanner,
+                        title: 'New Odoo Module',
+                        company: (d.apps.length > 0 && d.apps[0].company) ? d.apps[0].company : 'My Company',
+                        price: '$ 49',
+                        appUrl: 'https://apps.odoo.com/apps/modules'
+                    });
+                    renderPropertyInspector();
+                    updateCanvasLive();
+                    showToast('Added new app with network banner');
+                };
+
+                grp.querySelector('#btn-add-app-card').addEventListener('click', addAppFn);
+                grp.querySelector('#btn-add-app-card-bottom').addEventListener('click', addAppFn);
+
+                form.appendChild(grp);
+            }
 
             container.appendChild(form);
         }
@@ -1399,6 +1724,7 @@ if (document.readyState === 'loading') {
                     createWidgetInstance('screenshot_showcase'),
                     createWidgetInstance('edition_matrix'),
                     createWidgetInstance('faq_section'),
+                    createWidgetInstance('other_apps'),
                     createWidgetInstance('support_banner')
                 ];
                 selectedWidgetId = activeWidgets[0].id;

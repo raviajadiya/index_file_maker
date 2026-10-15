@@ -464,5 +464,46 @@ export const WIDGET_CATALOG = [
                 }
             }
         ]
+    },
+    {
+        category: 'Related Apps & Cross-Sell',
+        widgets: [
+            {
+                type: 'other_apps',
+                name: 'Other Apps Showcase',
+                desc: 'Showcase other Odoo modules with banner image, title, author, price & App Store link',
+                icon: 'fa-th-large',
+                defaultData: {
+                    title: 'Other Apps',
+                    subtitle: 'Explore our other popular and top-rated modules for Odoo',
+                    bgColor: '#ffffff',
+                    titleColor: '#1e293b',
+                    columns: '3',
+                    apps: [
+                        {
+                            bannerUrl: 'https://apps.odoocdn.com/apps/assets/16.0/evo_call_recording_transcript/banner.png',
+                            title: 'AI Call Recording & Auto Transcript for CRM',
+                            company: 'Evozard',
+                            price: '$ 139',
+                            appUrl: 'https://apps.odoo.com/apps/modules'
+                        },
+                        {
+                            bannerUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80',
+                            title: 'Round Robin Lead Assignment',
+                            company: 'Evozard',
+                            price: '$ 45',
+                            appUrl: 'https://apps.odoo.com/apps/modules'
+                        },
+                        {
+                            bannerUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&auto=format&fit=crop&q=80',
+                            title: 'Portal User Project Management Access',
+                            company: 'Evozard',
+                            price: '$ 50',
+                            appUrl: 'https://apps.odoo.com/apps/modules'
+                        }
+                    ]
+                }
+            }
+        ]
     }
 ];

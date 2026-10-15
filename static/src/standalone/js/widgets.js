@@ -331,5 +331,46 @@ const WIDGET_CATALOG = [
                 }
             }
         ]
+    },
+    {
+        category: 'Related Apps & Cross-Sell',
+        widgets: [
+            {
+                type: 'other_apps',
+                name: 'Other Apps Showcase',
+                desc: 'Showcase other Odoo modules with banner image, title, author, price & App Store link',
+                icon: 'fa-th-large',
+                defaultData: {
+                    title: 'Other Apps',
+                    subtitle: 'Explore our other popular and top-rated modules for Odoo',
+                    bgColor: '#ffffff',
+                    titleColor: '#1e293b',
+                    columns: '3',
+                    apps: [
+                        {
+                            bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
+                            title: 'Clipboard History Manager',
+                            company: 'Envision Technolabs',
+                            price: '$ 23.99',
+                            appUrl: 'https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager'
+                        },
+                        {
+                            bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
+                            title: 'Clipboard History Manager',
+                            company: 'Envision Technolabs',
+                            price: '$ 23.99',
+                            appUrl: 'https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager'
+                        },
+                        {
+                            bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
+                            title: 'Clipboard History Manager',
+                            company: 'Envision Technolabs',
+                            price: '$ 23.99',
+                            appUrl: 'https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager'
+                        }
+                    ]
+                }
+            }
+        ]
     }
 ];

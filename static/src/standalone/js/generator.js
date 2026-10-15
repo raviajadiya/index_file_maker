@@ -530,6 +530,64 @@ function renderWidgetHtml(widget) {
 </section>`;
         }
 
+        case 'other_apps': {
+            const bg = d.bgColor || '#ffffff';
+            const titleCol = d.titleColor || '#1e293b';
+            const colClass = d.columns === '2' ? 'col-12 col-md-6 mb-4' : (d.columns === '4' ? 'col-12 col-sm-6 col-lg-3 mb-4' : 'col-12 col-md-6 col-lg-4 mb-4');
+
+            const appsList = Array.isArray(d.apps) ? d.apps : [];
+            const appsHTML = appsList.map((app) => {
+                let bannerSrc = (app.bannerUrl || '').trim();
+                const srcMatch = bannerSrc.match(/src=["'](.*?)["']/i);
+                if (srcMatch) bannerSrc = srcMatch[1];
+
+                const bannerHTML = bannerSrc
+                    ? `<img src="${escapeHTML(bannerSrc)}" style="width:100%; height:auto; border-bottom:1px solid #e2e8f0; display:block" alt="${escapeHTML(app.title || '')}">`
+                    : `<div style="width: 100%; height: 180px; background: linear-gradient(135deg, ${globalBrand || '#714B67'} 0%, #1e293b 100%); display: flex; align-items: center; justify-content: center; color: #ffffff; padding: 16px; text-align: center; border-bottom: 1px solid #e2e8f0;">
+                        <div>
+                            <i class="fa fa-cubes" style="font-size: 38px; margin-bottom: 8px; opacity: 0.85; display: block;"></i>
+                            <div style="font-size: 13px; font-weight: 600; opacity: 0.95; line-height: 1.3;">${escapeHTML(app.title || 'App Banner')}</div>
+                        </div>
+                    </div>`;
+
+                return `
+                <div class="${colClass}">
+                    <a href="${escapeHTML(app.appUrl || '#')}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                        <div class="card h-100 shadow-sm" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;">
+                            ${bannerHTML}
+                            <div class="card-body p-3 d-flex flex-column justify-content-between" style="min-height: 105px;">
+                                <h5 style="font-size: 15px; font-weight: 700; color: #1e293b; line-height: 1.4; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    ${escapeHTML(app.title || 'App Title')}
+                                </h5>
+                                <div class="d-flex align-items-center justify-content-between pt-2" style="border-top: 1px solid #f1f5f9;">
+                                    <span style="font-size: 13px; color: #64748b; font-weight: 500;">
+                                        ${escapeHTML(app.company || '')}
+                                    </span>
+                                    <span style="font-size: 15px; font-weight: 700; color: #0f172a;">
+                                        ${escapeHTML(app.price || 'Free')}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>`;
+            }).join('\n');
+
+            return `<section class="py-5" style="background-color: ${bg};">
+    <div class="container py-2" style="max-width: 1140px;">
+        ${d.title ? `<div class="row justify-content-center text-center mb-4">
+            <div class="col-12 col-lg-9">
+                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol}; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
+                ${d.subtitle ? `<p style="font-size: 16px; color: #64748b; margin: 0 auto; max-width: 680px; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
+            </div>
+        </div>` : ''}
+        <div class="row justify-content-center">
+            ${appsHTML}
+        </div>
+    </div>
+</section>`;
+        }
+
         case 'footer_brand': {
             const bg = d.bgColor || '#1e293b';
             const textCol = d.textColor || '#94a3b8';
