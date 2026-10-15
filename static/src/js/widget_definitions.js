@@ -431,41 +431,6 @@ export const WIDGET_CATALOG = [
         ]
     },
     {
-        category: 'Support & Footer',
-        widgets: [
-            {
-                type: 'support_banner',
-                name: 'Support & Contact Card',
-                desc: 'Dedicated support contacts, WhatsApp, Skype, and warranty badge',
-                icon: 'fa-life-ring',
-                defaultData: {
-                    title: 'Need Help or Custom Features?',
-                    subtitle: 'Our dedicated team of certified Odoo developers is ready to help you succeed.',
-                    badge: '90 Days Free Support Included',
-                    email: 'support@yourdomain.com',
-                    skype: 'live:odoo_support',
-                    whatsapp: '+1 (555) 019-2834',
-                    docsUrl: '#',
-                    bgColor: '#714B67',
-                    textColor: '#ffffff'
-                }
-            },
-            {
-                type: 'footer_brand',
-                name: 'Brand & Copyright Footer',
-                desc: 'Simple developer brand signature',
-                icon: 'fa-bookmark',
-                defaultData: {
-                    companyName: 'Your Company Name',
-                    year: '2026',
-                    tagline: 'Crafted with ❤️ for the Odoo Global Community',
-                    bgColor: '#1e293b',
-                    textColor: '#94a3b8'
-                }
-            }
-        ]
-    },
-    {
         category: 'Related Apps & Cross-Sell',
         widgets: [
             {
@@ -502,6 +467,41 @@ export const WIDGET_CATALOG = [
                             appUrl: 'https://apps.odoo.com/apps/modules'
                         }
                     ]
+                }
+            }
+        ]
+    },
+    {
+        category: 'Support & Footer',
+        widgets: [
+            {
+                type: 'support_banner',
+                name: 'Support & Contact Card',
+                desc: 'Dedicated support contacts, WhatsApp, Skype, and warranty badge',
+                icon: 'fa-life-ring',
+                defaultData: {
+                    title: 'Need Help or Custom Features?',
+                    subtitle: 'Our dedicated team of certified Odoo developers is ready to help you succeed.',
+                    badge: '90 Days Free Support Included',
+                    email: 'support@yourdomain.com',
+                    skype: 'live:odoo_support',
+                    whatsapp: '+1 (555) 019-2834',
+                    docsUrl: '#',
+                    bgColor: '#714B67',
+                    textColor: '#ffffff'
+                }
+            },
+            {
+                type: 'footer_brand',
+                name: 'Brand & Copyright Footer',
+                desc: 'Simple developer brand signature',
+                icon: 'fa-bookmark',
+                defaultData: {
+                    companyName: 'Your Company Name',
+                    year: '2026',
+                    tagline: 'Crafted with ❤️ for the Odoo Global Community',
+                    bgColor: '#1e293b',
+                    textColor: '#94a3b8'
                 }
             }
         ]
