@@ -219,20 +219,54 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
 
         case 'stats_counter': {
             const bg = d.bgColor || '#f8f9fa';
+            const cardBg = d.cardBgColor || '#ffffff';
+            const cardBorder = d.cardBorderColor || '#e2e8f0';
+            const globalIconCol = d.accentColor || globalBrand || '#875A7B';
+            const iconBg = d.iconBgColor && !d.iconBgColor.includes('rgba') ? d.iconBgColor : (d.iconBgColor || '#f5efff');
+            const defaultNumCol = d.numberColor || d.accentColor || globalBrand || '#875A7B';
+            const defaultLabelCol = d.labelColor || '#64748b';
+            const titleCol = d.titleColor || '#1e293b';
+            const subtitleCol = d.subtitleColor || '#64748b';
             const stats = d.stats || [];
-            const colsHTML = stats.map(st => `
-            <div class="col-12 col-md-4 mb-3 text-center">
-                <div class="card h-100 shadow-sm" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;">
-                    <div class="card-body p-4">
-                        ${st.icon ? `<div class="mb-2" style="font-size: 24px; color: ${globalBrand} !important;">${renderSafeIcon(st.icon, 'fa fa-star')}</div>` : ''}
-                        <div style="font-size: 32px; font-weight: 700; color: ${globalBrand} !important; margin-bottom: 4px;">${escapeHTML(st.number)}</div>
-                        <div style="font-size: 15px; font-weight: 600; color: #64748b !important;">${escapeHTML(st.label)}</div>
+
+            const cols = parseInt(d.columns) || (stats.length === 4 ? 4 : (stats.length === 2 ? 2 : 3));
+            const colClass = cols === 2 ? 'col-12 col-sm-6 col-md-6 mb-4 text-center' : (cols === 4 ? 'col-12 col-sm-6 col-md-3 mb-4 text-center' : 'col-12 col-sm-6 col-md-4 mb-4 text-center');
+
+            const colsHTML = stats.map(st => {
+                let iconHtml = '';
+                if (st.iconUrl) {
+                    iconHtml = `<img src="${st.iconUrl}" alt="icon" style="width: 26px; height: 26px; object-fit: contain; vertical-align: middle;">`;
+                } else if (st.icon) {
+                    iconHtml = renderSafeIcon(st.icon, '<i class="oi" data-icon="task_alt"></i>');
+                }
+
+                const numCol = st.numberColor || defaultNumCol;
+                const labelCol = st.labelColor || defaultLabelCol;
+                const itemIconCol = st.iconColor || globalIconCol;
+
+                return `
+            <div class="${colClass}">
+                <div class="card h-100 shadow-sm" style="background-color: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 12px;">
+                    <div class="card-body p-4 d-flex flex-column align-items-center justify-content-center">
+                        ${iconHtml ? `
+                        <div class="mb-3 d-inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px; border-radius: 12px; background-color: ${iconBg}; color: ${itemIconCol} !important; font-size: 22px;">
+                            ${iconHtml}
+                        </div>` : ''}
+                        <div style="font-size: 32px; font-weight: 700; color: ${numCol} !important; margin-bottom: 4px; line-height: 1.2;">${escapeHTML(st.number || '')}</div>
+                        <div style="font-size: 15px; font-weight: 600; color: ${labelCol} !important; line-height: 1.4;">${escapeHTML(st.label || '')}</div>
                     </div>
                 </div>
-            </div>`).join('');
+            </div>`;
+            }).join('');
 
             return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-2">
+    <div class="container py-3">
+        ${d.title ? `<div class="row justify-content-center text-center mb-5">
+            <div class="col-12 col-lg-8">
+                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
+                ${d.subtitle ? `<p style="font-size: 16px; color: ${subtitleCol} !important; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
+            </div>
+        </div>` : ''}
         <div class="row justify-content-center">${colsHTML}</div>
     </div>
 </section>`;

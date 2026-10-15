@@ -89,11 +89,22 @@ const WIDGET_CATALOG = [
                 desc: '3 impressive key metric counters',
                 icon: 'fa-tachometer',
                 defaultData: {
+                    title: '',
+                    titleColor: '#1e293b',
+                    subtitle: '',
+                    subtitleColor: '#64748b',
                     bgColor: '#f8fafc',
+                    columns: 3,
+                    cardBgColor: '#ffffff',
+                    cardBorderColor: '#e2e8f0',
+                    accentColor: '#714B67',
+                    iconBgColor: '#f5efff',
+                    numberColor: '#714B67',
+                    labelColor: '#64748b',
                     stats: [
-                        { number: '99.9%', label: 'Calculation Accuracy', icon: 'fa-check-circle' },
-                        { number: '10,000+', label: 'Active Users', icon: 'fa-users' },
-                        { number: '5.0 ★', label: 'Customer Rating', icon: 'fa-star' }
+                        { number: '99.9%', label: 'Calculation Accuracy', icon: '<i class="oi" data-icon="task_alt"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' },
+                        { number: '10,000+', label: 'Active Users', icon: '<i class="oi" data-icon="group"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' },
+                        { number: '5.0 ★', label: 'Customer Rating', icon: '<i class="oi" data-icon="favorite"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' }
                     ]
                 }
             }
