@@ -67,35 +67,6 @@ export const STARTER_WIDGETS = [
         }
     },
     {
-        id: 'widget-cards-1',
-        type: 'feature_cards_3',
-        data: {
-            title: 'Packed with Enterprise Features',
-            subtitle: 'Everything your finance and sales teams need in a single unified system',
-            bgColor: '#ffffff',
-            cards: [
-                {
-                    title: 'Automated Ledger & Statements',
-                    desc: 'Generate real-time payout ledgers with detailed breakdowns per invoice and transaction.',
-                    icon: 'fa-book',
-                    badge: 'Accounting'
-                },
-                {
-                    title: 'One-Click Vendor Bill / Payroll',
-                    desc: 'Directly convert approved commissions into vendor bills or payroll additions seamlessly.',
-                    icon: 'fa-credit-card',
-                    badge: 'Payouts'
-                },
-                {
-                    title: 'Visual Analytics & KPIs',
-                    desc: 'Interactive graph and pivot reports to monitor sales compensation trends effortlessly.',
-                    icon: 'fa-line-chart',
-                    badge: 'Reporting'
-                }
-            ]
-        }
-    },
-    {
         id: 'widget-screenshot-1',
         type: 'screenshot_showcase',
         data: {
@@ -345,34 +316,28 @@ export const WIDGET_CATALOG = [
                 }
             },
             {
-                type: 'feature_cards_3',
-                name: '3-Column Feature Cards',
-                desc: '3 modern cards with hover effect and badges',
-                icon: 'fa-id-card-o',
-                defaultData: {
-                    title: 'Designed for Every Department',
-                    subtitle: 'A unified solution that empowers your entire organization',
-                    bgColor: '#ffffff',
-                    cards: [
-                        { title: 'For Administrators', desc: 'Configure system rules with intuitive menus and zero coding.', icon: 'fa-user-secret', badge: 'Admin' },
-                        { title: 'For Managers', desc: 'Review, approve, and monitor team activities in real-time.', icon: 'fa-briefcase', badge: 'Management' },
-                        { title: 'For End Users', desc: 'Clean, clutter-free screens that boost daily productivity.', icon: 'fa-user', badge: 'User' }
-                    ]
-                }
-            },
-            {
                 type: 'workflow_steps',
                 name: '3-Step How It Works',
-                desc: 'Numbered step-by-step implementation guide',
+                desc: 'Numbered step-by-step onboarding cards with custom colors',
                 icon: 'fa-list-ol',
                 defaultData: {
                     title: 'How It Works in 3 Simple Steps',
-                    subtitle: 'Quick and hassle-free onboarding',
+                    titleColor: '#1e293b',
+                    subtitle: 'Quick and hassle-free onboarding for your team',
+                    subtitleColor: '#64748b',
                     bgColor: '#f8fafc',
+                    cardBgColor: '#ffffff',
+                    cardBorderColor: '#e2e8f0',
+                    cardTitleColor: '#1e293b',
+                    cardDescColor: '#64748b',
+                    badgeBgColor: '#714B67',
+                    badgeTextColor: '#ffffff',
+                    columns: 3,
+                    align: 'center',
                     steps: [
-                        { num: '1', title: 'Install Module', desc: 'Download and activate the app from your Odoo Apps list in one click.' },
-                        { num: '2', title: 'Configure Preferences', desc: 'Set up your company rules and access rights with intuitive options.' },
-                        { num: '3', title: 'Enjoy Automation', desc: 'Watch your processes run smoothly with automatic triggers and logs.' }
+                        { num: '1', title: 'Install & Activate', desc: 'Download from Odoo Apps list and activate in one click.' },
+                        { num: '2', title: 'Configure Preferences', desc: 'Set up your company rules and rates with intuitive options.' },
+                        { num: '3', title: 'Enjoy Automation', desc: 'Watch your calculations run smoothly with automatic triggers.' }
                     ]
                 }
             }

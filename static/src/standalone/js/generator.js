@@ -553,61 +553,53 @@ function renderWidgetHtml(widget) {
 </section>`;
         }
 
-        case 'feature_cards_3': {
-            const bg = d.bgColor || '#ffffff';
-            const cards = d.cards || [];
-            const cardsHTML = cards.map(c => `
-            <div class="col-12 col-md-4 mb-4">
-                <div class="card h-100 shadow-sm" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;">
-                    <div class="card-body p-4 d-flex flex-column">
-                        ${c.badge ? `<div class="mb-3"><span style="background-color: #f1f5f9; color: #475569; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase;">${escapeHTML(c.badge)}</span></div>` : ''}
-                        <div class="mb-3 d-inline-flex align-items-center justify-content-center" style="width: 48px; height: 48px; border-radius: 10px; background-color: #f5efff; color: ${globalBrand}; font-size: 20px;">
-                            ${renderSafeIcon(c.icon, 'fa fa-check')}
-                        </div>
-                        <h4 style="font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 10px;">${escapeHTML(c.title)}</h4>
-                        <p style="font-size: 14px; color: #64748b; line-height: 1.6; margin: 0; flex: 1;">${escapeHTML(c.desc)}</p>
-                    </div>
-                </div>
-            </div>`).join('');
-
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3">
-        ${d.title ? `<div class="row justify-content-center text-center mb-5">
-            <div class="col-12 col-lg-8">
-                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
-                ${d.subtitle ? `<p style="font-size: 16px; color: #64748b; margin: 0;">${escapeHTML(d.subtitle)}</p>` : ''}
-            </div>
-        </div>` : ''}
-        <div class="row">${cardsHTML}</div>
-    </div>
-</section>`;
-        }
-
         case 'workflow_steps': {
             const bg = d.bgColor || '#f8f9fa';
+            const globalBrand = (window.pageSettings && window.pageSettings.brandColor) || '#714B67';
+
+            const titleCol = d.titleColor || '#1e293b';
+            const subtitleCol = d.subtitleColor || '#64748b';
+            const cardBg = d.cardBgColor || '#ffffff';
+            const cardBorder = d.cardBorderColor || '#e2e8f0';
+            const cardTitleCol = d.cardTitleColor || '#1e293b';
+            const cardDescCol = d.cardDescColor || '#64748b';
+            const badgeBg = d.badgeBgColor || globalBrand || '#714B67';
+            const badgeText = d.badgeTextColor || '#ffffff';
+            const align = d.align || 'center';
+            const isCenter = align === 'center';
+
             const steps = d.steps || [];
-            const stepsHTML = steps.map(s => `
-            <div class="col-12 col-md-4 mb-4">
-                <div class="card h-100 shadow-sm text-center" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;">
-                    <div class="card-body p-4">
-                        <div class="mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; border-radius: 50%; background-color: ${globalBrand}; color: #ffffff; font-size: 18px; font-weight: 700;">
-                            ${escapeHTML(s.num)}
+            const cols = parseInt(d.columns) || (steps.length === 4 ? 4 : (steps.length === 2 ? 2 : 3));
+            const colClass = cols === 2 ? 'col-12 col-md-6 mb-4' : (cols === 4 ? 'col-12 col-sm-6 col-md-3 mb-4' : 'col-12 col-md-4 mb-4');
+
+            const stepsHTML = steps.map((s, idx) => {
+                const numVal = s.num !== undefined && s.num !== null && s.num !== '' ? s.num : String(idx + 1);
+
+                return `
+            <div class="${colClass}">
+                <div class="card h-100 shadow-sm" style="background-color: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.04); transition: transform 0.2s, box-shadow 0.2s;">
+                    <div class="card-body p-4 d-flex flex-column ${isCenter ? 'text-center align-items-center' : 'text-start'}">
+                        <div class="d-flex align-items-center ${isCenter ? 'justify-content-center' : 'justify-content-start'} w-100 mb-3">
+                            <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 44px; padding: 0 12px; border-radius: 50px; background-color: ${badgeBg}; color: ${badgeText} !important; font-size: 17px; font-weight: 800; line-height: 1; box-shadow: 0 4px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
+                                ${escapeHTML(numVal)}
+                            </span>
                         </div>
-                        <h4 style="font-size: 17px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">${escapeHTML(s.title)}</h4>
-                        <p style="font-size: 14px; color: #64748b; line-height: 1.5; margin: 0;">${escapeHTML(s.desc)}</p>
+                        <h4 style="font-size: 18px; font-weight: 700; color: ${cardTitleCol} !important; margin: 0 0 10px 0; line-height: 1.35; width: 100%;">${escapeHTML(s.title || '')}</h4>
+                        <p style="font-size: 14px; color: ${cardDescCol} !important; line-height: 1.6; margin: 0; flex: 1; width: 100%;">${escapeHTML(s.desc || '')}</p>
                     </div>
                 </div>
-            </div>`).join('');
+            </div>`;
+            }).join('');
 
             return `<section class="py-5" style="background-color: ${bg};">
     <div class="container py-3">
         ${d.title ? `<div class="row justify-content-center text-center mb-5">
             <div class="col-12 col-lg-8">
-                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
-                ${d.subtitle ? `<p style="font-size: 16px; color: #64748b; margin: 0;">${escapeHTML(d.subtitle)}</p>` : ''}
+                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
+                ${d.subtitle ? `<p style="font-size: 16px; color: ${subtitleCol} !important; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
-        <div class="row">${stepsHTML}</div>
+        <div class="row justify-content-center">${stepsHTML}</div>
     </div>
 </section>`;
         }

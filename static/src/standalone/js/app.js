@@ -461,12 +461,12 @@ if (document.readyState === 'loading') {
             const form = document.createElement('div');
 
             // Title
-            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase') {
+            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps') {
                 form.appendChild(createInputField('Title', d.title, (val) => { d.title = val; updateCanvasLive(); }));
             }
 
             // Subtitle
-            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase') {
+            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps') {
                 form.appendChild(createTextareaField('Subtitle / Tagline', d.subtitle, (val) => { d.subtitle = val; updateCanvasLive(); }));
             }
 
@@ -835,8 +835,8 @@ if (document.readyState === 'loading') {
                 form.appendChild(imgGroup);
             }
 
-            // Colors (for widgets other than highlights_grid, stats_counter, mobile_showcase, and desktop_showcase)
-            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase') {
+            // Colors (for widgets other than highlights_grid, stats_counter, mobile_showcase, desktop_showcase, and workflow_steps)
+            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps') {
                 if (d.bgColor !== undefined) {
                     form.appendChild(createColorField('Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
                 }
@@ -1548,6 +1548,202 @@ if (document.readyState === 'loading') {
 
                 grp.querySelector('#btn-add-stat-card').addEventListener('click', addStatFn);
                 grp.querySelector('#btn-add-stat-card-bottom').addEventListener('click', addStatFn);
+
+                form.appendChild(grp);
+            }
+
+            // Dedicated Workflow Steps ("3-Step How It Works") Full Custom Inspector
+            if (widget.type === 'workflow_steps' && Array.isArray(d.steps)) {
+                if (d.title === undefined) d.title = 'How It Works in 3 Simple Steps';
+                if (d.titleColor === undefined) d.titleColor = '#1e293b';
+                if (d.subtitle === undefined) d.subtitle = 'Quick and hassle-free onboarding for your team';
+                if (d.subtitleColor === undefined) d.subtitleColor = '#64748b';
+                if (d.bgColor === undefined) d.bgColor = '#f8fafc';
+                if (d.cardBgColor === undefined) d.cardBgColor = '#ffffff';
+                if (d.cardBorderColor === undefined) d.cardBorderColor = '#e2e8f0';
+                if (d.cardTitleColor === undefined) d.cardTitleColor = '#1e293b';
+                if (d.cardDescColor === undefined) d.cardDescColor = '#64748b';
+                if (d.badgeBgColor === undefined) d.badgeBgColor = '#714B67';
+                if (d.badgeTextColor === undefined) d.badgeTextColor = '#ffffff';
+                if (d.accentColor === undefined) d.accentColor = '#00A09D';
+                if (d.iconBgColor === undefined) d.iconBgColor = '#e6f6f6';
+                if (d.columns === undefined) d.columns = 3;
+                if (d.align === undefined) d.align = 'center';
+
+                // Section Title & Subtitle Group
+                const secGroup = document.createElement('div');
+                secGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                secGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-header" style="color: var(--primary);"></i> Section Heading &amp; Background
+                    </div>
+                `;
+                secGroup.appendChild(createInputField('Section Title (Optional)', d.title, (val) => { d.title = val; updateCanvasLive(); }));
+                secGroup.appendChild(createColorField('Title Color', d.titleColor, (val) => { d.titleColor = val; updateCanvasLive(); }));
+                secGroup.appendChild(createTextareaField('Section Subtitle (Optional)', d.subtitle, (val) => { d.subtitle = val; updateCanvasLive(); }));
+                secGroup.appendChild(createColorField('Subtitle Color', d.subtitleColor, (val) => { d.subtitleColor = val; updateCanvasLive(); }));
+                secGroup.appendChild(createColorField('Section Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
+                form.appendChild(secGroup);
+
+                // Grid & Card Styling Group
+                const styleGroup = document.createElement('div');
+                styleGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                styleGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-sliders" style="color: var(--primary);"></i> Layout &amp; Card Styling
+                    </div>
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                        <div>
+                            <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Grid Columns</label>
+                            <select class="form-input" id="wf-columns-select" style="font-size: 12px; padding: 6px 10px;">
+                                <option value="3" ${parseInt(d.columns) === 3 ? 'selected' : ''}>3 Columns (Standard)</option>
+                                <option value="4" ${parseInt(d.columns) === 4 ? 'selected' : ''}>4 Columns (Compact)</option>
+                                <option value="2" ${parseInt(d.columns) === 2 ? 'selected' : ''}>2 Columns (Wide)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Card Alignment</label>
+                            <select class="form-input" id="wf-align-select" style="font-size: 12px; padding: 6px 10px;">
+                                <option value="center" ${d.align === 'center' ? 'selected' : ''}>Centered (Default)</option>
+                                <option value="left" ${d.align === 'left' ? 'selected' : ''}>Left-Aligned</option>
+                            </select>
+                        </div>
+                    </div>
+                `;
+                const colSel = styleGroup.querySelector('#wf-columns-select');
+                colSel.addEventListener('change', (e) => {
+                    d.columns = parseInt(e.target.value) || 3;
+                    updateCanvasLive();
+                });
+                const alignSel = styleGroup.querySelector('#wf-align-select');
+                alignSel.addEventListener('change', (e) => {
+                    d.align = e.target.value;
+                    updateCanvasLive();
+                });
+
+                styleGroup.appendChild(createColorField('Step Number Badge Color', d.badgeBgColor, (val) => { d.badgeBgColor = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Step Number Text Color', d.badgeTextColor, (val) => { d.badgeTextColor = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Card Background Color', d.cardBgColor, (val) => { d.cardBgColor = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Card Border Color', d.cardBorderColor, (val) => { d.cardBorderColor = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Card Title Color', d.cardTitleColor, (val) => { d.cardTitleColor = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Card Description Color', d.cardDescColor, (val) => { d.cardDescColor = val; updateCanvasLive(); }));
+                form.appendChild(styleGroup);
+
+                // Steps Manager
+                const grp = document.createElement('div');
+                grp.className = 'form-group';
+                grp.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label class="form-label" style="margin: 0; font-weight: 700; font-size: 13px; color: var(--text-main);">
+                            <i class="fa fa-list-ol" style="color: var(--primary); margin-right: 4px;"></i> Step Cards (${d.steps.length})
+                        </label>
+                        <button type="button" class="btn btn-outline" id="btn-add-step-card" style="font-size: 11px; padding: 4px 10px; color: var(--primary); border-color: var(--primary); cursor: pointer; font-weight: 600;">
+                            <i class="fa fa-plus"></i> Add Step
+                        </button>
+                    </div>
+                    <div class="items-list" id="workflow-steps-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                    <button type="button" class="btn btn-outline" id="btn-add-step-card-bottom" style="width: 100%; margin-top: 10px; font-size: 12px; padding: 7px; color: var(--primary); border-color: var(--primary); border-style: dashed; font-weight: 600; cursor: pointer;">
+                        <i class="fa fa-plus-circle"></i> + Add Another Step
+                    </button>
+                `;
+
+                const list = grp.querySelector('#workflow-steps-list');
+                d.steps.forEach((step, idx) => {
+                    const itemBox = document.createElement('div');
+                    itemBox.className = 'item-card';
+                    itemBox.style.cssText = 'background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.03);';
+
+                    itemBox.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #f1f5f9;">
+                            <span style="font-size: 11px; font-weight: 800; color: var(--primary);">Step #${idx + 1}</span>
+                            <div style="display: flex; gap: 4px; align-items: center;">
+                                <button type="button" class="toolbar-btn btn-wf-up" title="Move Up" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === 0 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-up"></i></button>
+                                <button type="button" class="toolbar-btn btn-wf-down" title="Move Down" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === d.steps.length - 1 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-down"></i></button>
+                                <button type="button" class="toolbar-btn btn-wf-del" title="Delete Step" style="padding: 2px 6px; font-size: 10px; color: #ef4444; cursor: pointer;"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 90px 1fr; gap: 8px; margin-bottom: 8px;">
+                            <div>
+                                <label style="font-size: 10px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">Step # / Tag</label>
+                                <input type="text" class="form-input wf-num-input" value="${escapeHTML(step.num !== undefined ? step.num : String(idx + 1))}" placeholder="1" style="font-size: 12px; font-weight: 700; padding: 6px 8px; text-align: center;">
+                            </div>
+                            <div>
+                                <label style="font-size: 10px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">Step Title</label>
+                                <input type="text" class="form-input wf-title-input" value="${escapeHTML(step.title || '')}" placeholder="Step Title" style="font-size: 12px; font-weight: 600; padding: 6px 8px;">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label style="font-size: 10px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">Step Description</label>
+                            <textarea class="form-input wf-desc-input" rows="2" placeholder="Brief description of this step..." style="font-size: 12px; padding: 6px 8px; width: 100%; resize: vertical;">${escapeHTML(step.desc || '')}</textarea>
+                        </div>
+                    `;
+
+                    // Listeners for step card
+                    const numInput = itemBox.querySelector('.wf-num-input');
+                    numInput.addEventListener('input', (e) => {
+                        step.num = e.target.value;
+                        updateCanvasLive();
+                    });
+
+                    const titleInput = itemBox.querySelector('.wf-title-input');
+                    titleInput.addEventListener('input', (e) => {
+                        step.title = e.target.value;
+                        updateCanvasLive();
+                    });
+
+                    const descInput = itemBox.querySelector('.wf-desc-input');
+                    descInput.addEventListener('input', (e) => {
+                        step.desc = e.target.value;
+                        updateCanvasLive();
+                    });
+
+                    const upBtn = itemBox.querySelector('.btn-wf-up');
+                    if (upBtn && idx > 0) {
+                        upBtn.addEventListener('click', () => {
+                            const temp = d.steps[idx];
+                            d.steps[idx] = d.steps[idx - 1];
+                            d.steps[idx - 1] = temp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+
+                    const downBtn = itemBox.querySelector('.btn-wf-down');
+                    if (downBtn && idx < d.steps.length - 1) {
+                        downBtn.addEventListener('click', () => {
+                            const temp = d.steps[idx];
+                            d.steps[idx] = d.steps[idx + 1];
+                            d.steps[idx + 1] = temp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+
+                    const delBtn = itemBox.querySelector('.btn-wf-del');
+                    delBtn.addEventListener('click', () => {
+                        d.steps.splice(idx, 1);
+                        renderPropertyInspector();
+                        updateCanvasLive();
+                    });
+
+                    list.appendChild(itemBox);
+                });
+
+                const addStepFn = () => {
+                    const nextNum = String(d.steps.length + 1);
+                    d.steps.push({
+                        num: nextNum,
+                        title: `Step ${nextNum} Title`,
+                        desc: 'Add clear instructions or summary for this onboarding step.'
+                    });
+                    renderPropertyInspector();
+                    updateCanvasLive();
+                };
+
+                grp.querySelector('#btn-add-step-card').addEventListener('click', addStepFn);
+                grp.querySelector('#btn-add-step-card-bottom').addEventListener('click', addStepFn);
 
                 form.appendChild(grp);
             }
@@ -2655,7 +2851,7 @@ if (document.readyState === 'loading') {
             } else if (name === 'utility') {
                 activeWidgets = [
                     createWidgetInstance('minimal_header'),
-                    createWidgetInstance('feature_cards_3'),
+                    createWidgetInstance('desktop_showcase'),
                     createWidgetInstance('screenshot_showcase'),
                     createWidgetInstance('support_banner')
                 ];
@@ -2666,7 +2862,7 @@ if (document.readyState === 'loading') {
                     createWidgetInstance('hero_banner'),
                     createWidgetInstance('highlights_grid'),
                     createWidgetInstance('mobile_showcase'),
-                    createWidgetInstance('feature_cards_3'),
+                    createWidgetInstance('desktop_showcase'),
                     createWidgetInstance('screenshot_showcase'),
                     createWidgetInstance('edition_matrix'),
                     createWidgetInstance('faq_section'),
