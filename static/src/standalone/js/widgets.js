@@ -212,58 +212,35 @@ const WIDGET_CATALOG = [
         ]
     },
     {
-        category: 'Media & Screenshots',
-        widgets: [
-            {
-                type: 'screenshot_showcase',
-                name: 'Browser Mockup Showcase',
-                desc: 'Full-width screenshot container with browser header',
-                icon: 'fa-desktop',
-                defaultData: {
-                    title: 'Clean & Native Odoo 20 Experience',
-                    subtitle: 'Designed to blend naturally with the modern Odoo backend interface',
-                    browserTitle: 'Odoo 20 - Commission Dashboard',
-                    imageUrl: '',
-                    calloutText: 'Fully responsive on Desktop, Tablet & Mobile',
-                    bgColor: '#f8fafc'
-                }
-            },
-            {
-                type: 'screenshot_duo',
-                name: '2-Column Screenshot Grid',
-                desc: 'Dual screenshot comparison cards',
-                icon: 'fa-picture-o',
-                defaultData: {
-                    title: 'Screenshots & User Experience',
-                    bgColor: '#ffffff',
-                    col1Title: 'Commission Rules Configuration',
-                    col1Desc: 'Easily set up complex equations and tiered margins.',
-                    col1Img: '',
-                    col2Title: 'Salesman Commission Statement',
-                    col2Desc: 'Transparent payout ledger accessible anytime.',
-                    col2Img: ''
-                }
-            }
-        ]
-    },
-    {
         category: 'Comparison & Tables',
         widgets: [
             {
-                type: 'edition_matrix',
-                name: 'Editions Compatibility Matrix',
-                desc: 'Community vs Enterprise comparison table',
-                icon: 'fa-table',
+                type: 'vs_table',
+                name: 'Feature Comparison (VS Table)',
+                desc: 'Side-by-side comparison table highlighting your app vs standard Odoo / competitors',
+                icon: 'fa-columns',
                 defaultData: {
-                    title: 'Editions & Versions Compatibility',
-                    subtitle: 'Certified and tested across all supported Odoo environments',
-                    bgColor: '#ffffff',
+                    title: 'Why Choose Our Solution?',
+                    subtitle: 'See how our advanced module delivers superior features and automation compared to standard Odoo',
+                    bgColor: '#f8fafc',
+                    cardBgColor: '#ffffff',
+                    cardBorderColor: '#e2e8f0',
+                    headerBgColor: '#f8fafc',
+                    headerTextColor: '#334155',
+                    titleColor: '#1e293b',
+                    subtitleColor: '#64748b',
+                    accentColor: '#007bff',
+                    col1Title: 'Key Capabilities & Features',
+                    col2Title: 'Our Module',
+                    col2Badge: 'Recommended',
+                    col3Title: 'Standard Odoo',
                     rows: [
-                        { feature: 'Core Commission Engine', community: true, enterprise: true, odoosh: true },
-                        { feature: 'Multi-Company & Branch Support', community: true, enterprise: true, odoosh: true },
-                        { feature: 'Customer Portal Statements', community: true, enterprise: true, odoosh: true },
-                        { feature: 'Automatic Vendor Bill Creation', community: true, enterprise: true, odoosh: true },
-                        { feature: 'Payroll Payslip Integration', community: false, enterprise: true, odoosh: true },
+                        { feature: 'Multi-Level Approval Rules', detail: 'Dynamic tiers by department, manager, and custom amounts', ourApp: true, competitor: false },
+                        { feature: 'Automated Real-Time Notifications', detail: 'Instant alerts via WhatsApp, SMS, and formatted email', ourApp: true, competitor: false },
+                        { feature: 'Interactive Analytics & KPIs', detail: 'Live graphical drill-down metrics and forecasting cards', ourApp: true, competitor: 'Basic Only' },
+                        { feature: 'Bulk Processing Engine', detail: 'Process hundreds of invoices and records in one click', ourApp: true, competitor: false },
+                        { feature: 'Custom PDF & Excel Designer', detail: 'Branded export templates with company logos and styles', ourApp: true, competitor: false },
+                        { feature: 'Dedicated Free Support & Upgrades', detail: 'Fast direct assistance via email, WhatsApp, and Skype', ourApp: '90 Days Free', competitor: 'Paid / None' }
                     ]
                 }
             }

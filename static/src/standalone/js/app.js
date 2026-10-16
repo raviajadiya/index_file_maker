@@ -461,12 +461,12 @@ if (document.readyState === 'loading') {
             const form = document.createElement('div');
 
             // Title
-            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps') {
+            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table') {
                 form.appendChild(createInputField('Title', d.title, (val) => { d.title = val; updateCanvasLive(); }));
             }
 
             // Subtitle
-            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps') {
+            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table') {
                 form.appendChild(createTextareaField('Subtitle / Tagline', d.subtitle, (val) => { d.subtitle = val; updateCanvasLive(); }));
             }
 
@@ -625,7 +625,7 @@ if (document.readyState === 'loading') {
             }
 
             // Badge / Chip Colors & Appearance (Dynamic Color Controls & Presets)
-            if (d.badges !== undefined || d.badgeBgColor !== undefined) {
+            if ((d.badges !== undefined || d.badgeBgColor !== undefined) && widget.type !== 'vs_table') {
                 const isShowcase = (widget.type === 'mobile_showcase' || widget.type === 'desktop_showcase');
                 if (d.badgeBgColor === undefined) d.badgeBgColor = (isShowcase ? '#007bff' : '#ffffff');
                 if (d.badgeTextColor === undefined) d.badgeTextColor = (isShowcase ? '#ffffff' : '#714B67');
@@ -835,8 +835,8 @@ if (document.readyState === 'loading') {
                 form.appendChild(imgGroup);
             }
 
-            // Colors (for widgets other than highlights_grid, stats_counter, mobile_showcase, desktop_showcase, and workflow_steps)
-            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps') {
+            // Colors (for widgets other than highlights_grid, stats_counter, mobile_showcase, desktop_showcase, workflow_steps, and vs_table)
+            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table') {
                 if (d.bgColor !== undefined) {
                     form.appendChild(createColorField('Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
                 }
@@ -2309,6 +2309,187 @@ if (document.readyState === 'loading') {
                 form.appendChild(ptStyleGroup);
             }
 
+            // Dedicated VS Table Full Custom Inspector
+            if (widget.type === 'vs_table') {
+                delete d.badgeNumber;
+                delete d.badgeText;
+                delete d.badgeBgColor;
+                delete d.badgeTextColor;
+                delete d.badgeBorderColor;
+                delete d.badgePreset;
+                if (d.title === undefined) d.title = 'Why Choose Our Solution?';
+                if (d.subtitle === undefined) d.subtitle = 'See how our advanced module delivers superior features and automation compared to standard Odoo';
+                if (d.bgColor === undefined) d.bgColor = '#f8fafc';
+                if (d.cardBgColor === undefined) d.cardBgColor = '#ffffff';
+                if (d.cardBorderColor === undefined) d.cardBorderColor = '#e2e8f0';
+                if (d.headerBgColor === undefined) d.headerBgColor = '#f8fafc';
+                if (d.headerTextColor === undefined) d.headerTextColor = '#334155';
+                if (d.titleColor === undefined) d.titleColor = '#1e293b';
+                if (d.subtitleColor === undefined) d.subtitleColor = '#64748b';
+                if (d.accentColor === undefined) d.accentColor = '#007bff';
+                if (d.col1Title === undefined) d.col1Title = 'Key Capabilities & Features';
+                if (d.col2Title === undefined) d.col2Title = 'Our Module';
+                if (d.col2Badge === undefined) d.col2Badge = 'Recommended';
+                if (d.col3Title === undefined) d.col3Title = 'Standard Odoo';
+                if (!Array.isArray(d.rows)) d.rows = [];
+
+                // 1. Header Group
+                const hdrGroup = document.createElement('div');
+                hdrGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                hdrGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-header" style="color: var(--primary);"></i> Section Header
+                    </div>
+                `;
+                hdrGroup.appendChild(createInputField('Heading Title', d.title, (val) => { d.title = val; updateCanvasLive(); }));
+                hdrGroup.appendChild(createColorField('Title Color', d.titleColor, (val) => { d.titleColor = val; updateCanvasLive(); }));
+                hdrGroup.appendChild(createTextareaField('Subtitle / Tagline', d.subtitle, (val) => { d.subtitle = val; updateCanvasLive(); }));
+                hdrGroup.appendChild(createColorField('Subtitle Color', d.subtitleColor, (val) => { d.subtitleColor = val; updateCanvasLive(); }));
+                hdrGroup.appendChild(createColorField('Section Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
+                form.appendChild(hdrGroup);
+
+                // 2. Column Titles & Highlight Settings
+                const colsGroup = document.createElement('div');
+                colsGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                colsGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-columns" style="color: var(--primary);"></i> Column Headers &amp; Highlights
+                    </div>
+                `;
+                colsGroup.appendChild(createInputField('Column 1 Header (Features)', d.col1Title, (val) => { d.col1Title = val; updateCanvasLive(); }));
+                colsGroup.appendChild(createInputField('Column 2 Header (Our App / Module)', d.col2Title, (val) => { d.col2Title = val; updateCanvasLive(); }));
+                colsGroup.appendChild(createInputField('Our App Top Badge Label', d.col2Badge, (val) => { d.col2Badge = val; updateCanvasLive(); }));
+                colsGroup.appendChild(createInputField('Column 3 Header (Competitor / Standard)', d.col3Title, (val) => { d.col3Title = val; updateCanvasLive(); }));
+                colsGroup.appendChild(createColorField('Our App Accent / Highlight Color', d.accentColor, (val) => { d.accentColor = val; updateCanvasLive(); }));
+                form.appendChild(colsGroup);
+
+                // 3. Table Styling Colors
+                const styleGroup = document.createElement('div');
+                styleGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                styleGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-paint-brush" style="color: var(--primary);"></i> Table Card Styling
+                    </div>
+                `;
+                styleGroup.appendChild(createColorField('Card Background Color', d.cardBgColor, (val) => { d.cardBgColor = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Card Border Color', d.cardBorderColor, (val) => { d.cardBorderColor = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Header Row Background', d.headerBgColor, (val) => { d.headerBgColor = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Header Row Text Color', d.headerTextColor, (val) => { d.headerTextColor = val; updateCanvasLive(); }));
+                form.appendChild(styleGroup);
+
+                // 4. Feature Rows Manager
+                const rowsGroup = document.createElement('div');
+                rowsGroup.className = 'form-group';
+                rowsGroup.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label class="form-label" style="margin: 0; font-weight: 700; font-size: 13px; color: var(--text-main);">
+                            <i class="fa fa-list" style="color: var(--primary); margin-right: 4px;"></i> Comparison Rows (${d.rows.length})
+                        </label>
+                        <button type="button" class="btn btn-outline" id="btn-add-vs-row" style="font-size: 11px; padding: 4px 10px; color: var(--primary); border-color: var(--primary); cursor: pointer; font-weight: 600;">
+                            <i class="fa fa-plus"></i> Add Row
+                        </button>
+                    </div>
+                    <div id="vs-rows-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                    <button type="button" class="btn btn-outline" id="btn-add-vs-row-bottom" style="width: 100%; margin-top: 10px; font-size: 12px; padding: 7px; color: var(--primary); border-color: var(--primary); border-style: dashed; font-weight: 600; cursor: pointer;">
+                        <i class="fa fa-plus-circle"></i> + Add Comparison Row
+                    </button>
+                `;
+
+                const rowsList = rowsGroup.querySelector('#vs-rows-list');
+                d.rows.forEach((r, idx) => {
+                    const rowBox = document.createElement('div');
+                    rowBox.style.cssText = 'background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);';
+                    rowBox.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; font-weight: 700; color: var(--primary);">Row #${idx + 1}</span>
+                            <div style="display: flex; gap: 4px;">
+                                <button type="button" class="toolbar-btn btn-vs-up" title="Move Up" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === 0 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-up"></i></button>
+                                <button type="button" class="toolbar-btn btn-vs-down" title="Move Down" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === d.rows.length - 1 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-down"></i></button>
+                                <button type="button" class="toolbar-btn btn-vs-del" title="Delete Row" style="padding: 2px 6px; font-size: 10px; color: #ef4444; cursor: pointer;"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <input type="text" class="form-input vs-feature-name mb-1" value="${escapeHTML(r.feature || '')}" placeholder="Feature Title..." style="font-size: 12px; padding: 6px 8px; font-weight: 600;">
+                        <input type="text" class="form-input vs-feature-detail mb-2" value="${escapeHTML(r.detail || '')}" placeholder="Short detail / description note (optional)..." style="font-size: 11px; padding: 4px 8px; color: #64748b;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #f8fafc; padding: 8px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                            <div>
+                                <label style="font-size: 10.5px; font-weight: 700; color: #0284c7; display: block; margin-bottom: 3px;">Our App</label>
+                                <input type="text" class="form-input vs-our-val" value="${r.ourApp === true ? 'Yes' : (r.ourApp === false ? 'No' : escapeHTML(String(r.ourApp || 'Yes')))}" placeholder="Yes, No, or Custom note..." style="font-size: 11px; padding: 4px 6px;">
+                            </div>
+                            <div>
+                                <label style="font-size: 10.5px; font-weight: 700; color: #64748b; display: block; margin-bottom: 3px;">Standard / Competitor</label>
+                                <input type="text" class="form-input vs-comp-val" value="${r.competitor === true ? 'Yes' : (r.competitor === false ? 'No' : escapeHTML(String(r.competitor || 'No')))}" placeholder="Yes, No, or Custom note..." style="font-size: 11px; padding: 4px 6px;">
+                            </div>
+                        </div>
+                    `;
+
+                    rowBox.querySelector('.vs-feature-name').addEventListener('input', (e) => {
+                        r.feature = e.target.value;
+                        updateCanvasLive();
+                    });
+                    rowBox.querySelector('.vs-feature-detail').addEventListener('input', (e) => {
+                        r.detail = e.target.value;
+                        updateCanvasLive();
+                    });
+                    rowBox.querySelector('.vs-our-val').addEventListener('input', (e) => {
+                        const v = e.target.value.trim();
+                        if (v.toLowerCase() === 'yes' || v.toLowerCase() === 'true') r.ourApp = true;
+                        else if (v.toLowerCase() === 'no' || v.toLowerCase() === 'false') r.ourApp = false;
+                        else r.ourApp = v;
+                        updateCanvasLive();
+                    });
+                    rowBox.querySelector('.vs-comp-val').addEventListener('input', (e) => {
+                        const v = e.target.value.trim();
+                        if (v.toLowerCase() === 'yes' || v.toLowerCase() === 'true') r.competitor = true;
+                        else if (v.toLowerCase() === 'no' || v.toLowerCase() === 'false') r.competitor = false;
+                        else r.competitor = v;
+                        updateCanvasLive();
+                    });
+
+                    const upBtn = rowBox.querySelector('.btn-vs-up');
+                    if (upBtn && idx > 0) {
+                        upBtn.addEventListener('click', () => {
+                            const tmp = d.rows[idx];
+                            d.rows[idx] = d.rows[idx - 1];
+                            d.rows[idx - 1] = tmp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+                    const downBtn = rowBox.querySelector('.btn-vs-down');
+                    if (downBtn && idx < d.rows.length - 1) {
+                        downBtn.addEventListener('click', () => {
+                            const tmp = d.rows[idx];
+                            d.rows[idx] = d.rows[idx + 1];
+                            d.rows[idx + 1] = tmp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+                    const delBtn = rowBox.querySelector('.btn-vs-del');
+                    delBtn.addEventListener('click', () => {
+                        d.rows.splice(idx, 1);
+                        renderPropertyInspector();
+                        updateCanvasLive();
+                    });
+
+                    rowsList.appendChild(rowBox);
+                });
+
+                const addVsRowFn = () => {
+                    d.rows.push({
+                        feature: 'New Advanced Capability',
+                        detail: 'Custom automated rule or workflow',
+                        ourApp: true,
+                        competitor: false
+                    });
+                    renderPropertyInspector();
+                    updateCanvasLive();
+                };
+                rowsGroup.querySelector('#btn-add-vs-row').addEventListener('click', addVsRowFn);
+                rowsGroup.querySelector('#btn-add-vs-row-bottom').addEventListener('click', addVsRowFn);
+                form.appendChild(rowsGroup);
+            }
+
             // Multi-item editors
             // 1. Bullets (feature split)
             if (d.bulletItems !== undefined) {
@@ -2852,7 +3033,6 @@ if (document.readyState === 'loading') {
                 activeWidgets = [
                     createWidgetInstance('minimal_header'),
                     createWidgetInstance('desktop_showcase'),
-                    createWidgetInstance('screenshot_showcase'),
                     createWidgetInstance('support_banner')
                 ];
                 selectedWidgetId = activeWidgets[0].id;
@@ -2863,8 +3043,7 @@ if (document.readyState === 'loading') {
                     createWidgetInstance('highlights_grid'),
                     createWidgetInstance('mobile_showcase'),
                     createWidgetInstance('desktop_showcase'),
-                    createWidgetInstance('screenshot_showcase'),
-                    createWidgetInstance('edition_matrix'),
+                    createWidgetInstance('vs_table'),
                     createWidgetInstance('faq_section'),
                     createWidgetInstance('other_apps'),
                     createWidgetInstance('support_banner')

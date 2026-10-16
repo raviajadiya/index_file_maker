@@ -101,6 +101,16 @@ function renderSafeIcon(iconStr, defaultIcon = '<i class="oi" data-icon="task_al
     return `<i class="${faClass}" style="font-size: 22px; vertical-align: middle; color: inherit;"></i>`;
 }
 
+function renderTableCheck(val) {
+    if (val === true || String(val).toLowerCase() === 'true' || val === 'yes' || val === '1') {
+        return `<span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background-color: #ecfdf5; color: #10b981; border: 1px solid #a7f3d0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 900; line-height: 1;">&#10003;</span>`;
+    } else if (val === false || String(val).toLowerCase() === 'false' || val === 'no' || val === '0' || val === '' || val === null || val === undefined) {
+        return `<span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background-color: #f8fafc; color: #94a3b8; border: 1px solid #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 900; line-height: 1;">&#10005;</span>`;
+    } else {
+        return `<span style="display: inline-block; padding: 4px 10px; border-radius: 12px; background-color: #eff6ff; color: #1d4ed8; font-size: 12px; font-weight: 700; border: 1px solid #bfdbfe; font-family: inherit;">${escapeHTML(String(val))}</span>`;
+    }
+}
+
 function renderWidgetAppStore(widget, globalBrand, globalAccent) {
     const d = widget.data || {};
     const type = widget.type;
@@ -615,100 +625,55 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
 </section>`;
         }
 
-        case 'screenshot_showcase': {
-            const bg = d.bgColor || '#ffffff';
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3">
-        ${d.title ? `<div class="row justify-content-center text-center mb-4">
-            <div class="col-12 col-lg-8">
-                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
-                ${d.subtitle ? `<p style="font-size: 16px; color: #64748b; margin: 0;">${escapeHTML(d.subtitle)}</p>` : ''}
-            </div>
-        </div>` : ''}
-        <!-- Browser Mockup Window -->
-        <div class="card shadow-sm overflow-hidden mt-4" style="background-color: #ffffff; border: 1px solid #cbd5e1; border-radius: 12px;">
-            <div class="d-flex align-items-center justify-content-between px-3 py-2" style="background-color: #f1f5f9; border-bottom: 1px solid #e2e8f0;">
-                <div class="d-flex">
-                    <span class="me-2" style="width: 12px; height: 12px; border-radius: 50%; background-color: #ef4444; display: inline-block;"></span>
-                    <span class="me-2" style="width: 12px; height: 12px; border-radius: 50%; background-color: #f59e0b; display: inline-block;"></span>
-                    <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #10b981; display: inline-block;"></span>
-                </div>
-                <div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 3px 20px; font-size: 12px; color: #64748b; font-weight: 500;">
-                    ${escapeHTML(d.browserTitle || 'Odoo 20')}
-                </div>
-                <div style="width: 44px;"></div>
-            </div>
-            <div class="p-3 text-center" style="background-color: #fafafa;">
-                ${d.imageUrl ? `<img src="${d.imageUrl}" alt="Full UI Screenshot" class="img-fluid" style="border-radius: 6px; display: block; border: 1px solid #e2e8f0;"/>` : `
-                <div class="py-5 px-3" style="background-color: #f1f5f9; border-radius: 6px; color: #94a3b8;">
-                    <i class="fa fa-desktop" style="font-size: 56px; margin-bottom: 14px; display: block;"></i>
-                    <span style="font-size: 16px; font-weight: 600;">Main Screen Demonstration / High-Res Screenshot</span>
-                </div>`}
-            </div>
-        </div>
-        ${d.calloutText ? `<div class="text-center mt-3"><span style="font-size: 13px; color: #64748b; font-weight: 500;"><i class="fa fa-check text-success me-1"></i> ${escapeHTML(d.calloutText)}</span></div>` : ''}
-    </div>
-</section>`;
-        }
-
-        case 'screenshot_duo': {
-            const bg = d.bgColor || '#f8f9fa';
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3">
-        ${d.title ? `<div class="row justify-content-center text-center mb-5"><div class="col-12"><h2 style="font-size: 32px; font-weight: 700; color: #1e293b;">${escapeHTML(d.title)}</h2></div></div>` : ''}
-        <div class="row">
-            <div class="col-12 col-md-6 mb-4">
-                <div class="card h-100 shadow-sm p-3" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;">
-                    ${d.col1Img ? `<img src="${d.col1Img}" alt="${escapeHTML(d.col1Title)}" class="img-fluid" style="border-radius: 6px; display: block;"/>` : `
-                    <div class="py-5 px-3 text-center" style="background-color: #f1f5f9; border-radius: 6px; color: #94a3b8;"><i class="fa fa-image" style="font-size: 40px; display: block; margin-bottom: 10px;"></i><span>Screenshot 1</span></div>`}
-                    <h4 style="font-size: 16px; font-weight: 700; color: #1e293b; margin-top: 14px; margin-bottom: 6px;">${escapeHTML(d.col1Title || '')}</h4>
-                    <p style="font-size: 13px; color: #64748b; margin: 0;">${escapeHTML(d.col1Desc || '')}</p>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 mb-4">
-                <div class="card h-100 shadow-sm p-3" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;">
-                    ${d.col2Img ? `<img src="${d.col2Img}" alt="${escapeHTML(d.col2Title)}" class="img-fluid" style="border-radius: 6px; display: block;"/>` : `
-                    <div class="py-5 px-3 text-center" style="background-color: #f1f5f9; border-radius: 6px; color: #94a3b8;"><i class="fa fa-image" style="font-size: 40px; display: block; margin-bottom: 10px;"></i><span>Screenshot 2</span></div>`}
-                    <h4 style="font-size: 16px; font-weight: 700; color: #1e293b; margin-top: 14px; margin-bottom: 6px;">${escapeHTML(d.col2Title || '')}</h4>
-                    <p style="font-size: 13px; color: #64748b; margin: 0;">${escapeHTML(d.col2Desc || '')}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>`;
-        }
-
-        case 'edition_matrix': {
-            const bg = d.bgColor || '#ffffff';
+        case 'vs_table': {
+            const bg = d.bgColor || '#f8fafc';
+            const cardBg = d.cardBgColor || '#ffffff';
+            const cardBorder = d.cardBorderColor || '#e2e8f0';
+            const headerBg = d.headerBgColor || '#f8fafc';
+            const headerTextColor = d.headerTextColor || '#334155';
+            const titleColor = d.titleColor || '#1e293b';
+            const subtitleColor = d.subtitleColor || '#64748b';
+            const accent = d.accentColor || globalAccent || '#007bff';
             const rows = d.rows || [];
-            const rowsHTML = rows.map(r => `
-            <tr style="border-bottom: 1px solid #e2e8f0;">
-                <td style="padding: 14px 18px; font-weight: 600; color: #1e293b;">${escapeHTML(r.feature)}</td>
-                <td style="padding: 14px 18px; text-align: center;">${r.community ? '<i class="fa fa-check-circle" style="color: #10b981; font-size: 18px;"></i>' : '<i class="fa fa-times-circle" style="color: #cbd5e1; font-size: 18px;"></i>'}</td>
-                <td style="padding: 14px 18px; text-align: center;">${r.enterprise ? '<i class="fa fa-check-circle" style="color: #10b981; font-size: 18px;"></i>' : '<i class="fa fa-times-circle" style="color: #cbd5e1; font-size: 18px;"></i>'}</td>
-                <td style="padding: 14px 18px; text-align: center;">${r.odoosh ? '<i class="fa fa-check-circle" style="color: #10b981; font-size: 18px;"></i>' : '<i class="fa fa-times-circle" style="color: #cbd5e1; font-size: 18px;"></i>'}</td>
+
+            const rowsHTML = rows.map((r, i) => `
+            <tr style="border-bottom: 1px solid #f1f5f9; background-color: ${i % 2 === 0 ? '#ffffff' : '#fafafa'};">
+                <td style="padding: 14px 22px;">
+                    <div style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 2px;">${escapeHTML(r.feature || '')}</div>
+                    ${r.detail ? `<div style="font-size: 12px; color: #64748b; line-height: 1.4;">${escapeHTML(r.detail)}</div>` : ''}
+                </td>
+                <td style="padding: 14px 16px; text-align: center; background-color: #f8fbff; border-left: 2px solid #e0f0fe; border-right: 2px solid #e0f0fe;">
+                    ${renderTableCheck(r.ourApp !== undefined ? r.ourApp : true)}
+                </td>
+                <td style="padding: 14px 16px; text-align: center;">
+                    ${renderTableCheck(r.competitor !== undefined ? r.competitor : false)}
+                </td>
             </tr>`).join('');
 
             return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3" style="max-width: 960px;">
-        ${d.title ? `<div class="row justify-content-center text-center mb-5">
-            <div class="col-12">
-                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
-                ${d.subtitle ? `<p style="font-size: 16px; color: #64748b; margin: 0;">${escapeHTML(d.subtitle)}</p>` : ''}
+    <div class="container py-3" style="max-width: 980px;">
+        <div class="row justify-content-center text-center mb-4">
+            <div class="col-12 col-lg-10">
+                ${d.title ? `<h2 style="font-size: 30px; font-weight: 700; color: ${titleColor} !important; margin: 0 0 10px 0; line-height: 1.3;">${escapeHTML(d.title)}</h2>` : ''}
+                ${d.subtitle ? `<p style="font-size: 15px; color: ${subtitleColor} !important; margin: 0 auto; line-height: 1.6; max-width: 720px;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
-        </div>` : ''}
-        <div class="card shadow-sm overflow-hidden" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;">
-            <table class="table table-borderless m-0" style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr style="background-color: #f8f9fa; border-bottom: 2px solid #e2e8f0;">
-                        <th style="padding: 16px 18px; font-size: 14px; font-weight: 700; color: #475569;">Features &amp; Scope</th>
-                        <th style="padding: 16px 18px; text-align: center; font-size: 14px; font-weight: 700; color: #475569;">Community</th>
-                        <th style="padding: 16px 18px; text-align: center; font-size: 14px; font-weight: 700; color: #475569;">Enterprise</th>
-                        <th style="padding: 16px 18px; text-align: center; font-size: 14px; font-weight: 700; color: #475569;">Odoo.sh</th>
-                    </tr>
-                </thead>
-                <tbody>${rowsHTML}</tbody>
-            </table>
+        </div>
+        <div style="background: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); overflow: hidden;">
+            <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; margin: 0; background-color: ${cardBg};">
+                    <thead>
+                        <tr style="background-color: ${headerBg}; border-bottom: 2px solid ${cardBorder};">
+                            <th style="padding: 18px 22px; font-size: 13px; font-weight: 700; color: ${headerTextColor}; text-transform: uppercase; letter-spacing: 0.5px; width: 48%;">${escapeHTML(d.col1Title || 'Key Capabilities & Features')}</th>
+                            <th style="padding: 16px 16px; text-align: center; background-color: #f0f7ff; border-left: 2px solid #bfdbfe; border-right: 2px solid #bfdbfe; border-top: 3px solid ${accent}; width: 26%;">
+                                ${d.col2Badge ? `<span style="display: inline-block; background-color: ${accent}; color: #ffffff; padding: 2px 8px; border-radius: 10px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">${escapeHTML(d.col2Badge)}</span><br>` : ''}
+                                <span style="font-size: 14px; font-weight: 800; color: ${accent};">${escapeHTML(d.col2Title || 'Our Module')}</span>
+                            </th>
+                            <th style="padding: 18px 16px; font-size: 13px; font-weight: 700; color: ${headerTextColor}; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; width: 26%;">${escapeHTML(d.col3Title || 'Standard Odoo')}</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rowsHTML}</tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>`;
