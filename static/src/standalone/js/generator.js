@@ -669,30 +669,51 @@ function renderWidgetHtml(widget) {
         }
 
         case 'faq_section': {
-            const bg = d.bgColor || '#f8f9fa';
+            const bg = d.bgColor || '#ffffff';
+            const headerBg = d.headerBg || '#eff6ff';
+            const questionColor = d.questionColor || '#2563eb';
+            const borderColor = d.borderColor || '#dbeafe';
             const faqs = d.faqs || [];
-            const faqsHTML = faqs.map(f => `
-            <div class="card shadow-sm mb-3" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;">
-                <div class="card-body p-4">
-                    <h4 class="d-flex align-items-center mb-2" style="font-size: 16px; font-weight: 700; color: #1e293b;">
-                        <i class="fa fa-question-circle me-2" style="color: ${globalBrand}; font-size: 18px;"></i>
-                        <span>${escapeHTML(f.q)}</span>
-                    </h4>
-                    <p style="font-size: 14px; color: #64748b; line-height: 1.6; margin: 0; padding-left: 26px;">
-                        ${escapeHTML(f.a)}
-                    </p>
-                </div>
-            </div>`).join('');
+            const faqsHTML = faqs.map((f, idx) => {
+                const isOpen = f.isOpen === true || (f.isOpen === undefined && idx === 0);
+                const openAttr = isOpen ? ' open' : '';
+                return `
+        <details class="faq-accordion-item"${openAttr} style="background-color: #ffffff; border: 1px solid ${borderColor}; border-radius: 10px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+            <summary style="background-color: ${headerBg}; color: ${questionColor}; padding: 14px 20px; font-weight: 600; font-size: 15px; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none; transition: background-color 0.2s;">
+                <span style="display: inline-block; padding-right: 12px; color: ${questionColor}; font-weight: 600; font-size: 15px; line-height: 1.4;">${escapeHTML(f.q)}</span>
+                <svg class="faq-chevron" style="width: 18px; height: 18px; min-width: 18px; stroke: ${questionColor}; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s ease;" viewBox="0 0 24 24">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </summary>
+            <div style="padding: 16px 20px; background-color: #ffffff; color: #334155; font-size: 14.5px; line-height: 1.65; border-top: 1px solid ${borderColor};">
+                ${escapeHTML(f.a)}
+            </div>
+        </details>`;
+            }).join('');
 
             return `<section class="py-4" style="background-color: ${bg};">
-    <div class="container py-1" style="max-width: 900px;">
+    <style>
+        details.faq-accordion-item summary::-webkit-details-marker,
+        details.faq-accordion-item summary::marker {
+            display: none !important;
+        }
+        details.faq-accordion-item[open] .faq-chevron {
+            transform: rotate(180deg);
+        }
+        details.faq-accordion-item summary:hover {
+            filter: brightness(0.97);
+        }
+    </style>
+    <div class="container py-1" style="max-width: 920px;">
         ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12">
-                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
-                ${d.subtitle ? `<p style="font-size: 16px; color: #64748b; margin: 0;">${escapeHTML(d.subtitle)}</p>` : ''}
+                <h2 style="font-size: 30px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">${escapeHTML(d.title)}</h2>
+                ${d.subtitle ? `<p style="font-size: 15px; color: #64748b; margin: 0;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
-        <div>${faqsHTML}</div>
+        <div class="faq-accordion-list">
+            ${faqsHTML}
+        </div>
     </div>
 </section>`;
         }

@@ -461,12 +461,12 @@ if (document.readyState === 'loading') {
             const form = document.createElement('div');
 
             // Title
-            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table') {
+            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section') {
                 form.appendChild(createInputField('Title', d.title, (val) => { d.title = val; updateCanvasLive(); }));
             }
 
             // Subtitle
-            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table') {
+            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section') {
                 form.appendChild(createTextareaField('Subtitle / Tagline', d.subtitle, (val) => { d.subtitle = val; updateCanvasLive(); }));
             }
 
@@ -835,8 +835,8 @@ if (document.readyState === 'loading') {
                 form.appendChild(imgGroup);
             }
 
-            // Colors (for widgets other than highlights_grid, stats_counter, mobile_showcase, desktop_showcase, workflow_steps, and vs_table)
-            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table') {
+            // Colors (for widgets other than highlights_grid, stats_counter, mobile_showcase, desktop_showcase, workflow_steps, vs_table, and faq_section)
+            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section') {
                 if (d.bgColor !== undefined) {
                     form.appendChild(createColorField('Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
                 }
@@ -2490,6 +2490,146 @@ if (document.readyState === 'loading') {
                 form.appendChild(rowsGroup);
             }
 
+            // ==========================================
+            // FAQ ACCORDION CARDS INSPECTOR
+            // ==========================================
+            if (widget.type === 'faq_section') {
+                if (d.bgColor === undefined) d.bgColor = '#ffffff';
+                if (d.headerBg === undefined) d.headerBg = '#eff6ff';
+                if (d.questionColor === undefined) d.questionColor = '#2563eb';
+                if (d.borderColor === undefined) d.borderColor = '#dbeafe';
+                if (!Array.isArray(d.faqs)) d.faqs = [];
+
+                // 1. Header & Section Background
+                const hdrGroup = document.createElement('div');
+                hdrGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                hdrGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-header" style="color: var(--primary);"></i> Section Header
+                    </div>
+                `;
+                hdrGroup.appendChild(createInputField('Heading Title', d.title, (val) => { d.title = val; updateCanvasLive(); }));
+                hdrGroup.appendChild(createTextareaField('Subtitle / Tagline', d.subtitle, (val) => { d.subtitle = val; updateCanvasLive(); }));
+                hdrGroup.appendChild(createColorField('Section Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
+                form.appendChild(hdrGroup);
+
+                // 2. Accordion Colors (Matching Evo CRM Preset)
+                const styleGroup = document.createElement('div');
+                styleGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                styleGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-paint-brush" style="color: var(--primary);"></i> Accordion Styling &amp; Colors
+                    </div>
+                `;
+                styleGroup.appendChild(createColorField('Question Bar Background', d.headerBg, (val) => { d.headerBg = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Question Text & Chevron Color', d.questionColor, (val) => { d.questionColor = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Card Border Color', d.borderColor, (val) => { d.borderColor = val; updateCanvasLive(); }));
+                form.appendChild(styleGroup);
+
+                // 3. FAQ Questions Manager
+                const faqGroup = document.createElement('div');
+                faqGroup.className = 'form-group';
+                faqGroup.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label class="form-label" style="margin: 0; font-weight: 700; font-size: 13px; color: var(--text-main);">
+                            <i class="fa fa-question-circle" style="color: var(--primary); margin-right: 4px;"></i> FAQ Questions (${d.faqs.length})
+                        </label>
+                        <button type="button" class="btn btn-outline" id="btn-add-faq-top" style="font-size: 11px; padding: 4px 10px; color: var(--primary); border-color: var(--primary); cursor: pointer; font-weight: 600;">
+                            <i class="fa fa-plus"></i> Add Question
+                        </button>
+                    </div>
+                    <div class="items-list" id="faq-cards-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                    <button type="button" class="btn btn-outline" id="btn-add-faq-bottom" style="width: 100%; margin-top: 10px; font-size: 12px; padding: 8px; color: var(--primary); border-color: var(--primary); border-style: dashed; font-weight: 600; cursor: pointer;">
+                        <i class="fa fa-plus-circle"></i> + Add Another Question
+                    </button>
+                `;
+
+                const list = faqGroup.querySelector('#faq-cards-list');
+                d.faqs.forEach((item, idx) => {
+                    const isItemOpen = item.isOpen === true || (item.isOpen === undefined && idx === 0);
+                    const itemBox = document.createElement('div');
+                    itemBox.className = 'item-card';
+                    itemBox.style.cssText = 'background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; position: relative;';
+                    itemBox.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-size: 11px; font-weight: 700; color: var(--primary);">FAQ #${idx + 1}</span>
+                            <div style="display: flex; gap: 4px;">
+                                <button type="button" class="toolbar-btn btn-faq-up" title="Move Up" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === 0 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-up"></i></button>
+                                <button type="button" class="toolbar-btn btn-faq-down" title="Move Down" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === d.faqs.length - 1 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-down"></i></button>
+                                <button type="button" class="toolbar-btn btn-faq-del" title="Delete Question" style="padding: 2px 6px; font-size: 10px; color: #ef4444; cursor: pointer;"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 6px;">
+                            <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Question</label>
+                            <input type="text" class="form-input faq-q-input" value="${escapeHTML(item.q || '')}" placeholder="e.g. Can users manage opportunities from the mobile app?">
+                        </div>
+                        <div style="margin-bottom: 8px;">
+                            <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Answer</label>
+                            <textarea class="form-textarea faq-a-input" rows="2" placeholder="e.g. Yes, users can create, update, and track...">${escapeHTML(item.a || '')}</textarea>
+                        </div>
+                        <label style="font-size: 11px; color: #475569; display: flex; align-items: center; gap: 6px; cursor: pointer; user-select: none;">
+                            <input type="checkbox" class="faq-open-checkbox" ${isItemOpen ? 'checked' : ''}>
+                            <span>Open by default (expanded)</span>
+                        </label>
+                    `;
+
+                    itemBox.querySelector('.faq-q-input').addEventListener('input', (e) => {
+                        item.q = e.target.value;
+                        updateCanvasLive();
+                    });
+                    itemBox.querySelector('.faq-a-input').addEventListener('input', (e) => {
+                        item.a = e.target.value;
+                        updateCanvasLive();
+                    });
+                    itemBox.querySelector('.faq-open-checkbox').addEventListener('change', (e) => {
+                        item.isOpen = e.target.checked;
+                        updateCanvasLive();
+                    });
+
+                    const upBtn = itemBox.querySelector('.btn-faq-up');
+                    if (upBtn && idx > 0) {
+                        upBtn.addEventListener('click', () => {
+                            const tmp = d.faqs[idx];
+                            d.faqs[idx] = d.faqs[idx - 1];
+                            d.faqs[idx - 1] = tmp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+                    const downBtn = itemBox.querySelector('.btn-faq-down');
+                    if (downBtn && idx < d.faqs.length - 1) {
+                        downBtn.addEventListener('click', () => {
+                            const tmp = d.faqs[idx];
+                            d.faqs[idx] = d.faqs[idx + 1];
+                            d.faqs[idx + 1] = tmp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+                    const delBtn = itemBox.querySelector('.btn-faq-del');
+                    delBtn.addEventListener('click', () => {
+                        d.faqs.splice(idx, 1);
+                        renderPropertyInspector();
+                        updateCanvasLive();
+                    });
+
+                    list.appendChild(itemBox);
+                });
+
+                const addFaqFn = () => {
+                    d.faqs.push({
+                        q: 'New question?',
+                        a: 'Detailed answer response with clear explanation.',
+                        isOpen: false
+                    });
+                    renderPropertyInspector();
+                    updateCanvasLive();
+                };
+                faqGroup.querySelector('#btn-add-faq-top').addEventListener('click', addFaqFn);
+                faqGroup.querySelector('#btn-add-faq-bottom').addEventListener('click', addFaqFn);
+                form.appendChild(faqGroup);
+            }
+
             // Multi-item editors
             // 1. Bullets (feature split)
             if (d.bulletItems !== undefined) {
@@ -2529,8 +2669,8 @@ if (document.readyState === 'loading') {
                 form.appendChild(grp);
             }
 
-            // 2. FAQs
-            if (d.faqs !== undefined) {
+            // 2. FAQs (legacy fallback for any other widget)
+            if (d.faqs !== undefined && widget.type !== 'faq_section') {
                 const grp = document.createElement('div');
                 grp.className = 'form-group';
                 grp.innerHTML = `

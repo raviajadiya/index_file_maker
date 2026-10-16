@@ -255,25 +255,32 @@ const WIDGET_CATALOG = [
                 desc: 'Frequently asked questions with answers',
                 icon: 'fa-question-circle',
                 defaultData: {
-                    title: 'Frequently Asked Questions',
+                    title: 'Frequent Questions',
                     subtitle: 'Got questions? We have answers.',
-                    bgColor: '#f8fafc',
+                    bgColor: '#ffffff',
+                    headerBg: '#eff6ff',
+                    questionColor: '#2563eb',
+                    borderColor: '#dbeafe',
                     faqs: [
                         {
-                            q: 'Is this module compatible with Odoo 20 and previous versions?',
-                            a: 'Yes! It is fully certified for Odoo 20, 19, 18, and 17 for both Community and Enterprise editions.'
+                            q: 'Can users manage opportunities from the mobile app?',
+                            a: 'Yes, users can create, update, and track opportunities directly from the mobile application with real-time status updates.',
+                            isOpen: true
                         },
                         {
-                            q: 'Does this require any external Python libraries?',
-                            a: 'No external libraries are required. It installs cleanly using standard Odoo dependencies.'
+                            q: 'Need customization? Who to contact?',
+                            a: 'You can contact our dedicated technical support team directly via email or Skype. We provide custom development and modification services tailored to your specific workflow.',
+                            isOpen: false
                         },
                         {
-                            q: 'Can we customize the commission logic for our business?',
-                            a: 'Yes, the codebase is cleanly documented and structured with extensible methods to plug in custom calculation logic.'
+                            q: 'Can users view invoices and customer information from the mobile app?',
+                            a: 'Yes, all invoices, payment records, and customer details are accessible securely from the mobile interface with role-based permissions.',
+                            isOpen: false
                         },
                         {
-                            q: 'Do you offer installation support?',
-                            a: 'Yes, we provide 90 days of free technical support and bug fixes for every purchase.'
+                            q: 'Is this module compatible with Odoo Community and Enterprise?',
+                            a: 'Yes! It is fully certified and tested on Odoo 20, 19, 18, and 17 for both Community and Enterprise editions with 100% feature parity.',
+                            isOpen: false
                         }
                     ]
                 }
