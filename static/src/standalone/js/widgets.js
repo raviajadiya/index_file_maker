@@ -284,19 +284,6 @@ const WIDGET_CATALOG = [
                         }
                     ]
                 }
-            },
-            {
-                type: 'testimonial_card',
-                name: 'Customer Testimonial',
-                desc: 'Customer quote with 5-star rating',
-                icon: 'fa-quote-left',
-                defaultData: {
-                    quote: 'This module transformed our sales compensation process. What used to take 3 days of spreadsheet reconciliation now happens automatically in seconds!',
-                    author: 'David Harrison',
-                    role: 'VP of Sales Operations',
-                    company: 'Apex Global Logistics',
-                    bgColor: '#ffffff'
-                }
             }
         ]
     },

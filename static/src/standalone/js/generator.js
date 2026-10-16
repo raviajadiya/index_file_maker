@@ -718,26 +718,6 @@ function renderWidgetHtml(widget) {
 </section>`;
         }
 
-        case 'testimonial_card': {
-            const bg = d.bgColor || '#ffffff';
-            return `<section class="py-4 text-center" style="background-color: ${bg};">
-    <div class="container py-1" style="max-width: 820px;">
-        <div class="card shadow-sm p-4 text-center" style="background-color: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 16px;">
-            <div class="mb-3" style="color: #facc15; font-size: 20px;">
-                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-            </div>
-            <p style="font-size: 18px; font-weight: 500; font-style: italic; color: #1e293b; line-height: 1.6; margin-bottom: 18px;">
-                &ldquo;${escapeHTML(d.quote || '')}&rdquo;
-            </p>
-            <div>
-                <strong style="font-size: 16px; color: #1e293b; display: block;">${escapeHTML(d.author || '')}</strong>
-                <span style="font-size: 14px; color: #64748b;">${escapeHTML(d.role || '')}${d.company ? ` &bull; ${escapeHTML(d.company)}` : ''}</span>
-            </div>
-        </div>
-    </div>
-</section>`;
-        }
-
         case 'support_banner': {
             const bg = d.bgColor || globalBrand || '#714B67';
             const textCol = d.textColor || '#ffffff';

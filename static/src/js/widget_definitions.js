@@ -423,19 +423,6 @@ export const WIDGET_CATALOG = [
                         }
                     ]
                 }
-            },
-            {
-                type: 'testimonial_card',
-                name: 'Customer Testimonial',
-                desc: 'Customer quote with 5-star rating',
-                icon: 'fa-quote-left',
-                defaultData: {
-                    quote: 'This module saved our team hundreds of hours every month. Clean code, zero bugs, and outstanding support!',
-                    author: 'David Harrison',
-                    role: 'Chief Technology Officer',
-                    company: 'Apex Solutions',
-                    bgColor: '#ffffff'
-                }
             }
         ]
     },
