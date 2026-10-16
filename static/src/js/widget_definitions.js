@@ -142,25 +142,25 @@ export const STARTER_WIDGETS = [
             iconColor: '#714B67',
             channels: [
                 {
-                    icon: 'fa fa-envelope',
+                    icon: '<i class="oi" data-icon="email"></i>',
                     label: 'Email Support',
                     value: 'support@yourdomain.com',
                     url: 'mailto:support@yourdomain.com'
                 },
                 {
-                    icon: 'fa fa-skype',
-                    label: 'Skype / Teams',
-                    value: 'live:odoo_support',
-                    url: 'skype:live:odoo_support?chat'
+                    icon: '<i class="oi" data-icon="forum"></i>',
+                    label: 'Community Forum',
+                    value: 'Join Discussions',
+                    url: 'https://yourdomain.com/forum'
                 },
                 {
-                    icon: 'fa fa-whatsapp',
-                    label: 'WhatsApp Chat',
-                    value: '+1 (555) 019-2834',
-                    url: 'https://wa.me/15550192834'
+                    icon: '<i class="oi" data-icon="campaign"></i>',
+                    label: 'Latest Updates',
+                    value: 'News & Releases',
+                    url: 'https://yourdomain.com/updates'
                 },
                 {
-                    icon: 'fa fa-life-ring',
+                    icon: '<i class="oi" data-icon="help"></i>',
                     label: 'Helpdesk Portal',
                     value: 'Submit a Ticket',
                     url: 'https://yourdomain.com/helpdesk'
@@ -498,7 +498,7 @@ export const WIDGET_CATALOG = [
             {
                 type: 'support_banner',
                 name: 'Support & Contact Card',
-                desc: 'Dedicated support contacts, WhatsApp, Skype, and warranty badge',
+                desc: 'Dedicated support contacts, email, forum, updates, and warranty badge',
                 icon: 'fa-life-ring',
                 defaultData: {
                     title: 'Need Help or Custom Features?',
@@ -511,25 +511,25 @@ export const WIDGET_CATALOG = [
                     iconColor: '#714B67',
                     channels: [
                         {
-                            icon: 'fa fa-envelope',
+                            icon: '<i class="oi" data-icon="email"></i>',
                             label: 'Email Support',
                             value: 'support@yourdomain.com',
                             url: 'mailto:support@yourdomain.com'
                         },
                         {
-                            icon: 'fa fa-skype',
-                            label: 'Skype / Teams',
-                            value: 'live:odoo_support',
-                            url: 'skype:live:odoo_support?chat'
+                            icon: '<i class="oi" data-icon="forum"></i>',
+                            label: 'Community Forum',
+                            value: 'Join Discussions',
+                            url: 'https://yourdomain.com/forum'
                         },
                         {
-                            icon: 'fa fa-whatsapp',
-                            label: 'WhatsApp Chat',
-                            value: '+1 (555) 019-2834',
-                            url: 'https://wa.me/15550192834'
+                            icon: '<i class="oi" data-icon="campaign"></i>',
+                            label: 'Latest Updates',
+                            value: 'News & Releases',
+                            url: 'https://yourdomain.com/updates'
                         },
                         {
-                            icon: 'fa fa-life-ring',
+                            icon: '<i class="oi" data-icon="help"></i>',
                             label: 'Helpdesk Portal',
                             value: 'Submit a Ticket',
                             url: 'https://yourdomain.com/helpdesk'

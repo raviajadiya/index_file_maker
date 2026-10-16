@@ -2722,12 +2722,14 @@ if (document.readyState === 'loading') {
                 if (d.cardBorderColor === undefined) d.cardBorderColor = '#e2e8f0';
                 if (d.iconColor === undefined) d.iconColor = d.bgColor;
 
-                // Normalize channels with backward compatibility fallback
-                if (!Array.isArray(d.channels)) {
-                    d.channels = [];
-                    if (d.email) d.channels.push({ icon: 'fa fa-envelope', label: 'Email Support', value: d.email, url: `mailto:${d.email}` });
-                    if (d.skype) d.channels.push({ icon: 'fa fa-skype', label: 'Skype / Teams', value: d.skype, url: `skype:${d.skype}?chat` });
-                    if (d.whatsapp) d.channels.push({ icon: 'fa fa-whatsapp', label: 'WhatsApp Chat', value: d.whatsapp, url: `https://wa.me/${d.whatsapp.replace(/[^0-9]/g, '')}` });
+                // Normalize channels with standard 4 native Odoo .oi channels
+                if (!Array.isArray(d.channels) || d.channels.length === 0) {
+                    d.channels = [
+                        { icon: '<i class="oi" data-icon="email"></i>', label: 'Email Support', value: d.email || 'support@yourdomain.com', url: `mailto:${d.email || 'support@yourdomain.com'}` },
+                        { icon: '<i class="oi" data-icon="forum"></i>', label: 'Community Forum', value: 'Join Discussions', url: 'https://yourdomain.com/forum' },
+                        { icon: '<i class="oi" data-icon="campaign"></i>', label: 'Latest Updates', value: 'News & Releases', url: 'https://yourdomain.com/updates' },
+                        { icon: '<i class="oi" data-icon="help"></i>', label: 'Helpdesk Portal', value: 'Submit a Ticket', url: 'https://yourdomain.com/helpdesk' }
+                    ];
                 }
 
                 // 1. Header & Text Styling
@@ -2758,22 +2760,12 @@ if (document.readyState === 'loading') {
                 cardStyleGroup.appendChild(createColorField('Channel Icon Color', d.iconColor, (val) => { d.iconColor = val; updateCanvasLive(); }));
                 form.appendChild(cardStyleGroup);
 
-                // 3. Support Channels Manager (Curated Odoo-Supported Support Icons)
-                const SUPPORT_ICONS = [
-                    { icon: 'fa fa-envelope', label: '✉️ Email Support (fa-envelope)' },
-                    { icon: 'fa fa-whatsapp', label: '💬 WhatsApp Chat (fa-whatsapp)' },
-                    { icon: 'fa fa-skype', label: '📞 Skype / Teams (fa-skype)' },
-                    { icon: 'fa fa-headphones', label: '🎧 Live Support / Headset (fa-headphones)' },
-                    { icon: 'fa fa-life-ring', label: '🛟 Helpdesk & Tickets (fa-life-ring)' },
-                    { icon: 'fa fa-phone', label: '📱 Phone Call Support (fa-phone)' },
-                    { icon: 'fa fa-ticket', label: '🎫 Ticket / Issue Tracking (fa-ticket)' },
-                    { icon: 'fa fa-book', label: '📖 User Documentation (fa-book)' },
-                    { icon: 'fa fa-comments', label: '🗨️ Live Chat / Discussion (fa-comments)' },
-                    { icon: 'fa fa-globe', label: '🌐 Customer Portal / Website (fa-globe)' },
-                    { icon: 'fa fa-shield', label: '🛡️ Warranty & Guarantee (fa-shield)' },
-                    { icon: 'fa fa-question-circle', label: '❓ FAQ & Help (fa-question-circle)' },
-                    { icon: 'fa fa-video-camera', label: '🎥 Video Call / Demo (fa-video-camera)' },
-                    { icon: 'fa fa-clock-o', label: '⏰ 24/7 Availability (fa-clock-o)' }
+                // 3. Support Channels Manager (Curated Native Odoo .oi Icons for App Store)
+                const SUPPORT_OI_PRESETS = [
+                    { name: 'campaign', label: '📢 Announcements & Releases', html: '<i class="oi" data-icon="campaign"></i>' },
+                    { name: 'forum', label: '🗨️ Discussion Forum', html: '<i class="oi" data-icon="forum"></i>' },
+                    { name: 'email', label: '✉️ Email Support', html: '<i class="oi" data-icon="email"></i>' },
+                    { name: 'help', label: '❓ FAQ & Helpdesk', html: '<i class="oi" data-icon="help"></i>' }
                 ];
 
                 const channelsGroup = document.createElement('div');
@@ -2781,13 +2773,13 @@ if (document.readyState === 'loading') {
                 channelsGroup.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <label class="form-label" style="margin: 0; font-weight: 700; font-size: 13px; color: var(--text-main);">
-                            <i class="fa fa-life-ring" style="color: var(--primary); margin-right: 4px;"></i> Support Channels (${d.channels.length})
+                            <i class="oi" data-icon="forum" style="color: var(--primary); margin-right: 4px; vertical-align: middle;"></i> Support Channels (${d.channels.length})
                         </label>
                         <button type="button" class="btn btn-outline" id="btn-add-channel-top" style="font-size: 11px; padding: 4px 10px; color: var(--primary); border-color: var(--primary); cursor: pointer; font-weight: 600;">
                             <i class="fa fa-plus"></i> Add Channel
                         </button>
                     </div>
-                    <div class="items-list" id="channels-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                    <div class="items-list" id="channels-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
                     <button type="button" class="btn btn-outline" id="btn-add-channel-bottom" style="width: 100%; margin-top: 10px; font-size: 12px; padding: 8px; color: var(--primary); border-color: var(--primary); border-style: dashed; font-weight: 600; cursor: pointer;">
                         <i class="fa fa-plus-circle"></i> + Add Another Channel
                     </button>
@@ -2797,46 +2789,123 @@ if (document.readyState === 'loading') {
                 d.channels.forEach((ch, idx) => {
                     const chBox = document.createElement('div');
                     chBox.className = 'item-card';
-                    chBox.style.cssText = 'background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; position: relative;';
+                    chBox.style.cssText = 'background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; position: relative; box-shadow: 0 1px 3px rgba(0,0,0,0.03);';
 
-                    const optionsHTML = SUPPORT_ICONS.map(si => 
-                        `<option value="${si.icon}" ${ch.icon === si.icon ? 'selected' : ''}>${si.label}</option>`
-                    ).join('');
+                    const curIcon = (ch.icon || '').toLowerCase().trim();
+                    const presetBtns = SUPPORT_OI_PRESETS.map(p => {
+                        const isSel = curIcon === p.html.toLowerCase() ||
+                                      curIcon === p.name ||
+                                      curIcon.includes(`data-icon="${p.name}"`) ||
+                                      curIcon.includes(`data-icon='${p.name}'`) ||
+                                      (curIcon.includes(p.name) && !curIcon.includes('fa-'));
+                        return `
+                            <button type="button" class="ch-preset-btn" data-icon='${escapeHTML(p.html)}' data-name="${p.name}" data-search="${p.name} ${p.label.toLowerCase()}" title="${p.label}" style="font-size: 11px; padding: 7px 10px; border: 1px solid ${isSel ? 'var(--primary)' : '#e2e8f0'}; border-radius: 6px; background: ${isSel ? '#f5eff4' : '#ffffff'}; color: ${isSel ? 'var(--primary)' : '#334155'}; cursor: pointer; font-weight: ${isSel ? '700' : '500'}; display: flex; align-items: center; gap: 8px; text-align: left; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.02); transition: all 0.15s ease;">
+                                <span style="font-size: 18px; display: inline-flex; align-items: center; justify-content: center; width: 22px; color: ${isSel ? 'var(--primary)' : '#714B67'}; flex-shrink: 0;">
+                                    ${p.html}
+                                </span>
+                                <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px;">${p.label}</span>
+                            </button>
+                        `;
+                    }).join('');
 
                     chBox.innerHTML = `
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-size: 11px; font-weight: 700; color: var(--primary);"><i class="${ch.icon || 'fa fa-headphones'}"></i> Channel #${idx + 1}</span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #f1f5f9;">
+                            <span style="font-size: 11px; font-weight: 700; color: var(--primary);">Channel #${idx + 1}</span>
                             <div style="display: flex; gap: 4px;">
                                 <button type="button" class="toolbar-btn btn-ch-up" title="Move Up" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === 0 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-up"></i></button>
                                 <button type="button" class="toolbar-btn btn-ch-down" title="Move Down" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === d.channels.length - 1 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-down"></i></button>
                                 <button type="button" class="toolbar-btn btn-ch-del" title="Delete Channel" style="padding: 2px 6px; font-size: 10px; color: #ef4444; cursor: pointer;"><i class="fa fa-trash"></i></button>
                             </div>
                         </div>
-                        <div style="margin-bottom: 6px;">
-                            <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Odoo Support Icon</label>
-                            <select class="form-input ch-icon-select" style="font-size: 12px; padding: 5px 8px;">
-                                ${optionsHTML}
-                            </select>
+
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 8px;">
+                            <label style="font-size: 11px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="display: flex; align-items: center; gap: 5px;">
+                                    <i class="oi" data-icon="forum" style="color: var(--primary); font-size: 14px;"></i> Odoo Support Icon (App Store Compatible)
+                                </span>
+                                <span class="ch-icon-preview-box" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; background: #ffffff; color: ${d.iconColor || '#714B67'}; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); font-size: 20px;">
+                                    ${renderSafeIcon(ch.icon, '<i class="oi" data-icon="email"></i>')}
+                                </span>
+                            </label>
+
+                            <div style="margin-bottom: 6px;">
+                                <input type="text" class="form-input ch-icon-search-input" placeholder="🔍 Search support icons (campaign, forum, email, help)..." style="font-size: 11px; padding: 5px 8px; width: 100%; border-radius: 6px;">
+                            </div>
+
+                            <div class="preset-icons-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; padding: 6px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 8px;">
+                                ${presetBtns}
+                            </div>
+
+                            <div>
+                                <label style="font-size: 9px; color: var(--text-muted); display: block; margin-bottom: 2px;">Odoo Icon Tag / Class</label>
+                                <input type="text" class="form-input ch-icon-input" value="${escapeHTML(ch.icon || '<i class=\"oi\" data-icon=\"email\"></i>')}" placeholder='<i class="oi" data-icon="email"></i>' style="font-size: 11px; padding: 4px 8px; font-family: monospace;">
+                            </div>
                         </div>
+
                         <div style="margin-bottom: 6px;">
                             <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Channel Label</label>
-                            <input type="text" class="form-input ch-label-input" value="${escapeHTML(ch.label || '')}" placeholder="e.g. Email Support, WhatsApp, Helpdesk">
+                            <input type="text" class="form-input ch-label-input" value="${escapeHTML(ch.label || '')}" placeholder="e.g. Email Support, Community Forum, Helpdesk">
                         </div>
                         <div style="margin-bottom: 6px;">
                             <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Display Value / Contact Info</label>
-                            <input type="text" class="form-input ch-value-input" value="${escapeHTML(ch.value || '')}" placeholder="e.g. support@yourdomain.com or +1 555 019-2834">
+                            <input type="text" class="form-input ch-value-input" value="${escapeHTML(ch.value || '')}" placeholder="e.g. support@yourdomain.com or Join Discussions">
                         </div>
                         <div>
                             <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Action Link URL (Optional)</label>
-                            <input type="text" class="form-input ch-url-input" value="${escapeHTML(ch.url || '')}" placeholder="e.g. mailto:..., https://wa.me/..., skype:...">
+                            <input type="text" class="form-input ch-url-input" value="${escapeHTML(ch.url || '')}" placeholder="e.g. mailto:..., https://...">
                         </div>
                     `;
 
-                    chBox.querySelector('.ch-icon-select').addEventListener('change', (e) => {
+                    const chIconInput = chBox.querySelector('.ch-icon-input');
+                    const chPreviewBox = chBox.querySelector('.ch-icon-preview-box');
+
+                    function updateChPreview() {
+                        if (chPreviewBox) {
+                            chPreviewBox.innerHTML = renderSafeIcon(ch.icon, '<i class="oi" data-icon="email"></i>');
+                        }
+                    }
+
+                    chIconInput.addEventListener('input', (e) => {
                         ch.icon = e.target.value;
                         updateCanvasLive();
-                        renderPropertyInspector();
+                        updateChPreview();
                     });
+
+                    const chSearchInput = chBox.querySelector('.ch-icon-search-input');
+                    if (chSearchInput) {
+                        chSearchInput.addEventListener('input', (e) => {
+                            const query = e.target.value.toLowerCase().trim();
+                            chBox.querySelectorAll('.ch-preset-btn').forEach(btn => {
+                                const searchData = (btn.getAttribute('data-search') || '').toLowerCase();
+                                if (!query || searchData.includes(query)) {
+                                    btn.style.display = 'flex';
+                                } else {
+                                    btn.style.display = 'none';
+                                }
+                            });
+                        });
+                    }
+
+                    chBox.querySelectorAll('.ch-preset-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const selectedIcon = btn.getAttribute('data-icon');
+                            ch.icon = selectedIcon;
+                            chIconInput.value = selectedIcon;
+                            chBox.querySelectorAll('.ch-preset-btn').forEach(b => {
+                                b.style.borderColor = '#e2e8f0';
+                                b.style.background = '#ffffff';
+                                b.style.color = '#334155';
+                                b.style.fontWeight = '500';
+                            });
+                            btn.style.borderColor = 'var(--primary)';
+                            btn.style.background = '#f5eff4';
+                            btn.style.color = 'var(--primary)';
+                            btn.style.fontWeight = '700';
+                            updateChPreview();
+                            updateCanvasLive();
+                        });
+                    });
+
                     chBox.querySelector('.ch-label-input').addEventListener('input', (e) => {
                         ch.label = e.target.value;
                         updateCanvasLive();
@@ -2882,10 +2951,10 @@ if (document.readyState === 'loading') {
 
                 const addChannelFn = () => {
                     d.channels.push({
-                        icon: 'fa fa-envelope',
-                        label: 'Support Channel',
-                        value: 'contact@yourdomain.com',
-                        url: 'mailto:contact@yourdomain.com'
+                        icon: '<i class="oi" data-icon="email"></i>',
+                        label: 'Email Support',
+                        value: 'support@yourdomain.com',
+                        url: 'mailto:support@yourdomain.com'
                     });
                     renderPropertyInspector();
                     updateCanvasLive();

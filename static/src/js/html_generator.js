@@ -66,8 +66,31 @@ const KNOWN_OI_ICONS = new Set([
     'campaign', 'chat', 'forum', 'email', 'event', 'calendar_month', 'task_alt',
     'check_circle', 'cancel', 'delete', 'edit', 'add', 'close', 'refresh', 'download',
     'upload', 'attach_file', 'folder', 'description', 'business', 'lock', 'help',
-    'favorite', 'schedule', 'progress_activity'
+    'favorite', 'schedule', 'progress_activity', 'support_agent', 'contact_support',
+    'call', 'groups', 'verified', 'shield', 'send', 'mail', 'link'
 ]);
+
+const FA_TO_OI_MAP = {
+    'fa-envelope': 'email',
+    'fa-headphones': 'help',
+    'fa-life-ring': 'help',
+    'fa-ticket': 'help',
+    'fa-book': 'description',
+    'fa-comments': 'forum',
+    'fa-comment': 'forum',
+    'fa-bullhorn': 'campaign',
+    'fa-whatsapp': 'forum',
+    'fa-skype': 'forum',
+    'fa-phone': 'forum',
+    'fa-globe': 'business',
+    'fa-shield': 'verified',
+    'fa-question-circle': 'help',
+    'fa-question': 'help',
+    'fa-clock-o': 'schedule',
+    'fa-star': 'star',
+    'fa-desktop': 'desktop_windows',
+    'fa-check': 'check_circle'
+};
 
 function renderSafeIcon(iconStr, defaultIcon = '<i class="oi" data-icon="task_alt"></i>') {
     if (!iconStr) iconStr = defaultIcon;
@@ -78,6 +101,13 @@ function renderSafeIcon(iconStr, defaultIcon = '<i class="oi" data-icon="task_al
     if (str.startsWith('http://') || str.startsWith('https://') || str.endsWith('.png') || str.endsWith('.svg') || str.endsWith('.jpg') || str.endsWith('.webp')) {
         return `<img src="${str}" alt="icon" style="width: 24px; height: 24px; object-fit: contain; vertical-align: middle;">`;
     }
+
+    // Auto-map legacy Font Awesome icons to Odoo OI icons for 100% AppStore compatibility
+    for (const [faKey, oiVal] of Object.entries(FA_TO_OI_MAP)) {
+        if (str.includes(faKey)) {
+            return `<i class="oi" data-icon="${oiVal}" style="font-size: 26px; vertical-align: middle; color: inherit;"></i>`;
+        }
+    }
     // If it's already an HTML element e.g. <i class="oi" data-icon="person"></i> or <i class="fa ..."></i>
     if (/^<i\s+[^>]*>/i.test(str)) {
         return str;
@@ -85,17 +115,20 @@ function renderSafeIcon(iconStr, defaultIcon = '<i class="oi" data-icon="task_al
     // If it has data-icon attribute in text e.g. data-icon="person"
     const dataIconMatch = str.match(/data-icon=["']([^"']+)["']/i);
     if (dataIconMatch) {
-        return `<i class="oi" data-icon="${dataIconMatch[1]}" style="font-size: 24px; vertical-align: middle; color: inherit;"></i>`;
+        return `<i class="oi" data-icon="${dataIconMatch[1]}" style="font-size: 26px; vertical-align: middle; color: inherit;"></i>`;
     }
     // If it's prefixed with oi: or oi- e.g. oi:person or oi-person
     const oiPrefixMatch = str.match(/^oi[:\s-]+([\w-]+)/i);
     if (oiPrefixMatch) {
-        return `<i class="oi" data-icon="${oiPrefixMatch[1]}" style="font-size: 24px; vertical-align: middle; color: inherit;"></i>`;
+        return `<i class="oi" data-icon="${oiPrefixMatch[1]}" style="font-size: 26px; vertical-align: middle; color: inherit;"></i>`;
     }
     // If it's one of the known OI icons
     const cleanLower = str.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+    if (cleanLower === 'call' || cleanLower === 'phone' || cleanLower === 'skype' || cleanLower === 'whatsapp' || cleanLower === 'chat') {
+        return `<i class="oi" data-icon="forum" style="font-size: 26px; vertical-align: middle; color: inherit;"></i>`;
+    }
     if (KNOWN_OI_ICONS.has(cleanLower)) {
-        return `<i class="oi" data-icon="${cleanLower}" style="font-size: 24px; vertical-align: middle; color: inherit;"></i>`;
+        return `<i class="oi" data-icon="${cleanLower}" style="font-size: 26px; vertical-align: middle; color: inherit;"></i>`;
     }
     const faClass = formatFaIconClass(str, 'fa fa-bolt');
     return `<i class="${faClass}" style="font-size: 22px; vertical-align: middle; color: inherit;"></i>`;
@@ -730,7 +763,7 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
         }
 
         case 'support_banner': {
-            const bg = d.bgColor || globalBrand || '#875A7B';
+            const bg = d.bgColor || globalBrand || '#714B67';
             const textCol = d.textColor || '#ffffff';
             const cardBg = d.cardBgColor || '#ffffff';
             const cardBorder = d.cardBorderColor || '#e2e8f0';
@@ -739,15 +772,16 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             // Normalize channels with backward compatibility fallback
             let channels = Array.isArray(d.channels) ? d.channels : [];
             if (channels.length === 0) {
-                if (d.email) channels.push({ icon: 'fa fa-envelope', label: 'Email Support', value: d.email, url: `mailto:${d.email}` });
-                if (d.skype) channels.push({ icon: 'fa fa-skype', label: 'Skype / Teams', value: d.skype, url: `skype:${d.skype}?chat` });
-                if (d.whatsapp) channels.push({ icon: 'fa fa-whatsapp', label: 'WhatsApp Chat', value: d.whatsapp, url: `https://wa.me/${d.whatsapp.replace(/[^0-9]/g, '')}` });
+                if (d.email) channels.push({ icon: '<i class="oi" data-icon="email"></i>', label: 'Email Support', value: d.email, url: `mailto:${d.email}` });
+                channels.push({ icon: '<i class="oi" data-icon="forum"></i>', label: 'Community Forum', value: 'Join Discussions', url: 'https://yourdomain.com/forum' });
+                channels.push({ icon: '<i class="oi" data-icon="campaign"></i>', label: 'Latest Updates', value: 'News & Releases', url: 'https://yourdomain.com/updates' });
+                channels.push({ icon: '<i class="oi" data-icon="help"></i>', label: 'Helpdesk Portal', value: 'Submit a Ticket', url: 'https://yourdomain.com/helpdesk' });
             }
 
             const colClass = channels.length <= 2 ? 'col-12 col-sm-6 mb-3' : (channels.length === 3 ? 'col-12 col-sm-6 col-md-4 mb-3' : (channels.length === 4 ? 'col-12 col-sm-6 col-md-3 mb-3' : 'col-12 col-sm-6 col-md-4 mb-3'));
 
             const channelsHTML = channels.map((c) => {
-                const iconClass = (c.icon || 'fa fa-headphones').trim();
+                const iconHtml = renderSafeIcon(c.icon, '<i class="oi" data-icon="help"></i>');
                 let linkUrl = (c.url || '').trim();
                 if (!linkUrl && c.value) {
                     if (c.value.includes('@')) linkUrl = `mailto:${c.value.trim()}`;
@@ -756,7 +790,9 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
 
                 const cardInner = `
                     <div class="card h-100 shadow-sm p-3 text-center" style="background-color: ${cardBg}; color: #1e293b; border: 1px solid ${cardBorder}; border-radius: 12px; transition: transform 0.2s, box-shadow 0.2s;">
-                        <i class="${escapeHTML(iconClass)} mb-2" style="font-size: 26px; color: ${iconCol}; display: inline-block;"></i>
+                        <div class="mb-2" style="font-size: 28px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; height: 36px; color: ${iconCol} !important;">
+                            ${iconHtml}
+                        </div>
                         <span style="font-size: 12px; color: #64748b; display: block; font-weight: 500; margin-bottom: 2px;">${escapeHTML(c.label || 'Support Channel')}</span>
                         <strong style="font-size: 13.5px; word-break: break-all; color: #0f172a;">${escapeHTML(c.value || '')}</strong>
                     </div>`;
@@ -768,6 +804,10 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             }).join('');
 
             return `<section class="py-4 my-2" style="background-color: ${bg}; color: ${textCol}; border-radius: 16px;">
+    <style>
+        .oi, i.oi { display: inline-block; font-family: 'Material Symbols Outlined' !important; font-style: normal; font-weight: 400 !important; line-height: 1; letter-spacing: normal; text-transform: none; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; vertical-align: middle; }
+        .oi:before, .oi::before, i.oi:before, i.oi::before { display: inline-block; content: attr(data-icon); text-rendering: geometricPrecision; word-break: keep-all; }
+    </style>
     <div class="container text-center py-2" style="max-width: 960px;">
         ${d.badge ? `<span style="background-color: #ffffff; color: ${bg}; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">${escapeHTML(d.badge)}</span>` : ''}
         <h2 style="font-size: 30px; font-weight: 700; margin-bottom: 10px; color: ${textCol} !important;">${escapeHTML(d.title || '')}</h2>
