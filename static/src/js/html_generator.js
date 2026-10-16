@@ -732,35 +732,48 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
         case 'support_banner': {
             const bg = d.bgColor || globalBrand || '#875A7B';
             const textCol = d.textColor || '#ffffff';
+            const cardBg = d.cardBgColor || '#ffffff';
+            const cardBorder = d.cardBorderColor || '#e2e8f0';
+            const iconCol = d.iconColor || bg;
+
+            // Normalize channels with backward compatibility fallback
+            let channels = Array.isArray(d.channels) ? d.channels : [];
+            if (channels.length === 0) {
+                if (d.email) channels.push({ icon: 'fa fa-envelope', label: 'Email Support', value: d.email, url: `mailto:${d.email}` });
+                if (d.skype) channels.push({ icon: 'fa fa-skype', label: 'Skype / Teams', value: d.skype, url: `skype:${d.skype}?chat` });
+                if (d.whatsapp) channels.push({ icon: 'fa fa-whatsapp', label: 'WhatsApp Chat', value: d.whatsapp, url: `https://wa.me/${d.whatsapp.replace(/[^0-9]/g, '')}` });
+            }
+
+            const colClass = channels.length <= 2 ? 'col-12 col-sm-6 mb-3' : (channels.length === 3 ? 'col-12 col-sm-6 col-md-4 mb-3' : (channels.length === 4 ? 'col-12 col-sm-6 col-md-3 mb-3' : 'col-12 col-sm-6 col-md-4 mb-3'));
+
+            const channelsHTML = channels.map((c) => {
+                const iconClass = (c.icon || 'fa fa-headphones').trim();
+                let linkUrl = (c.url || '').trim();
+                if (!linkUrl && c.value) {
+                    if (c.value.includes('@')) linkUrl = `mailto:${c.value.trim()}`;
+                    else if (/^(\+|00)[0-9\s-]+$/.test(c.value.trim())) linkUrl = `tel:${c.value.trim().replace(/\s+/g, '')}`;
+                }
+
+                const cardInner = `
+                    <div class="card h-100 shadow-sm p-3 text-center" style="background-color: ${cardBg}; color: #1e293b; border: 1px solid ${cardBorder}; border-radius: 12px; transition: transform 0.2s, box-shadow 0.2s;">
+                        <i class="${escapeHTML(iconClass)} mb-2" style="font-size: 26px; color: ${iconCol}; display: inline-block;"></i>
+                        <span style="font-size: 12px; color: #64748b; display: block; font-weight: 500; margin-bottom: 2px;">${escapeHTML(c.label || 'Support Channel')}</span>
+                        <strong style="font-size: 13.5px; word-break: break-all; color: #0f172a;">${escapeHTML(c.value || '')}</strong>
+                    </div>`;
+
+                return `
+            <div class="${colClass}">
+                ${linkUrl ? `<a href="${escapeHTML(linkUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block; height: 100%;">${cardInner}</a>` : cardInner}
+            </div>`;
+            }).join('');
+
             return `<section class="py-4 my-2" style="background-color: ${bg}; color: ${textCol}; border-radius: 16px;">
     <div class="container text-center py-2" style="max-width: 960px;">
-        ${d.badge ? `<span style="background-color: #ffffff; color: ${bg}; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 12px;">${escapeHTML(d.badge)}</span>` : ''}
+        ${d.badge ? `<span style="background-color: #ffffff; color: ${bg}; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">${escapeHTML(d.badge)}</span>` : ''}
         <h2 style="font-size: 30px; font-weight: 700; margin-bottom: 10px; color: ${textCol} !important;">${escapeHTML(d.title || '')}</h2>
         <p style="font-size: 15px; opacity: 0.95; max-width: 680px; margin: 0 auto 20px auto; line-height: 1.6; color: ${textCol} !important;">${escapeHTML(d.subtitle || '')}</p>
         <div class="row justify-content-center">
-            ${d.email ? `<div class="col-12 col-sm-6 col-md-4 mb-3">
-                <a href="mailto:${escapeHTML(d.email)}" style="text-decoration: none; color: inherit; display: block;">
-                    <div class="card h-100 shadow-sm p-3 text-center" style="background-color: #ffffff; color: #1e293b; border: 1px solid #e2e8f0; border-radius: 10px;">
-                        <i class="fa fa-envelope mb-2" style="font-size: 24px; color: ${bg};"></i>
-                        <span style="font-size: 12px; color: #64748b; display: block;">Email Support</span>
-                        <strong style="font-size: 13px; word-break: break-all;">${escapeHTML(d.email)}</strong>
-                    </div>
-                </a>
-            </div>` : ''}
-            ${d.skype ? `<div class="col-12 col-sm-6 col-md-4 mb-3">
-                <div class="card h-100 shadow-sm p-3 text-center" style="background-color: #ffffff; color: #1e293b; border: 1px solid #e2e8f0; border-radius: 10px;">
-                    <i class="fa fa-skype mb-2" style="font-size: 24px; color: ${bg};"></i>
-                    <span style="font-size: 12px; color: #64748b; display: block;">Skype / Teams</span>
-                    <strong style="font-size: 13px;">${escapeHTML(d.skype)}</strong>
-                </div>
-            </div>` : ''}
-            ${d.whatsapp ? `<div class="col-12 col-sm-6 col-md-4 mb-3">
-                <div class="card h-100 shadow-sm p-3 text-center" style="background-color: #ffffff; color: #1e293b; border: 1px solid #e2e8f0; border-radius: 10px;">
-                    <i class="fa fa-whatsapp mb-2" style="font-size: 24px; color: ${bg};"></i>
-                    <span style="font-size: 12px; color: #64748b; display: block;">WhatsApp</span>
-                    <strong style="font-size: 13px;">${escapeHTML(d.whatsapp)}</strong>
-                </div>
-            </div>` : ''}
+            ${channelsHTML}
         </div>
     </div>
 </section>`;

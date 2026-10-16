@@ -340,12 +340,37 @@ const WIDGET_CATALOG = [
                     title: 'Dedicated Support & Tailored Customization',
                     subtitle: 'Have a question or need custom modifications? Our experienced Odoo team is here to assist you.',
                     badge: '90 Days Free Support Included',
-                    email: 'support@yourdomain.com',
-                    skype: 'live:odoo_support',
-                    whatsapp: '+1 (555) 019-2834',
-                    docsUrl: '#',
                     bgColor: '#714B67',
-                    textColor: '#ffffff'
+                    textColor: '#ffffff',
+                    cardBgColor: '#ffffff',
+                    cardBorderColor: '#e2e8f0',
+                    iconColor: '#714B67',
+                    channels: [
+                        {
+                            icon: 'fa fa-envelope',
+                            label: 'Email Support',
+                            value: 'support@yourdomain.com',
+                            url: 'mailto:support@yourdomain.com'
+                        },
+                        {
+                            icon: 'fa fa-skype',
+                            label: 'Skype / Teams',
+                            value: 'live:odoo_support',
+                            url: 'skype:live:odoo_support?chat'
+                        },
+                        {
+                            icon: 'fa fa-whatsapp',
+                            label: 'WhatsApp Chat',
+                            value: '+1 (555) 019-2834',
+                            url: 'https://wa.me/15550192834'
+                        },
+                        {
+                            icon: 'fa fa-life-ring',
+                            label: 'Helpdesk Portal',
+                            value: 'Submit a Ticket',
+                            url: 'https://yourdomain.com/helpdesk'
+                        }
+                    ]
                 }
             },
             {

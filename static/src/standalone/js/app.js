@@ -461,12 +461,12 @@ if (document.readyState === 'loading') {
             const form = document.createElement('div');
 
             // Title
-            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section') {
+            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section' && widget.type !== 'support_banner') {
                 form.appendChild(createInputField('Title', d.title, (val) => { d.title = val; updateCanvasLive(); }));
             }
 
             // Subtitle
-            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section') {
+            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section' && widget.type !== 'support_banner') {
                 form.appendChild(createTextareaField('Subtitle / Tagline', d.subtitle, (val) => { d.subtitle = val; updateCanvasLive(); }));
             }
 
@@ -835,8 +835,8 @@ if (document.readyState === 'loading') {
                 form.appendChild(imgGroup);
             }
 
-            // Colors (for widgets other than highlights_grid, stats_counter, mobile_showcase, desktop_showcase, workflow_steps, vs_table, and faq_section)
-            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section') {
+            // Colors (for widgets other than highlights_grid, stats_counter, mobile_showcase, desktop_showcase, workflow_steps, vs_table, faq_section, and support_banner)
+            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section' && widget.type !== 'support_banner') {
                 if (d.bgColor !== undefined) {
                     form.appendChild(createColorField('Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
                 }
@@ -2712,15 +2712,187 @@ if (document.readyState === 'loading') {
                 form.appendChild(grp);
             }
 
-            // 3. Support Contacts
-            if (d.email !== undefined) {
-                form.appendChild(createInputField('Support Email', d.email, (val) => { d.email = val; updateCanvasLive(); }));
-            }
-            if (d.skype !== undefined) {
-                form.appendChild(createInputField('Skype / Teams', d.skype, (val) => { d.skype = val; updateCanvasLive(); }));
-            }
-            if (d.whatsapp !== undefined) {
-                form.appendChild(createInputField('WhatsApp / Phone', d.whatsapp, (val) => { d.whatsapp = val; updateCanvasLive(); }));
+            // ==========================================
+            // SUPPORT & CONTACT BANNER INSPECTOR
+            // ==========================================
+            if (widget.type === 'support_banner') {
+                if (d.bgColor === undefined) d.bgColor = '#714B67';
+                if (d.textColor === undefined) d.textColor = '#ffffff';
+                if (d.cardBgColor === undefined) d.cardBgColor = '#ffffff';
+                if (d.cardBorderColor === undefined) d.cardBorderColor = '#e2e8f0';
+                if (d.iconColor === undefined) d.iconColor = d.bgColor;
+
+                // Normalize channels with backward compatibility fallback
+                if (!Array.isArray(d.channels)) {
+                    d.channels = [];
+                    if (d.email) d.channels.push({ icon: 'fa fa-envelope', label: 'Email Support', value: d.email, url: `mailto:${d.email}` });
+                    if (d.skype) d.channels.push({ icon: 'fa fa-skype', label: 'Skype / Teams', value: d.skype, url: `skype:${d.skype}?chat` });
+                    if (d.whatsapp) d.channels.push({ icon: 'fa fa-whatsapp', label: 'WhatsApp Chat', value: d.whatsapp, url: `https://wa.me/${d.whatsapp.replace(/[^0-9]/g, '')}` });
+                }
+
+                // 1. Header & Text Styling
+                const hdrGroup = document.createElement('div');
+                hdrGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                hdrGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-header" style="color: var(--primary);"></i> Banner Header &amp; Badge
+                    </div>
+                `;
+                hdrGroup.appendChild(createInputField('Heading Title', d.title, (val) => { d.title = val; updateCanvasLive(); }));
+                hdrGroup.appendChild(createTextareaField('Subtitle / Description', d.subtitle, (val) => { d.subtitle = val; updateCanvasLive(); }));
+                hdrGroup.appendChild(createInputField('Warranty / Top Badge', d.badge || '', (val) => { d.badge = val; updateCanvasLive(); }));
+                hdrGroup.appendChild(createColorField('Banner Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
+                hdrGroup.appendChild(createColorField('Banner Text Color', d.textColor, (val) => { d.textColor = val; updateCanvasLive(); }));
+                form.appendChild(hdrGroup);
+
+                // 2. Card Styling
+                const cardStyleGroup = document.createElement('div');
+                cardStyleGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                cardStyleGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-paint-brush" style="color: var(--primary);"></i> Channel Cards Styling
+                    </div>
+                `;
+                cardStyleGroup.appendChild(createColorField('Card Background Color', d.cardBgColor, (val) => { d.cardBgColor = val; updateCanvasLive(); }));
+                cardStyleGroup.appendChild(createColorField('Card Border Color', d.cardBorderColor, (val) => { d.cardBorderColor = val; updateCanvasLive(); }));
+                cardStyleGroup.appendChild(createColorField('Channel Icon Color', d.iconColor, (val) => { d.iconColor = val; updateCanvasLive(); }));
+                form.appendChild(cardStyleGroup);
+
+                // 3. Support Channels Manager (Curated Odoo-Supported Support Icons)
+                const SUPPORT_ICONS = [
+                    { icon: 'fa fa-envelope', label: '✉️ Email Support (fa-envelope)' },
+                    { icon: 'fa fa-whatsapp', label: '💬 WhatsApp Chat (fa-whatsapp)' },
+                    { icon: 'fa fa-skype', label: '📞 Skype / Teams (fa-skype)' },
+                    { icon: 'fa fa-headphones', label: '🎧 Live Support / Headset (fa-headphones)' },
+                    { icon: 'fa fa-life-ring', label: '🛟 Helpdesk & Tickets (fa-life-ring)' },
+                    { icon: 'fa fa-phone', label: '📱 Phone Call Support (fa-phone)' },
+                    { icon: 'fa fa-ticket', label: '🎫 Ticket / Issue Tracking (fa-ticket)' },
+                    { icon: 'fa fa-book', label: '📖 User Documentation (fa-book)' },
+                    { icon: 'fa fa-comments', label: '🗨️ Live Chat / Discussion (fa-comments)' },
+                    { icon: 'fa fa-globe', label: '🌐 Customer Portal / Website (fa-globe)' },
+                    { icon: 'fa fa-shield', label: '🛡️ Warranty & Guarantee (fa-shield)' },
+                    { icon: 'fa fa-question-circle', label: '❓ FAQ & Help (fa-question-circle)' },
+                    { icon: 'fa fa-video-camera', label: '🎥 Video Call / Demo (fa-video-camera)' },
+                    { icon: 'fa fa-clock-o', label: '⏰ 24/7 Availability (fa-clock-o)' }
+                ];
+
+                const channelsGroup = document.createElement('div');
+                channelsGroup.className = 'form-group';
+                channelsGroup.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label class="form-label" style="margin: 0; font-weight: 700; font-size: 13px; color: var(--text-main);">
+                            <i class="fa fa-life-ring" style="color: var(--primary); margin-right: 4px;"></i> Support Channels (${d.channels.length})
+                        </label>
+                        <button type="button" class="btn btn-outline" id="btn-add-channel-top" style="font-size: 11px; padding: 4px 10px; color: var(--primary); border-color: var(--primary); cursor: pointer; font-weight: 600;">
+                            <i class="fa fa-plus"></i> Add Channel
+                        </button>
+                    </div>
+                    <div class="items-list" id="channels-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                    <button type="button" class="btn btn-outline" id="btn-add-channel-bottom" style="width: 100%; margin-top: 10px; font-size: 12px; padding: 8px; color: var(--primary); border-color: var(--primary); border-style: dashed; font-weight: 600; cursor: pointer;">
+                        <i class="fa fa-plus-circle"></i> + Add Another Channel
+                    </button>
+                `;
+
+                const chList = channelsGroup.querySelector('#channels-list');
+                d.channels.forEach((ch, idx) => {
+                    const chBox = document.createElement('div');
+                    chBox.className = 'item-card';
+                    chBox.style.cssText = 'background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; position: relative;';
+
+                    const optionsHTML = SUPPORT_ICONS.map(si => 
+                        `<option value="${si.icon}" ${ch.icon === si.icon ? 'selected' : ''}>${si.label}</option>`
+                    ).join('');
+
+                    chBox.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-size: 11px; font-weight: 700; color: var(--primary);"><i class="${ch.icon || 'fa fa-headphones'}"></i> Channel #${idx + 1}</span>
+                            <div style="display: flex; gap: 4px;">
+                                <button type="button" class="toolbar-btn btn-ch-up" title="Move Up" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === 0 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-up"></i></button>
+                                <button type="button" class="toolbar-btn btn-ch-down" title="Move Down" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === d.channels.length - 1 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-down"></i></button>
+                                <button type="button" class="toolbar-btn btn-ch-del" title="Delete Channel" style="padding: 2px 6px; font-size: 10px; color: #ef4444; cursor: pointer;"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 6px;">
+                            <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Odoo Support Icon</label>
+                            <select class="form-input ch-icon-select" style="font-size: 12px; padding: 5px 8px;">
+                                ${optionsHTML}
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 6px;">
+                            <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Channel Label</label>
+                            <input type="text" class="form-input ch-label-input" value="${escapeHTML(ch.label || '')}" placeholder="e.g. Email Support, WhatsApp, Helpdesk">
+                        </div>
+                        <div style="margin-bottom: 6px;">
+                            <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Display Value / Contact Info</label>
+                            <input type="text" class="form-input ch-value-input" value="${escapeHTML(ch.value || '')}" placeholder="e.g. support@yourdomain.com or +1 555 019-2834">
+                        </div>
+                        <div>
+                            <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Action Link URL (Optional)</label>
+                            <input type="text" class="form-input ch-url-input" value="${escapeHTML(ch.url || '')}" placeholder="e.g. mailto:..., https://wa.me/..., skype:...">
+                        </div>
+                    `;
+
+                    chBox.querySelector('.ch-icon-select').addEventListener('change', (e) => {
+                        ch.icon = e.target.value;
+                        updateCanvasLive();
+                        renderPropertyInspector();
+                    });
+                    chBox.querySelector('.ch-label-input').addEventListener('input', (e) => {
+                        ch.label = e.target.value;
+                        updateCanvasLive();
+                    });
+                    chBox.querySelector('.ch-value-input').addEventListener('input', (e) => {
+                        ch.value = e.target.value;
+                        updateCanvasLive();
+                    });
+                    chBox.querySelector('.ch-url-input').addEventListener('input', (e) => {
+                        ch.url = e.target.value;
+                        updateCanvasLive();
+                    });
+
+                    const upBtn = chBox.querySelector('.btn-ch-up');
+                    if (upBtn && idx > 0) {
+                        upBtn.addEventListener('click', () => {
+                            const tmp = d.channels[idx];
+                            d.channels[idx] = d.channels[idx - 1];
+                            d.channels[idx - 1] = tmp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+                    const downBtn = chBox.querySelector('.btn-ch-down');
+                    if (downBtn && idx < d.channels.length - 1) {
+                        downBtn.addEventListener('click', () => {
+                            const tmp = d.channels[idx];
+                            d.channels[idx] = d.channels[idx + 1];
+                            d.channels[idx + 1] = tmp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+                    const delBtn = chBox.querySelector('.btn-ch-del');
+                    delBtn.addEventListener('click', () => {
+                        d.channels.splice(idx, 1);
+                        renderPropertyInspector();
+                        updateCanvasLive();
+                    });
+
+                    chList.appendChild(chBox);
+                });
+
+                const addChannelFn = () => {
+                    d.channels.push({
+                        icon: 'fa fa-envelope',
+                        label: 'Support Channel',
+                        value: 'contact@yourdomain.com',
+                        url: 'mailto:contact@yourdomain.com'
+                    });
+                    renderPropertyInspector();
+                    updateCanvasLive();
+                };
+                channelsGroup.querySelector('#btn-add-channel-top').addEventListener('click', addChannelFn);
+                channelsGroup.querySelector('#btn-add-channel-bottom').addEventListener('click', addChannelFn);
+                form.appendChild(channelsGroup);
             }
             // 4. Other Apps List Manager (for other_apps)
             if (Array.isArray(d.apps)) {
