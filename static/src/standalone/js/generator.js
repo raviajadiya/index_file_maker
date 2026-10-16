@@ -114,19 +114,19 @@ function renderWidgetHtml(widget) {
                 `<span class="mx-1 my-1" style="background-color: ${badgeBg}; color: ${badgeColor}; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-block; border: 1px solid ${badgeBorder};">${escapeHTML(b)}</span>`
             ).join(' ');
 
-            return `<section class="py-5 text-center" style="background-color: ${bg}; color: ${textCol};">
-    <div class="container py-3">
+            return `<section class="py-4 text-center" style="background-color: ${bg}; color: ${textCol};">
+    <div class="container py-2">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10">
                 ${d.iconUrl ? `<div class="mb-3"><img src="${d.iconUrl}" alt="App Icon" style="width: 80px; height: 80px; border-radius: 18px; object-fit: contain; background-color: #ffffff; padding: 8px; border: 1px solid #e2e8f0;"/></div>` : ''}
-                <h1 style="font-size: 40px; font-weight: 700; line-height: 1.25; margin-bottom: 16px; color: ${textCol} !important;">
+                <h1 style="font-size: 40px; font-weight: 700; line-height: 1.25; margin-bottom: 14px; color: ${textCol} !important;">
                     ${escapeHTML(d.title || 'App Title')}
                 </h1>
-                <p style="font-size: 18px; max-width: 780px; margin: 0 auto 28px auto; opacity: 0.95; line-height: 1.6; color: ${textCol} !important;">
+                <p style="font-size: 18px; max-width: 780px; margin: 0 auto 20px auto; opacity: 0.95; line-height: 1.6; color: ${textCol} !important;">
                     ${escapeHTML(d.subtitle || '')}
                 </p>
-                ${d.showBadges && badgesHTML ? `<div class="mb-4 d-flex flex-wrap justify-content-center">${badgesHTML}</div>` : ''}
-                <div class="d-flex flex-wrap justify-content-center mt-3">
+                ${d.showBadges && badgesHTML ? `<div class="mb-3 d-flex flex-wrap justify-content-center">${badgesHTML}</div>` : ''}
+                <div class="d-flex flex-wrap justify-content-center mt-2">
                     ${d.primaryBtnText ? `<span class="mx-2 mb-2" style="background-color: ${accent}; color: #ffffff; padding: 12px 30px; border-radius: 8px; font-weight: 700; font-size: 15px; display: inline-block;">${escapeHTML(d.primaryBtnText)}</span>` : ''}
                     ${d.secondaryBtnText ? `<span class="mx-2 mb-2" style="background-color: #ffffff; color: ${bg}; border: 1px solid #ffffff; padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: 15px; display: inline-block;">${escapeHTML(d.secondaryBtnText)}</span>` : ''}
                 </div>
@@ -139,12 +139,12 @@ function renderWidgetHtml(widget) {
         case 'minimal_header': {
             const bg = d.bgColor || '#ffffff';
             const accent = d.accentColor || globalBrand || '#714B67';
-            return `<section class="py-5 text-center" style="background-color: ${bg}; border-bottom: 1px solid #e2e8f0;">
-    <div class="container py-2">
+            return `<section class="py-4 text-center" style="background-color: ${bg}; border-bottom: 1px solid #e2e8f0;">
+    <div class="container py-1">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8">
                 ${d.badge ? `<span style="background-color: #f5efff; color: ${accent}; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase;">${escapeHTML(d.badge)}</span>` : ''}
-                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-top: 14px; margin-bottom: 12px;">${escapeHTML(d.title || '')}</h2>
+                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-top: 12px; margin-bottom: 10px;">${escapeHTML(d.title || '')}</h2>
                 <p style="font-size: 16px; color: #64748b; margin: 0 auto; max-width: 680px; line-height: 1.6;">${escapeHTML(d.subtitle || '')}</p>
             </div>
         </div>
@@ -172,7 +172,7 @@ function renderWidgetHtml(widget) {
             const titleCol = d.titleColor || '#1e293b';
             const subtitleCol = d.subtitleColor || '#64748b';
             const cols = parseInt(d.columns) || 4;
-            const colClass = cols === 2 ? 'col-12 col-md-6 mb-4' : (cols === 3 ? 'col-12 col-md-4 mb-4' : 'col-12 col-sm-6 col-md-3 mb-4');
+            const colClass = cols === 2 ? 'col-12 col-md-6 mb-3' : (cols === 3 ? 'col-12 col-md-4 mb-3' : 'col-12 col-sm-6 col-md-3 mb-3');
             const items = d.items || [];
 
             const cardsHTML = items.map(it => {
@@ -197,11 +197,11 @@ function renderWidgetHtml(widget) {
             </div>`;
             }).join('');
 
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3">
-        ${d.title ? `<div class="row justify-content-center text-center mb-5">
+            return `<section class="py-4" style="background-color: ${bg};">
+    <div class="container py-1">
+        ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12 col-lg-8">
-                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
+                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
                 ${d.subtitle ? `<p style="font-size: 16px; color: ${subtitleCol} !important; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
@@ -223,7 +223,7 @@ function renderWidgetHtml(widget) {
             const stats = d.stats || [];
 
             const cols = parseInt(d.columns) || (stats.length === 4 ? 4 : (stats.length === 2 ? 2 : 3));
-            const colClass = cols === 2 ? 'col-12 col-sm-6 col-md-6 mb-4 text-center' : (cols === 4 ? 'col-12 col-sm-6 col-md-3 mb-4 text-center' : 'col-12 col-sm-6 col-md-4 mb-4 text-center');
+            const colClass = cols === 2 ? 'col-12 col-sm-6 col-md-6 mb-3 text-center' : (cols === 4 ? 'col-12 col-sm-6 col-md-3 mb-3 text-center' : 'col-12 col-sm-6 col-md-4 mb-3 text-center');
 
             const colsHTML = stats.map(st => {
                 let iconHtml = '';
@@ -252,11 +252,11 @@ function renderWidgetHtml(widget) {
             </div>`;
             }).join('');
 
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3">
-        ${d.title ? `<div class="row justify-content-center text-center mb-5">
+            return `<section class="py-4" style="background-color: ${bg};">
+    <div class="container py-1">
+        ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12 col-lg-8">
-                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
+                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
                 ${d.subtitle ? `<p style="font-size: 16px; color: ${subtitleCol} !important; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
@@ -350,20 +350,20 @@ function renderWidgetHtml(widget) {
                     ${d.badgeNumber ? `<span style="background-color: ${badgeBg}; color: ${badgeText} !important; border: 1px solid ${badgeBorder}; padding: 4px 14px; border-radius: 10px; font-weight: 700; font-size: 18px; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 38px; margin-right: 12px; line-height: 1; flex-shrink: 0;">${escapeHTML(d.badgeNumber)}</span>` : ''}
                     ${d.badgeText ? `<span style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 1.2;">${escapeHTML(d.badgeText)}</span>` : ''}
                 </div>` : ''}
-                <h2 style="font-size: 26px; font-weight: 600; color: ${titleCol} !important; margin: 0 0 12px 0; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
-                ${d.desc ? `<p style="font-size: 15px; font-weight: 400; color: ${descCol} !important; line-height: 1.6; margin-bottom: 22px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${escapeHTML(d.desc)}</p>` : ''}
+                <h2 style="font-size: 26px; font-weight: 600; color: ${titleCol} !important; margin: 0 0 10px 0; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
+                ${d.desc ? `<p style="font-size: 15px; font-weight: 400; color: ${descCol} !important; line-height: 1.6; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${escapeHTML(d.desc)}</p>` : ''}
                 <div>${pointsHTML}</div>
             </div>`;
 
             const imageColHTML = `
-            <div class="col-12 col-lg-6 mb-4 mb-lg-0 d-flex align-items-center justify-content-center">
+            <div class="col-12 col-lg-6 mb-3 mb-lg-0 d-flex align-items-center justify-content-center">
                 <div style="width: 100%;">
                     ${phonesHTML}
                 </div>
             </div>`;
 
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3">
+            return `<section class="py-4" style="background-color: ${bg};">
+    <div class="container py-1">
         <div class="row align-items-center">
             ${isImageLeft ? `${imageColHTML}\n            ${contentColHTML}` : `${contentColHTML}\n            ${imageColHTML}`}
         </div>
@@ -466,23 +466,23 @@ function renderWidgetHtml(widget) {
                 </div>`;
             }
 
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3">
+            return `<section class="py-4" style="background-color: ${bg};">
+    <div class="container py-1">
         <!-- TOP: Count, Category, Title, Subtitle -->
-        <div class="row ${isCenter ? 'justify-content-center text-center' : ''} mb-4">
+        <div class="row ${isCenter ? 'justify-content-center text-center' : ''} mb-3">
             <div class="col-12 col-lg-10">
                 ${(d.badgeNumber || d.badgeText) ? `
                 <div class="d-flex align-items-center ${isCenter ? 'justify-content-center' : ''} mb-3">
                     ${d.badgeNumber ? `<span style="background-color: ${badgeBg}; color: ${badgeText} !important; border: 1px solid ${badgeBorder}; padding: 4px 14px; border-radius: 10px; font-weight: 700; font-size: 18px; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 38px; margin-right: 12px; line-height: 1; flex-shrink: 0;">${escapeHTML(d.badgeNumber)}</span>` : ''}
                     ${d.badgeText ? `<span style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 1.2;">${escapeHTML(d.badgeText)}</span>` : ''}
                 </div>` : ''}
-                <h2 style="font-size: 30px; font-weight: 700; color: ${titleCol} !important; margin: 0 0 12px 0; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
+                <h2 style="font-size: 30px; font-weight: 700; color: ${titleCol} !important; margin: 0 0 10px 0; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
                 ${d.desc ? `<p style="font-size: 16px; font-weight: 400; color: ${descCol} !important; line-height: 1.6; margin: 0 ${isCenter ? 'auto' : ''}; max-width: 800px;">${escapeHTML(d.desc)}</p>` : ''}
             </div>
         </div>
 
         <!-- MIDDLE: Full-Width Desktop Mockup Frame -->
-        <div class="row justify-content-center mb-4">
+        <div class="row justify-content-center mb-3">
             <div class="col-12">
                 ${desktopMockupHTML}
             </div>
@@ -506,13 +506,13 @@ function renderWidgetHtml(widget) {
                     <span>${escapeHTML(b)}</span>
                 </li>`).join('');
 
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3">
+            return `<section class="py-4" style="background-color: ${bg};">
+    <div class="container py-1">
         <div class="row align-items-center">
-            <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+            <div class="col-12 col-lg-6 mb-3 mb-lg-0">
                 ${d.badge ? `<span style="background-color: #f5efff; color: ${accent}; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase;">${escapeHTML(d.badge)}</span>` : ''}
-                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-top: 14px; margin-bottom: 16px; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
-                <p style="font-size: 16px; color: #64748b; line-height: 1.6; margin-bottom: 24px;">${escapeHTML(d.desc || '')}</p>
+                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-top: 12px; margin-bottom: 12px; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
+                <p style="font-size: 16px; color: #64748b; line-height: 1.6; margin-bottom: 18px;">${escapeHTML(d.desc || '')}</p>
                 <ul class="list-unstyled p-0 m-0">${bullets}</ul>
             </div>
             <div class="col-12 col-lg-6">
@@ -539,8 +539,8 @@ function renderWidgetHtml(widget) {
                     <span>${escapeHTML(b)}</span>
                 </li>`).join('');
 
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3">
+            return `<section class="py-4" style="background-color: ${bg};">
+    <div class="container py-1">
         <div class="row align-items-center">
             <div class="col-12 col-lg-6 mb-4 mb-lg-0 order-2 order-lg-1">
                 <div class="card shadow-sm p-2 text-center" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;">
@@ -601,11 +601,11 @@ function renderWidgetHtml(widget) {
             </div>`;
             }).join('');
 
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3">
-        ${d.title ? `<div class="row justify-content-center text-center mb-5">
+            return `<section class="py-4" style="background-color: ${bg};">
+    <div class="container py-1">
+        ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12 col-lg-8">
-                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
+                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
                 ${d.subtitle ? `<p style="font-size: 16px; color: ${subtitleCol} !important; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
@@ -639,11 +639,11 @@ function renderWidgetHtml(widget) {
                 </td>
             </tr>`).join('');
 
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3" style="max-width: 980px;">
-        <div class="row justify-content-center text-center mb-4">
+            return `<section class="py-4" style="background-color: ${bg};">
+    <div class="container py-1" style="max-width: 980px;">
+        <div class="row justify-content-center text-center mb-3">
             <div class="col-12 col-lg-10">
-                ${d.title ? `<h2 style="font-size: 30px; font-weight: 700; color: ${titleColor} !important; margin: 0 0 10px 0; line-height: 1.3;">${escapeHTML(d.title)}</h2>` : ''}
+                ${d.title ? `<h2 style="font-size: 30px; font-weight: 700; color: ${titleColor} !important; margin: 0 0 8px 0; line-height: 1.3;">${escapeHTML(d.title)}</h2>` : ''}
                 ${d.subtitle ? `<p style="font-size: 15px; color: ${subtitleColor} !important; margin: 0 auto; line-height: 1.6; max-width: 720px;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>
@@ -684,11 +684,11 @@ function renderWidgetHtml(widget) {
                 </div>
             </div>`).join('');
 
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-3" style="max-width: 900px;">
-        ${d.title ? `<div class="row justify-content-center text-center mb-5">
+            return `<section class="py-4" style="background-color: ${bg};">
+    <div class="container py-1" style="max-width: 900px;">
+        ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12">
-                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
+                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
                 ${d.subtitle ? `<p style="font-size: 16px; color: #64748b; margin: 0;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
@@ -699,13 +699,13 @@ function renderWidgetHtml(widget) {
 
         case 'testimonial_card': {
             const bg = d.bgColor || '#ffffff';
-            return `<section class="py-5 text-center" style="background-color: ${bg};">
-    <div class="container py-3" style="max-width: 820px;">
+            return `<section class="py-4 text-center" style="background-color: ${bg};">
+    <div class="container py-1" style="max-width: 820px;">
         <div class="card shadow-sm p-4 text-center" style="background-color: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 16px;">
             <div class="mb-3" style="color: #facc15; font-size: 20px;">
                 <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
             </div>
-            <p style="font-size: 18px; font-weight: 500; font-style: italic; color: #1e293b; line-height: 1.6; margin-bottom: 20px;">
+            <p style="font-size: 18px; font-weight: 500; font-style: italic; color: #1e293b; line-height: 1.6; margin-bottom: 18px;">
                 &ldquo;${escapeHTML(d.quote || '')}&rdquo;
             </p>
             <div>
@@ -720,11 +720,11 @@ function renderWidgetHtml(widget) {
         case 'support_banner': {
             const bg = d.bgColor || globalBrand || '#714B67';
             const textCol = d.textColor || '#ffffff';
-            return `<section class="py-5 my-4" style="background-color: ${bg}; color: ${textCol}; border-radius: 16px;">
-    <div class="container text-center py-3" style="max-width: 960px;">
-        ${d.badge ? `<span style="background-color: #ffffff; color: ${bg}; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 16px;">${escapeHTML(d.badge)}</span>` : ''}
-        <h2 style="font-size: 32px; font-weight: 700; margin-bottom: 14px; color: ${textCol} !important;">${escapeHTML(d.title || '')}</h2>
-        <p style="font-size: 16px; opacity: 0.95; max-width: 680px; margin: 0 auto 36px auto; line-height: 1.6; color: ${textCol} !important;">${escapeHTML(d.subtitle || '')}</p>
+            return `<section class="py-4 my-2" style="background-color: ${bg}; color: ${textCol}; border-radius: 16px;">
+    <div class="container text-center py-2" style="max-width: 960px;">
+        ${d.badge ? `<span style="background-color: #ffffff; color: ${bg}; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 12px;">${escapeHTML(d.badge)}</span>` : ''}
+        <h2 style="font-size: 30px; font-weight: 700; margin-bottom: 10px; color: ${textCol} !important;">${escapeHTML(d.title || '')}</h2>
+        <p style="font-size: 15px; opacity: 0.95; max-width: 680px; margin: 0 auto 20px auto; line-height: 1.6; color: ${textCol} !important;">${escapeHTML(d.subtitle || '')}</p>
         <div class="row justify-content-center">
             ${d.email ? `<div class="col-12 col-sm-6 col-md-4 mb-3">
                 <a href="mailto:${escapeHTML(d.email)}" style="text-decoration: none; color: inherit; display: block;">
@@ -757,7 +757,7 @@ function renderWidgetHtml(widget) {
         case 'other_apps': {
             const bg = d.bgColor || '#ffffff';
             const titleCol = d.titleColor || '#1e293b';
-            const colClass = d.columns === '2' ? 'col-12 col-md-6 mb-4' : (d.columns === '4' ? 'col-12 col-sm-6 col-lg-3 mb-4' : 'col-12 col-md-6 col-lg-4 mb-4');
+            const colClass = d.columns === '2' ? 'col-12 col-md-6 mb-3' : (d.columns === '4' ? 'col-12 col-sm-6 col-lg-3 mb-3' : 'col-12 col-md-6 col-lg-4 mb-3');
 
             const appsList = Array.isArray(d.apps) ? d.apps : [];
             const appsHTML = appsList.map((app) => {
@@ -797,11 +797,11 @@ function renderWidgetHtml(widget) {
                 </div>`;
             }).join('\n');
 
-            return `<section class="py-5" style="background-color: ${bg};">
-    <div class="container py-2" style="max-width: 1140px;">
-        ${d.title ? `<div class="row justify-content-center text-center mb-4">
+            return `<section class="py-4" style="background-color: ${bg};">
+    <div class="container py-1" style="max-width: 1140px;">
+        ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12 col-lg-9">
-                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol}; margin-bottom: 10px;">${escapeHTML(d.title)}</h2>
+                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol}; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
                 ${d.subtitle ? `<p style="font-size: 16px; color: #64748b; margin: 0 auto; max-width: 680px; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
