@@ -542,7 +542,6 @@
             position: relative;
             cursor: pointer;
             transition: outline 0.15s ease, box-shadow 0.15s ease;
-            border-bottom: 1px dashed rgba(0,0,0,0.06);
         }
 
         .widget-block:hover {

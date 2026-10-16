@@ -692,10 +692,10 @@ if (document.readyState === 'loading') {
                     ${isShowcase ? `
                     <div style="text-align: center; margin-bottom: 12px; padding: 12px 10px; background: ${d.bgColor || '#ffffff'}; border: 1px solid #e2e8f0; border-radius: 8px;">
                         <div style="display: inline-flex; align-items: center; justify-content: center; gap: 12px;">
-                            <span id="badge-chip-live-preview" style="background-color: ${d.badgeBgColor}; color: ${d.badgeTextColor} !important; border: 1px solid ${d.badgeBorderColor || d.badgeBgColor}; padding: 4px 14px; border-radius: 10px; font-size: 18px; font-weight: 700; min-width: 44px; height: 38px; display: inline-flex; align-items: center; justify-content: center; line-height: 1; flex-shrink: 0;">
+                            <span id="badge-chip-live-preview" style="background-color: ${d.badgeBgColor}; color: ${d.badgeTextColor} !important; border: 1px solid ${d.badgeBorderColor || d.badgeBgColor}; padding: 0 10px; border-radius: 8px; font-size: 16px; font-weight: 700; min-width: 42px; height: 36px; line-height: 34px; text-align: center; vertical-align: middle; display: inline-block; box-sizing: border-box; flex-shrink: 0;">
                                 ${escapeHTML(d.badgeNumber || (widget.type === 'desktop_showcase' ? '01' : '03'))}
                             </span>
-                            <span id="badge-chip-category-preview" style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 1.2;">
+                            <span id="badge-chip-category-preview" style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 36px; vertical-align: middle; display: inline-block;">
                                 ${escapeHTML(d.badgeText || (widget.type === 'desktop_showcase' ? 'Dashboard' : 'Conversation'))}
                             </span>
                         </div>
@@ -3282,6 +3282,89 @@ if (document.readyState === 'loading') {
 
                 form.appendChild(grp);
             }
+
+            // Section Border & Divider Controls for ALL widgets (Odoo App Store Safe CSS)
+            const borderCard = document.createElement('div');
+            borderCard.style.cssText = 'background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-top: 18px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);';
+
+            const currentBorder = d.sectionBorder !== undefined ? d.sectionBorder : (widget.type === 'support_banner' ? 'none' : (widget.type === 'footer_brand' ? 'top' : 'bottom'));
+            const currentBorderColor = d.sectionBorderColor || (widget.type === 'footer_brand' ? '#334155' : '#e2e8f0');
+            const currentBorderWidth = d.sectionBorderWidth || '1px';
+            const currentBorderStyle = d.sectionBorderStyle || 'solid';
+
+            borderCard.innerHTML = `
+                <div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                    <span style="display: flex; align-items: center; gap: 7px;">
+                        <i class="fa fa-square-o" style="color: var(--primary);"></i> Section Border &amp; Divider
+                    </span>
+                    <span style="font-size: 10px; font-weight: 600; background: #e0f2fe; color: #0369a1; padding: 2px 7px; border-radius: 4px;">Odoo App Store Safe</span>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Border Position</label>
+                    <select class="form-input" id="sec-border-type-select" style="font-size: 12px; padding: 7px 10px;">
+                        <option value="bottom" ${currentBorder === 'bottom' ? 'selected' : ''}>Bottom Divider (Standard)</option>
+                        <option value="top_bottom" ${currentBorder === 'top_bottom' ? 'selected' : ''}>Top &amp; Bottom Borders</option>
+                        <option value="all" ${currentBorder === 'all' ? 'selected' : ''}>Full Box Border (All 4 Sides)</option>
+                        <option value="top" ${currentBorder === 'top' ? 'selected' : ''}>Top Border Only</option>
+                        <option value="none" ${currentBorder === 'none' ? 'selected' : ''}>No Border (None)</option>
+                    </select>
+                </div>
+
+                <div id="sec-border-options-box" style="display: ${currentBorder === 'none' ? 'none' : 'block'};">
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+                        <div>
+                            <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Border Width</label>
+                            <select class="form-input" id="sec-border-width-select" style="font-size: 12px; padding: 6px 8px;">
+                                <option value="1px" ${currentBorderWidth === '1px' ? 'selected' : ''}>1px (Subtle)</option>
+                                <option value="2px" ${currentBorderWidth === '2px' ? 'selected' : ''}>2px (Medium)</option>
+                                <option value="3px" ${currentBorderWidth === '3px' ? 'selected' : ''}>3px (Bold)</option>
+                                <option value="4px" ${currentBorderWidth === '4px' ? 'selected' : ''}>4px (Thick)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Border Style</label>
+                            <select class="form-input" id="sec-border-style-select" style="font-size: 12px; padding: 6px 8px;">
+                                <option value="solid" ${currentBorderStyle === 'solid' ? 'selected' : ''}>Solid</option>
+                                <option value="dashed" ${currentBorderStyle === 'dashed' ? 'selected' : ''}>Dashed</option>
+                                <option value="dotted" ${currentBorderStyle === 'dotted' ? 'selected' : ''}>Dotted</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="sec-border-color-wrapper"></div>
+                </div>
+            `;
+
+            const typeSelect = borderCard.querySelector('#sec-border-type-select');
+            const optionsBox = borderCard.querySelector('#sec-border-options-box');
+            const widthSelect = borderCard.querySelector('#sec-border-width-select');
+            const styleSelect = borderCard.querySelector('#sec-border-style-select');
+            const colorWrapper = borderCard.querySelector('#sec-border-color-wrapper');
+
+            typeSelect.addEventListener('change', (e) => {
+                d.sectionBorder = e.target.value;
+                optionsBox.style.display = d.sectionBorder === 'none' ? 'none' : 'block';
+                if (!d.sectionBorderColor) d.sectionBorderColor = currentBorderColor;
+                updateCanvasLive();
+            });
+
+            widthSelect.addEventListener('change', (e) => {
+                d.sectionBorderWidth = e.target.value;
+                updateCanvasLive();
+            });
+
+            styleSelect.addEventListener('change', (e) => {
+                d.sectionBorderStyle = e.target.value;
+                updateCanvasLive();
+            });
+
+            colorWrapper.appendChild(createColorField('Border Color', currentBorderColor, (val) => {
+                d.sectionBorderColor = val;
+                updateCanvasLive();
+            }));
+
+            form.appendChild(borderCard);
 
             container.appendChild(form);
         }

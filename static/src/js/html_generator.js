@@ -183,6 +183,28 @@ function renderTableCheck(val) {
     }
 }
 
+// SECTION BORDER GENERATOR (Standard Odoo-Safe CSS)
+function getSectionBorderStyle(d, defaultType = 'bottom', defaultColor = '#e2e8f0') {
+    const borderType = d.sectionBorder !== undefined ? d.sectionBorder : defaultType;
+    if (borderType === 'none' || borderType === false) return '';
+    const color = d.sectionBorderColor || defaultColor;
+    const width = d.sectionBorderWidth ? (String(d.sectionBorderWidth).includes('px') ? d.sectionBorderWidth : d.sectionBorderWidth + 'px') : '1px';
+    const style = d.sectionBorderStyle || 'solid';
+    const borderVal = `${width} ${style} ${color}`;
+
+    if (borderType === 'bottom') {
+        return `border-bottom: ${borderVal};`;
+    } else if (borderType === 'top') {
+        return `border-top: ${borderVal};`;
+    } else if (borderType === 'top_bottom') {
+        return `border-top: ${borderVal}; border-bottom: ${borderVal};`;
+    } else if (borderType === 'all') {
+        const radius = d.sectionBorderRadius ? ` border-radius: ${String(d.sectionBorderRadius).includes('px') ? d.sectionBorderRadius : d.sectionBorderRadius + 'px'};` : '';
+        return `border: ${borderVal};${radius}`;
+    }
+    return `border-bottom: ${borderVal};`;
+}
+
 function renderWidgetAppStore(widget, globalBrand, globalAccent) {
     const d = widget.data || {};
     const type = widget.type;
@@ -203,7 +225,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                 `<span class="mx-1 my-1" style="background-color: ${badgeBg}; color: ${badgeColor}; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-block; border: 1px solid ${badgeBorder};">${escapeHTML(b)}</span>`
             ).join(' ');
 
-            return `<section class="py-4 text-center" style="background-color: ${bg}; color: ${textCol};">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4 text-center" style="background-color: ${bg}; color: ${textCol}; ${borderCss}">
     <div class="container py-2">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10">
@@ -228,7 +251,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
         case 'minimal_header': {
             const bg = d.bgColor || '#ffffff';
             const accent = d.accentColor || globalBrand || '#875A7B';
-            return `<section class="py-4 text-center" style="background-color: ${bg}; border-bottom: 1px solid #e2e8f0;">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4 text-center" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8">
@@ -244,7 +268,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
         case 'discount_ribbon': {
             const bg = d.bgColor || globalBrand || '#714B67';
             const textCol = d.textColor || '#ffffff';
-            return `<section class="py-2 text-center" style="background-color: ${bg}; color: ${textCol}; font-weight: 600; font-size: 15px;">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-2 text-center" style="background-color: ${bg}; color: ${textCol}; font-weight: 600; font-size: 15px; ${borderCss}">
     <div class="container d-flex flex-wrap align-items-center justify-content-center">
         <span class="mx-2 my-1">${escapeHTML(d.text || '')}</span>
         ${d.btnText ? `<span class="mx-2 my-1" style="background-color: #ffffff; color: ${bg}; padding: 4px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; display: inline-block;">${escapeHTML(d.btnText)}</span>` : ''}
@@ -276,7 +301,7 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             <div class="${colClass}">
                 <div class="card h-100 shadow-sm" style="background-color: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 12px;">
                     <div class="card-body p-4 d-flex flex-column">
-                        <div class="mb-3 d-inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px; border-radius: 12px; background-color: ${iconBg}; color: ${iconColor} !important; font-size: 22px;">
+                        <div class="mb-3 text-center" style="width: 52px; height: 52px; line-height: 52px; text-align: center; border-radius: 12px; background-color: ${iconBg}; color: ${iconColor} !important; font-size: 22px; display: inline-block; vertical-align: middle;">
                             ${iconHtml}
                         </div>
                         <h4 style="font-size: 18px; font-weight: 700; color: ${it.titleColor || '#1e293b'} !important; margin: 0 0 8px 0; line-height: 1.35;">${escapeHTML(it.title || '')}</h4>
@@ -286,7 +311,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             </div>`;
             }).join('');
 
-            return `<section class="py-4" style="background-color: ${bg};">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12 col-lg-8">
@@ -329,19 +355,20 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                 return `
             <div class="${colClass}">
                 <div class="card h-100 shadow-sm" style="background-color: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 12px;">
-                    <div class="card-body p-4 d-flex flex-column align-items-center justify-content-center">
+                    <div class="card-body p-4 text-center" style="text-align: center;">
                         ${iconHtml ? `
-                        <div class="mb-3 d-inline-flex align-items-center justify-content-center" style="width: 52px; height: 52px; border-radius: 12px; background-color: ${iconBg}; color: ${itemIconCol} !important; font-size: 22px;">
+                        <div class="mb-3 text-center" style="width: 52px; height: 52px; line-height: 52px; text-align: center; border-radius: 12px; background-color: ${iconBg}; color: ${itemIconCol} !important; font-size: 22px; display: inline-block; vertical-align: middle;">
                             ${iconHtml}
                         </div>` : ''}
-                        <div style="font-size: 32px; font-weight: 700; color: ${numCol} !important; margin-bottom: 4px; line-height: 1.2;">${escapeHTML(st.number || '')}</div>
-                        <div style="font-size: 15px; font-weight: 600; color: ${labelCol} !important; line-height: 1.4;">${escapeHTML(st.label || '')}</div>
+                        <div style="font-size: 32px; font-weight: 700; color: ${numCol} !important; margin-bottom: 4px; line-height: 1.2; text-align: center;">${escapeHTML(st.number || '')}</div>
+                        <div style="font-size: 15px; font-weight: 600; color: ${labelCol} !important; line-height: 1.4; text-align: center;">${escapeHTML(st.label || '')}</div>
                     </div>
                 </div>
             </div>`;
             }).join('');
 
-            return `<section class="py-4" style="background-color: ${bg};">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12 col-lg-8">
@@ -432,9 +459,9 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             const contentColHTML = `
             <div class="col-12 col-lg-6 d-flex flex-column justify-content-center">
                 ${(d.badgeNumber || d.badgeText) ? `
-                <div class="d-flex align-items-center mb-3">
-                    ${d.badgeNumber ? `<span style="background-color: ${badgeBg}; color: ${badgeText} !important; border: 1px solid ${badgeBorder}; padding: 4px 14px; border-radius: 10px; font-weight: 700; font-size: 18px; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 38px; margin-right: 12px; line-height: 1; flex-shrink: 0;">${escapeHTML(d.badgeNumber)}</span>` : ''}
-                    ${d.badgeText ? `<span style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 1.2;">${escapeHTML(d.badgeText)}</span>` : ''}
+                <div class="mb-3" style="line-height: 1.2;">
+                    ${d.badgeNumber ? `<span style="background-color: ${badgeBg}; color: ${badgeText} !important; border: 1px solid ${badgeBorder}; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-block; min-width: 42px; height: 36px; line-height: 34px; text-align: center; vertical-align: middle; margin-right: 12px; padding: 0 10px; box-sizing: border-box;">${escapeHTML(d.badgeNumber)}</span>` : ''}
+                    ${d.badgeText ? `<span style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 36px; vertical-align: middle; display: inline-block;">${escapeHTML(d.badgeText)}</span>` : ''}
                 </div>` : ''}
                 <h2 style="font-size: 26px; font-weight: 600; color: ${titleCol} !important; margin: 0 0 10px 0; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
                 ${d.desc ? `<p style="font-size: 15px; font-weight: 400; color: ${descCol} !important; line-height: 1.6; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${escapeHTML(d.desc)}</p>` : ''}
@@ -448,7 +475,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                 </div>
             </div>`;
 
-            return `<section class="py-4" style="background-color: ${bg};">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         <div class="row align-items-center">
             ${isImageLeft ? `${imageColHTML}\n            ${contentColHTML}` : `${contentColHTML}\n            ${imageColHTML}`}
@@ -555,15 +583,16 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                 </div>`;
             }
 
-            return `<section class="py-4" style="background-color: ${bg};">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         <!-- TOP: Count, Category, Title, Subtitle -->
         <div class="row ${isCenter ? 'justify-content-center text-center' : ''} mb-3">
             <div class="col-12 col-lg-10">
                 ${(d.badgeNumber || d.badgeText) ? `
-                <div class="d-flex align-items-center ${isCenter ? 'justify-content-center' : ''} mb-3">
-                    ${d.badgeNumber ? `<span style="background-color: ${badgeBg}; color: ${badgeText} !important; border: 1px solid ${badgeBorder}; padding: 4px 14px; border-radius: 10px; font-weight: 700; font-size: 18px; display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 38px; margin-right: 12px; line-height: 1; flex-shrink: 0;">${escapeHTML(d.badgeNumber)}</span>` : ''}
-                    ${d.badgeText ? `<span style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 1.2;">${escapeHTML(d.badgeText)}</span>` : ''}
+                <div class="mb-3 ${isCenter ? 'text-center' : ''}" style="text-align: ${isCenter ? 'center' : 'left'}; line-height: 1.2;">
+                    ${d.badgeNumber ? `<span style="background-color: ${badgeBg}; color: ${badgeText} !important; border: 1px solid ${badgeBorder}; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-block; min-width: 42px; height: 36px; line-height: 34px; text-align: center; vertical-align: middle; margin-right: 12px; padding: 0 10px; box-sizing: border-box;">${escapeHTML(d.badgeNumber)}</span>` : ''}
+                    ${d.badgeText ? `<span style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 36px; vertical-align: middle; display: inline-block;">${escapeHTML(d.badgeText)}</span>` : ''}
                 </div>` : ''}
                 <h2 style="font-size: 30px; font-weight: 700; color: ${titleCol} !important; margin: 0 0 10px 0; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
                 ${d.desc ? `<p style="font-size: 16px; font-weight: 400; color: ${descCol} !important; line-height: 1.6; margin: 0 ${isCenter ? 'auto' : ''}; max-width: 800px;">${escapeHTML(d.desc)}</p>` : ''}
@@ -595,7 +624,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                     <span>${escapeHTML(b)}</span>
                 </li>`).join('');
 
-            return `<section class="py-4" style="background-color: ${bg};">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         <div class="row align-items-center">
             <div class="col-12 col-lg-6 mb-3 mb-lg-0">
@@ -628,7 +658,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                     <span>${escapeHTML(b)}</span>
                 </li>`).join('');
 
-            return `<section class="py-4" style="background-color: ${bg};">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         <div class="row align-items-center">
             <div class="col-12 col-lg-6 mb-4 mb-lg-0 order-2 order-lg-1">
@@ -678,19 +709,20 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             <div class="${colClass}">
                 <div class="card h-100 shadow-sm" style="background-color: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.04);">
                     <div class="card-body p-4 d-flex flex-column ${isCenter ? 'text-center align-items-center' : 'text-start'}">
-                        <div class="d-flex align-items-center ${isCenter ? 'justify-content-center' : 'justify-content-start'} w-100 mb-3">
-                            <span style="display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 44px; padding: 0 12px; border-radius: 50px; background-color: ${badgeBg}; color: ${badgeText} !important; font-size: 17px; font-weight: 800; line-height: 1; box-shadow: 0 4px 10px rgba(0,0,0,0.12); flex-shrink: 0;">
+                        <div class="w-100 mb-3" style="text-align: ${isCenter ? 'center' : 'left'};">
+                            <span style="display: inline-block; min-width: 44px; height: 44px; line-height: 44px; text-align: center; vertical-align: middle; padding: 0 8px; border-radius: 50px; background-color: ${badgeBg}; color: ${badgeText} !important; font-size: 18px; font-weight: 800; box-shadow: 0 4px 10px rgba(0,0,0,0.12); box-sizing: border-box;">
                                 ${escapeHTML(numVal)}
                             </span>
                         </div>
-                        <h4 style="font-size: 18px; font-weight: 700; color: ${cardTitleCol} !important; margin: 0 0 10px 0; line-height: 1.35; width: 100%;">${escapeHTML(s.title || '')}</h4>
-                        <p style="font-size: 14px; color: ${cardDescCol} !important; line-height: 1.6; margin: 0; flex: 1; width: 100%;">${escapeHTML(s.desc || '')}</p>
+                        <h4 style="font-size: 18px; font-weight: 700; color: ${cardTitleCol} !important; margin: 0 0 10px 0; line-height: 1.35; width: 100%; text-align: ${isCenter ? 'center' : 'left'};">${escapeHTML(s.title || '')}</h4>
+                        <p style="font-size: 14px; color: ${cardDescCol} !important; line-height: 1.6; margin: 0; flex: 1; width: 100%; text-align: ${isCenter ? 'center' : 'left'};">${escapeHTML(s.desc || '')}</p>
                     </div>
                 </div>
             </div>`;
             }).join('');
 
-            return `<section class="py-4" style="background-color: ${bg};">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12 col-lg-8">
@@ -728,7 +760,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                 </td>
             </tr>`).join('');
 
-            return `<section class="py-4" style="background-color: ${bg};">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1" style="max-width: 980px;">
         <div class="row justify-content-center text-center mb-3">
             <div class="col-12 col-lg-10">
@@ -780,7 +813,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
         </details>`;
             }).join('');
 
-            return `<section class="py-4" style="background-color: ${bg};">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1" style="max-width: 920px;">
         ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12">
@@ -823,7 +857,7 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
 
                 const cardInner = `
                     <div class="card h-100 shadow-sm p-3 text-center" style="background-color: ${cardBg}; color: #1e293b; border: 1px solid ${cardBorder}; border-radius: 12px; transition: transform 0.2s, box-shadow 0.2s;">
-                        <div class="mb-2 d-flex align-items-center justify-content-center" style="font-size: 28px; line-height: 1; height: 38px; color: ${iconCol} !important;">
+                        <div class="mb-2 text-center" style="font-size: 28px; line-height: 38px; height: 38px; text-align: center; color: ${iconCol} !important;">
                             ${iconHtml}
                         </div>
                         <span style="font-size: 12px; color: #64748b; display: block; font-weight: 500; margin-bottom: 2px;">${escapeHTML(c.label || 'Support Channel')}</span>
@@ -836,7 +870,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             </div>`;
             }).join('');
 
-            return `<section class="py-4 my-2" style="background-color: ${bg}; color: ${textCol}; border-radius: 16px;">
+            const borderCss = getSectionBorderStyle(d, 'none', '#e2e8f0');
+            return `<section class="py-4 my-2" style="background-color: ${bg}; color: ${textCol}; border-radius: 16px; ${borderCss}">
     <div class="container text-center py-2" style="max-width: 960px;">
         ${d.badge ? `<span style="background-color: #ffffff; color: ${bg}; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">${escapeHTML(d.badge)}</span>` : ''}
         <h2 style="font-size: 30px; font-weight: 700; margin-bottom: 10px; color: ${textCol} !important;">${escapeHTML(d.title || '')}</h2>
@@ -891,7 +926,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                 </div>`;
             }).join('\n');
 
-            return `<section class="py-4" style="background-color: ${bg};">
+            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1" style="max-width: 1140px;">
         ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12 col-lg-9">
@@ -913,7 +949,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             tagline = tagline.replace(/❤️|â\s*¤ï¸|&hearts;|&#10084;&#65039;?/g, '<i class="fa fa-heart" style="color: #ef4444; margin: 0 2px;"></i>');
             const safeTagline = tagline.includes('<i class="fa') ? tagline : escapeHTML(tagline);
 
-            return `<footer class="py-4 text-center" style="background-color: ${bg}; color: ${textCol}; font-size: 14px;">
+            const borderCss = getSectionBorderStyle(d, 'top', '#334155');
+            return `<footer class="py-4 text-center" style="background-color: ${bg}; color: ${textCol}; font-size: 14px; ${borderCss}">
     <div class="container" style="max-width: 900px;">
         <p style="margin-bottom: 6px; font-weight: 600;">${escapeHTML(d.companyName || 'Company Name')} &copy; ${escapeHTML(d.year || '2026')}</p>
         <p style="margin: 0; font-size: 13px; opacity: 0.85;">${safeTagline}</p>
