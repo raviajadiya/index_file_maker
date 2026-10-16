@@ -149,6 +149,41 @@ const WIDGET_CATALOG = [
                 }
             },
             {
+                type: 'desktop_showcase',
+                name: 'Desktop Showcase',
+                desc: 'Full-width desktop mockup with top count badge, title, and bottom feature point cards',
+                icon: 'fa-desktop',
+                defaultData: {
+                    badgeNumber: '01',
+                    badgeText: 'Dashboard',
+                    title: 'Interactive Real-Time Operations Hub',
+                    desc: 'Centralize and monitor your entire business performance with live KPI metrics, dynamic filtering, and interactive data visualization.',
+                    headerAlign: 'center',
+                    pointsLayout: 'grid',
+                    frameStyle: 'browser',
+                    browserUrl: 'https://my-company.odoo.com/web#dashboard',
+                    imageUrl: '',
+                    imageCaption: '',
+                    points: [
+                        'Real-time automated transaction and sales tracking',
+                        'Multi-currency ledger reconciliation with instant filtering',
+                        'One-click export to Excel, PDF, and audit log history'
+                    ],
+                    bgColor: '#ffffff',
+                    accentColor: '#007bff',
+                    badgeBgColor: '#007bff',
+                    badgeTextColor: '#ffffff',
+                    badgeBorderColor: '#007bff',
+                    badgePreset: 'blue',
+                    titleColor: '#1e293b',
+                    descColor: '#64748b',
+                    pointBgColor: '#f0f7ff',
+                    pointBorderColor: '#d0e4ff',
+                    pointTextColor: '#1e293b',
+                    frameColor: '#1e293b'
+                }
+            },
+            {
                 type: 'feature_cards_3',
                 name: '3-Column Feature Cards',
                 desc: '3 modern cards with hover effects and icons',
