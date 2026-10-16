@@ -230,6 +230,19 @@ if (document.readyState === 'loading') {
                 data: JSON.parse(JSON.stringify(widgetDef.defaultData))
             };
 
+            // Seamlessly adapt to current active theme/brand color if customized by user
+            const currentBrand = (window.pageSettings && window.pageSettings.brandColor) || '#714B67';
+            if (currentBrand && currentBrand !== '#714B67') {
+                if (newWidget.data.bgColor === '#714B67') newWidget.data.bgColor = currentBrand;
+                if (newWidget.data.accentColor === '#714B67') newWidget.data.accentColor = currentBrand;
+                if (newWidget.data.badgeBgColor === '#714B67') newWidget.data.badgeBgColor = currentBrand;
+                if (newWidget.data.badgeBorderColor === '#714B67') newWidget.data.badgeBorderColor = currentBrand;
+                if (newWidget.data.badgeTextColor === '#714B67') newWidget.data.badgeTextColor = currentBrand;
+                if (newWidget.data.iconColor === '#714B67') newWidget.data.iconColor = currentBrand;
+                if (newWidget.data.questionColor === '#714B67') newWidget.data.questionColor = currentBrand;
+                if (newWidget.data.numberColor === '#714B67') newWidget.data.numberColor = currentBrand;
+            }
+
             if (insertIndex !== null) {
                 activeWidgets.splice(insertIndex, 0, newWidget);
             } else {
@@ -3445,12 +3458,24 @@ if (document.readyState === 'loading') {
                 if (w) { found = w; break; }
             }
             if (!found) return null;
-            return {
+            const inst = {
                 id: 'w_' + Math.floor(Math.random() * 1000000),
                 type: found.type,
                 name: found.name,
                 data: JSON.parse(JSON.stringify(found.defaultData))
             };
+            const currentBrand = (window.pageSettings && window.pageSettings.brandColor) || '#714B67';
+            if (currentBrand && currentBrand !== '#714B67') {
+                if (inst.data.bgColor === '#714B67') inst.data.bgColor = currentBrand;
+                if (inst.data.accentColor === '#714B67') inst.data.accentColor = currentBrand;
+                if (inst.data.badgeBgColor === '#714B67') inst.data.badgeBgColor = currentBrand;
+                if (inst.data.badgeBorderColor === '#714B67') inst.data.badgeBorderColor = currentBrand;
+                if (inst.data.badgeTextColor === '#714B67') inst.data.badgeTextColor = currentBrand;
+                if (inst.data.iconColor === '#714B67') inst.data.iconColor = currentBrand;
+                if (inst.data.questionColor === '#714B67') inst.data.questionColor = currentBrand;
+                if (inst.data.numberColor === '#714B67') inst.data.numberColor = currentBrand;
+            }
+            return inst;
         }
 
         // ==========================================

@@ -186,7 +186,7 @@ function renderWidgetHtml(widget) {
         }
 
         case 'discount_ribbon': {
-            const bg = d.bgColor || '#f59e0b';
+            const bg = d.bgColor || globalBrand || '#714B67';
             const textCol = d.textColor || '#ffffff';
             return `<section class="py-2 text-center" style="background-color: ${bg}; color: ${textCol}; font-weight: 600; font-size: 15px;">
     <div class="container d-flex flex-wrap align-items-center justify-content-center">
@@ -303,14 +303,14 @@ function renderWidgetHtml(widget) {
             const globalBrand = (window.pageSettings && window.pageSettings.brandColor) || '#714B67';
             const globalAccent = (window.pageSettings && window.pageSettings.accentColor) || '#00A09D';
 
-            const accent = d.accentColor || globalAccent || '#007bff';
-            const badgeBg = d.badgeBgColor || accent || '#007bff';
+            const accent = d.accentColor || globalBrand || '#714B67';
+            const badgeBg = d.badgeBgColor || accent || '#714B67';
             const badgeText = d.badgeTextColor || '#ffffff';
             const badgeBorder = d.badgeBorderColor || badgeBg;
             const titleCol = d.titleColor || '#1e293b';
             const descCol = d.descColor || '#64748b';
-            const pointBg = d.pointBgColor || '#f0f7ff';
-            const pointBorder = d.pointBorderColor || '#d0e4ff';
+            const pointBg = d.pointBgColor || '#fdf8fc';
+            const pointBorder = d.pointBorderColor || '#f0e6ed';
             const pointText = d.pointTextColor || '#1e293b';
             const frameCol = d.frameColor || '#1e293b';
             const isImageLeft = d.layoutPosition !== 'image_right';
@@ -409,14 +409,14 @@ function renderWidgetHtml(widget) {
             const globalBrand = (window.pageSettings && window.pageSettings.brandColor) || '#714B67';
             const globalAccent = (window.pageSettings && window.pageSettings.accentColor) || '#00A09D';
 
-            const accent = d.accentColor || globalAccent || '#007bff';
-            const badgeBg = d.badgeBgColor || accent || '#007bff';
+            const accent = d.accentColor || globalBrand || '#714B67';
+            const badgeBg = d.badgeBgColor || accent || '#714B67';
             const badgeText = d.badgeTextColor || '#ffffff';
             const badgeBorder = d.badgeBorderColor || badgeBg;
             const titleCol = d.titleColor || '#1e293b';
             const descCol = d.descColor || '#64748b';
-            const pointBg = d.pointBgColor || '#f0f7ff';
-            const pointBorder = d.pointBorderColor || '#d0e4ff';
+            const pointBg = d.pointBgColor || '#fdf8fc';
+            const pointBorder = d.pointBorderColor || '#f0e6ed';
             const pointText = d.pointTextColor || '#1e293b';
             const frameCol = d.frameColor || '#1e293b';
             const frameStyle = d.frameStyle || 'browser';
@@ -655,7 +655,7 @@ function renderWidgetHtml(widget) {
             const headerTextColor = d.headerTextColor || '#334155';
             const titleColor = d.titleColor || '#1e293b';
             const subtitleColor = d.subtitleColor || '#64748b';
-            const accent = d.accentColor || globalAccent || '#007bff';
+            const accent = d.accentColor || globalBrand || '#714B67';
             const rows = d.rows || [];
 
             const rowsHTML = rows.map((r, i) => `
@@ -664,7 +664,7 @@ function renderWidgetHtml(widget) {
                     <div style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 2px;">${escapeHTML(r.feature || '')}</div>
                     ${r.detail ? `<div style="font-size: 12px; color: #64748b; line-height: 1.4;">${escapeHTML(r.detail)}</div>` : ''}
                 </td>
-                <td style="padding: 14px 16px; text-align: center; background-color: #f8fbff; border-left: 2px solid #e0f0fe; border-right: 2px solid #e0f0fe;">
+                <td style="padding: 14px 16px; text-align: center; background-color: #fdf8fc; border-left: 2px solid #f0e6ed; border-right: 2px solid #f0e6ed;">
                     ${renderTableCheck(r.ourApp !== undefined ? r.ourApp : true)}
                 </td>
                 <td style="padding: 14px 16px; text-align: center;">
@@ -686,7 +686,7 @@ function renderWidgetHtml(widget) {
                     <thead>
                         <tr style="background-color: ${headerBg}; border-bottom: 2px solid ${cardBorder};">
                             <th style="padding: 18px 22px; font-size: 13px; font-weight: 700; color: ${headerTextColor}; text-transform: uppercase; letter-spacing: 0.5px; width: 48%;">${escapeHTML(d.col1Title || 'Key Capabilities & Features')}</th>
-                            <th style="padding: 16px 16px; text-align: center; background-color: #f0f7ff; border-left: 2px solid #bfdbfe; border-right: 2px solid #bfdbfe; border-top: 3px solid ${accent}; width: 26%;">
+                            <th style="padding: 16px 16px; text-align: center; background-color: #fdf8fc; border-left: 2px solid #f0e6ed; border-right: 2px solid #f0e6ed; border-top: 3px solid ${accent}; width: 26%;">
                                 ${d.col2Badge ? `<span style="display: inline-block; background-color: ${accent}; color: #ffffff; padding: 2px 8px; border-radius: 10px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">${escapeHTML(d.col2Badge)}</span><br>` : ''}
                                 <span style="font-size: 14px; font-weight: 800; color: ${accent};">${escapeHTML(d.col2Title || 'Our Module')}</span>
                             </th>
@@ -703,9 +703,9 @@ function renderWidgetHtml(widget) {
 
         case 'faq_section': {
             const bg = d.bgColor || '#ffffff';
-            const headerBg = d.headerBg || '#eff6ff';
-            const questionColor = d.questionColor || '#2563eb';
-            const borderColor = d.borderColor || '#dbeafe';
+            const headerBg = d.headerBg || '#fdf8fc';
+            const questionColor = d.questionColor || globalBrand || '#714B67';
+            const borderColor = d.borderColor || '#e2e8f0';
             const faqs = d.faqs || [];
             const faqsHTML = faqs.map((f, idx) => {
                 const isOpen = f.isOpen === true || (f.isOpen === undefined && idx === 0);
