@@ -61,84 +61,123 @@ function formatFaIconClass(iconStr, defaultClass = 'fa fa-bolt') {
     return clean ? `fa fa-${clean}` : defaultClass;
 }
 
-const KNOWN_OI_ICONS = new Set([
-    'person', 'group', 'search', 'menu', 'dashboard', 'notifications', 'notifications_active',
-    'campaign', 'chat', 'forum', 'email', 'event', 'calendar_month', 'task_alt',
-    'check_circle', 'cancel', 'delete', 'edit', 'add', 'close', 'refresh', 'download',
-    'upload', 'attach_file', 'folder', 'description', 'business', 'lock', 'help',
-    'favorite', 'schedule', 'progress_activity', 'support_agent', 'contact_support',
-    'call', 'groups', 'verified', 'shield', 'send', 'mail', 'link'
-]);
+const ICON_TO_FA_MAP = {
+    // Communication & Support
+    'email': 'fa fa-envelope',
+    'mail': 'fa fa-envelope',
+    'forum': 'fa fa-comments',
+    'chat': 'fa fa-comments',
+    'campaign': 'fa fa-bullhorn',
+    'help': 'fa fa-life-ring',
+    'support_agent': 'fa fa-headphones',
+    'contact_support': 'fa fa-question-circle',
+    'call': 'fa fa-phone',
+    'phone': 'fa fa-phone',
+    'whatsapp': 'fa fa-whatsapp',
+    'skype': 'fa fa-skype',
 
-const FA_TO_OI_MAP = {
-    'fa-envelope': 'email',
-    'fa-headphones': 'help',
-    'fa-life-ring': 'help',
-    'fa-ticket': 'help',
-    'fa-book': 'description',
-    'fa-comments': 'forum',
-    'fa-comment': 'forum',
-    'fa-bullhorn': 'campaign',
-    'fa-whatsapp': 'forum',
-    'fa-skype': 'forum',
-    'fa-phone': 'forum',
-    'fa-globe': 'business',
-    'fa-shield': 'verified',
-    'fa-question-circle': 'help',
-    'fa-question': 'help',
-    'fa-clock-o': 'schedule',
-    'fa-star': 'star',
-    'fa-desktop': 'desktop_windows',
-    'fa-check': 'check_circle'
+    // Status, Checks & Actions
+    'check_circle': 'fa fa-check-circle',
+    'task_alt': 'fa fa-check-circle',
+    'check': 'fa fa-check',
+    'verified': 'fa fa-check-circle',
+    'shield': 'fa fa-shield',
+    'cancel': 'fa fa-times-circle',
+    'close': 'fa fa-times',
+    'delete': 'fa fa-trash',
+    'edit': 'fa fa-pencil',
+    'add': 'fa fa-plus',
+    'refresh': 'fa fa-refresh',
+    'download': 'fa fa-download',
+    'upload': 'fa fa-upload',
+
+    // UI, Navigation & Dashboards
+    'dashboard': 'fa fa-tachometer',
+    'desktop_windows': 'fa fa-desktop',
+    'desktop': 'fa fa-desktop',
+    'laptop': 'fa fa-laptop',
+    'mobile': 'fa fa-mobile',
+    'devices': 'fa fa-desktop',
+    'search': 'fa fa-search',
+    'menu': 'fa fa-bars',
+    'attach_file': 'fa fa-paperclip',
+    'folder': 'fa fa-folder',
+    'description': 'fa fa-file-text-o',
+    'business': 'fa fa-building',
+    'lock': 'fa fa-lock',
+    'favorite': 'fa fa-heart',
+    'heart': 'fa fa-heart',
+    'schedule': 'fa fa-clock-o',
+    'clock': 'fa fa-clock-o',
+    'calendar_month': 'fa fa-calendar',
+    'event': 'fa fa-calendar',
+    'person': 'fa fa-user',
+    'user': 'fa fa-user',
+    'group': 'fa fa-users',
+    'groups': 'fa fa-users',
+    'notifications': 'fa fa-bell',
+    'notifications_active': 'fa fa-bell',
+    'link': 'fa fa-link',
+    'progress_activity': 'fa fa-spinner',
+    'star': 'fa fa-star',
+    'cogs': 'fa fa-cogs',
+    'cog': 'fa fa-cog',
+    'bolt': 'fa fa-bolt',
+    'line-chart': 'fa fa-line-chart',
+    'bar-chart': 'fa fa-bar-chart',
+    'pie-chart': 'fa fa-pie-chart',
+    'money': 'fa fa-money',
+    'dollar': 'fa fa-usd'
 };
 
-function renderSafeIcon(iconStr, defaultIcon = '<i class="oi" data-icon="task_alt"></i>') {
-    if (!iconStr) iconStr = defaultIcon;
+function renderSafeIcon(iconStr, defaultFaClass = 'fa fa-check-circle', fontSize = '26px') {
+    if (!iconStr) iconStr = defaultFaClass;
     const str = String(iconStr).trim();
-    if (str.startsWith('<svg') || str.startsWith('<img') || str.startsWith('data:image')) {
+    if (str.startsWith('<img') || str.startsWith('data:image')) {
         return str;
     }
     if (str.startsWith('http://') || str.startsWith('https://') || str.endsWith('.png') || str.endsWith('.svg') || str.endsWith('.jpg') || str.endsWith('.webp')) {
         return `<img src="${str}" alt="icon" style="width: 24px; height: 24px; object-fit: contain; vertical-align: middle;">`;
     }
 
-    // Auto-map legacy Font Awesome icons to Odoo OI icons for 100% AppStore compatibility
-    for (const [faKey, oiVal] of Object.entries(FA_TO_OI_MAP)) {
-        if (str.includes(faKey)) {
-            return `<i class="oi" data-icon="${oiVal}" style="font-size: 26px; vertical-align: middle; color: inherit;"></i>`;
-        }
-    }
-    // If it's already an HTML element e.g. <i class="oi" data-icon="person"></i> or <i class="fa ..."></i>
-    if (/^<i\s+[^>]*>/i.test(str)) {
-        return str;
-    }
-    // If it has data-icon attribute in text e.g. data-icon="person"
+    // 1. Extract icon name from data-icon="..." e.g. <i class="oi" data-icon="email"></i>
     const dataIconMatch = str.match(/data-icon=["']([^"']+)["']/i);
     if (dataIconMatch) {
-        return `<i class="oi" data-icon="${dataIconMatch[1]}" style="font-size: 26px; vertical-align: middle; color: inherit;"></i>`;
+        const name = dataIconMatch[1].toLowerCase().trim();
+        const faClass = ICON_TO_FA_MAP[name] || formatFaIconClass(name, defaultFaClass);
+        return `<i class="${faClass}" style="font-size: ${fontSize}; vertical-align: middle; color: inherit;"></i>`;
     }
-    // If it's prefixed with oi: or oi- e.g. oi:person or oi-person
+
+    // 2. If it's already an HTML element with Font Awesome e.g. <i class="fa fa-envelope"></i>
+    const faClassMatch = str.match(/class=["']([^"']*fa\s+fa-[^"']*)["']/i);
+    if (faClassMatch) {
+        return `<i class="${faClassMatch[1].trim()}" style="font-size: ${fontSize}; vertical-align: middle; color: inherit;"></i>`;
+    }
+
+    // 3. If prefixed with oi: or oi- e.g. oi:campaign
     const oiPrefixMatch = str.match(/^oi[:\s-]+([\w-]+)/i);
     if (oiPrefixMatch) {
-        return `<i class="oi" data-icon="${oiPrefixMatch[1]}" style="font-size: 26px; vertical-align: middle; color: inherit;"></i>`;
+        const name = oiPrefixMatch[1].toLowerCase().trim();
+        const faClass = ICON_TO_FA_MAP[name] || formatFaIconClass(name, defaultFaClass);
+        return `<i class="${faClass}" style="font-size: ${fontSize}; vertical-align: middle; color: inherit;"></i>`;
     }
-    // If it's one of the known OI icons
+
+    // 4. If it's in our known mapping (e.g. 'email', 'campaign', 'forum', 'help', 'task_alt', etc.)
     const cleanLower = str.toLowerCase().replace(/[^a-z0-9_-]/g, '');
-    if (cleanLower === 'call' || cleanLower === 'phone' || cleanLower === 'skype' || cleanLower === 'whatsapp' || cleanLower === 'chat') {
-        return `<i class="oi" data-icon="forum" style="font-size: 26px; vertical-align: middle; color: inherit;"></i>`;
+    if (ICON_TO_FA_MAP[cleanLower]) {
+        return `<i class="${ICON_TO_FA_MAP[cleanLower]}" style="font-size: ${fontSize}; vertical-align: middle; color: inherit;"></i>`;
     }
-    if (KNOWN_OI_ICONS.has(cleanLower)) {
-        return `<i class="oi" data-icon="${cleanLower}" style="font-size: 26px; vertical-align: middle; color: inherit;"></i>`;
-    }
-    const faClass = formatFaIconClass(str, 'fa fa-bolt');
-    return `<i class="${faClass}" style="font-size: 22px; vertical-align: middle; color: inherit;"></i>`;
+
+    // 5. Standard formatFaIconClass fallback
+    const faClass = formatFaIconClass(str, defaultFaClass);
+    return `<i class="${faClass}" style="font-size: ${fontSize}; vertical-align: middle; color: inherit;"></i>`;
 }
 
 function renderTableCheck(val) {
     if (val === true || String(val).toLowerCase() === 'true' || val === 'yes' || val === '1') {
-        return `<span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background-color: #ecfdf5; color: #10b981; border: 1px solid #a7f3d0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 900; line-height: 1;">&#10003;</span>`;
+        return `<i class="fa fa-check-circle" style="color: #10b981; font-size: 22px; vertical-align: middle;"></i>`;
     } else if (val === false || String(val).toLowerCase() === 'false' || val === 'no' || val === '0' || val === '' || val === null || val === undefined) {
-        return `<span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background-color: #f8fafc; color: #94a3b8; border: 1px solid #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 900; line-height: 1;">&#10005;</span>`;
+        return `<i class="fa fa-times-circle" style="color: #cbd5e1; font-size: 20px; vertical-align: middle;"></i>`;
     } else {
         return `<span style="display: inline-block; padding: 4px 10px; border-radius: 12px; background-color: #eff6ff; color: #1d4ed8; font-size: 12px; font-weight: 700; border: 1px solid #bfdbfe; font-family: inherit;">${escapeHTML(String(val))}</span>`;
     }
@@ -333,8 +372,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             const points = d.points || d.bulletItems || [];
             const pointsHTML = points.map(pt => `
                 <div class="d-flex align-items-center p-3 mb-2" style="background-color: ${pointBg}; border: 1px solid ${pointBorder}; border-radius: 10px;">
-                    <span class="me-3" style="color: ${accent} !important; font-size: 20px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                        <i class="oi" data-icon="check_circle"></i>
+                    <span class="me-3 d-inline-flex align-items-center justify-content-center" style="color: ${accent} !important; font-size: 20px; flex-shrink: 0;">
+                        <i class="fa fa-check-circle" style="color: ${accent}; font-size: 20px; vertical-align: middle;"></i>
                     </span>
                     <span style="font-size: 15px; font-weight: 500; color: ${pointText} !important; line-height: 1.4;">${escapeHTML(pt)}</span>
                 </div>
@@ -345,15 +384,15 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                     return `<img src="${imgUrl}" alt="Mobile Screen" style="width: 100%; height: auto; display: block; border-radius: 24px;">`;
                 }
                 return `
-                <div style="width: 100%; min-height: 380px; background-color: #0f172a; border-radius: 24px; padding: 20px 14px; color: #94a3b8; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box;">
-                    <div class="d-flex justify-content-between" style="font-size: 11px; color: #94a3b8;">
+                <div class="d-flex flex-column justify-content-between p-3 text-center" style="width: 100%; min-height: 380px; background-color: #0f172a; border-radius: 24px; color: #94a3b8; box-sizing: border-box;">
+                    <div class="d-flex justify-content-between px-2" style="font-size: 11px; color: #94a3b8;">
                         <span>9:41</span>
                         <span><i class="fa fa-wifi me-1"></i><i class="fa fa-battery-full"></i></span>
                     </div>
                     <div class="text-center py-4">
-                        <i class="fa fa-mobile" style="font-size: 44px; color: ${accent}; margin-bottom: 10px; display: block;"></i>
-                        <span style="font-size: 13px; font-weight: 600; color: #ffffff; display: block; margin-bottom: 4px;">App Screen Preview</span>
-                        <span style="font-size: 11px; color: #64748b; display: block;">Upload mobile screenshot</span>
+                        <div class="mb-2"><i class="fa fa-mobile" style="font-size: 44px; color: ${accent};"></i></div>
+                        <div style="font-size: 13px; font-weight: 600; color: #ffffff; margin-bottom: 4px;">App Screen Preview</div>
+                        <div style="font-size: 11px; color: #64748b;">Upload mobile screenshot</div>
                     </div>
                     <div style="height: 12px;"></div>
                 </div>`;
@@ -443,8 +482,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                     return `
                     <div class="col-12 mb-2">
                         <div class="d-flex align-items-center p-3" style="background-color: ${pointBg}; border: 1px solid ${pointBorder}; border-radius: 10px;">
-                            <span class="me-3" style="color: ${accent} !important; font-size: 20px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                <i class="oi" data-icon="check_circle"></i>
+                            <span class="me-3 d-inline-flex align-items-center justify-content-center" style="color: ${accent} !important; font-size: 20px; flex-shrink: 0;">
+                                <i class="fa fa-check-circle" style="color: ${accent}; font-size: 20px; vertical-align: middle;"></i>
                             </span>
                             <span style="font-size: 15px; font-weight: 500; color: ${pointText} !important; line-height: 1.4;">${escapeHTML(pt)}</span>
                         </div>
@@ -453,8 +492,8 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                 return `
                 <div class="${colClass} mb-3">
                     <div class="h-100 d-flex align-items-center p-3" style="background-color: ${pointBg}; border: 1px solid ${pointBorder}; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
-                        <span class="me-3" style="color: ${accent} !important; font-size: 22px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                            <i class="oi" data-icon="check_circle"></i>
+                        <span class="me-3 d-inline-flex align-items-center justify-content-center" style="color: ${accent} !important; font-size: 20px; flex-shrink: 0;">
+                            <i class="fa fa-check-circle" style="color: ${accent}; font-size: 20px; vertical-align: middle;"></i>
                         </span>
                         <span style="font-size: 15px; font-weight: 500; color: ${pointText} !important; line-height: 1.45;">${escapeHTML(pt)}</span>
                     </div>
@@ -466,10 +505,16 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                     return `<img src="${imgUrl}" alt="Desktop View" style="width: 100%; height: auto; display: block;">`;
                 }
                 return `
-                <div style="width: 100%; min-height: 380px; background-color: #0f172a; padding: 40px 20px; color: #94a3b8; display: flex; flex-direction: column; align-items: center; justify-content: center; box-sizing: border-box;">
-                    <i class="fa fa-desktop" style="font-size: 54px; color: ${accent}; margin-bottom: 14px; display: block;"></i>
-                    <span style="font-size: 16px; font-weight: 600; color: #ffffff; display: block; margin-bottom: 6px;">Desktop Interface Full View</span>
-                    <span style="font-size: 13px; color: #64748b; display: block;">Upload full-width web screenshot or backend dashboard</span>
+                <div class="text-center d-flex flex-column align-items-center justify-content-center py-5 px-3" style="width: 100%; min-height: 380px; background-color: #0f172a; color: #94a3b8; box-sizing: border-box;">
+                    <div class="mb-3 text-center">
+                        <i class="fa fa-desktop" style="font-size: 54px; color: ${accent};"></i>
+                    </div>
+                    <div style="font-size: 16px; font-weight: 600; color: #ffffff; margin-bottom: 6px;">
+                        Desktop Interface Full View
+                    </div>
+                    <div style="font-size: 13px; color: #64748b;">
+                        Upload full-width web screenshot or backend dashboard
+                    </div>
                 </div>`;
             };
 
@@ -723,31 +768,19 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                 const openAttr = isOpen ? ' open' : '';
                 return `
         <details class="faq-accordion-item"${openAttr} style="background-color: #ffffff; border: 1px solid ${borderColor}; border-radius: 10px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-            <summary style="background-color: ${headerBg}; color: ${questionColor}; padding: 14px 20px; font-weight: 600; font-size: 15px; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; user-select: none; outline: none; transition: background-color 0.2s;">
-                <span style="display: inline-block; padding-right: 12px; color: ${questionColor}; font-weight: 600; font-size: 15px; line-height: 1.4;">${escapeHTML(f.q)}</span>
-                <svg class="faq-chevron" style="width: 18px; height: 18px; min-width: 18px; stroke: ${questionColor}; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s ease;" viewBox="0 0 24 24">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+            <summary class="d-flex align-items-center justify-content-between p-3" style="background-color: ${headerBg}; color: ${questionColor}; cursor: pointer; user-select: none; outline: none; border-bottom: 1px solid ${borderColor}; list-style: none;">
+                <span style="display: inline-block; padding-right: 12px; color: ${questionColor}; font-weight: 700; font-size: 15px; line-height: 1.4;">${escapeHTML(f.q)}</span>
+                <span style="display: inline-block; color: ${questionColor}; font-size: 14px; margin-left: auto; flex-shrink: 0;">
+                    <i class="fa fa-chevron-down"></i>
+                </span>
             </summary>
-            <div style="padding: 16px 20px; background-color: #ffffff; color: #334155; font-size: 14.5px; line-height: 1.65; border-top: 1px solid ${borderColor};">
+            <div style="padding: 16px 20px; background-color: #ffffff; color: #334155; font-size: 14.5px; line-height: 1.65;">
                 ${escapeHTML(f.a)}
             </div>
         </details>`;
             }).join('');
 
             return `<section class="py-4" style="background-color: ${bg};">
-    <style>
-        details.faq-accordion-item summary::-webkit-details-marker,
-        details.faq-accordion-item summary::marker {
-            display: none !important;
-        }
-        details.faq-accordion-item[open] .faq-chevron {
-            transform: rotate(180deg);
-        }
-        details.faq-accordion-item summary:hover {
-            filter: brightness(0.97);
-        }
-    </style>
     <div class="container py-1" style="max-width: 920px;">
         ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12">
@@ -772,16 +805,16 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             // Normalize channels with backward compatibility fallback
             let channels = Array.isArray(d.channels) ? d.channels : [];
             if (channels.length === 0) {
-                if (d.email) channels.push({ icon: '<i class="oi" data-icon="email"></i>', label: 'Email Support', value: d.email, url: `mailto:${d.email}` });
-                channels.push({ icon: '<i class="oi" data-icon="forum"></i>', label: 'Community Forum', value: 'Join Discussions', url: 'https://yourdomain.com/forum' });
-                channels.push({ icon: '<i class="oi" data-icon="campaign"></i>', label: 'Latest Updates', value: 'News & Releases', url: 'https://yourdomain.com/updates' });
-                channels.push({ icon: '<i class="oi" data-icon="help"></i>', label: 'Helpdesk Portal', value: 'Submit a Ticket', url: 'https://yourdomain.com/helpdesk' });
+                if (d.email) channels.push({ icon: 'fa fa-envelope', label: 'Email Support', value: d.email, url: `mailto:${d.email}` });
+                channels.push({ icon: 'fa fa-comments', label: 'Community Forum', value: 'Join Discussions', url: 'https://yourdomain.com/forum' });
+                channels.push({ icon: 'fa fa-bullhorn', label: 'Latest Updates', value: 'News & Releases', url: 'https://yourdomain.com/updates' });
+                channels.push({ icon: 'fa fa-life-ring', label: 'Helpdesk Portal', value: 'Submit a Ticket', url: 'https://yourdomain.com/helpdesk' });
             }
 
             const colClass = channels.length <= 2 ? 'col-12 col-sm-6 mb-3' : (channels.length === 3 ? 'col-12 col-sm-6 col-md-4 mb-3' : (channels.length === 4 ? 'col-12 col-sm-6 col-md-3 mb-3' : 'col-12 col-sm-6 col-md-4 mb-3'));
 
             const channelsHTML = channels.map((c) => {
-                const iconHtml = renderSafeIcon(c.icon, '<i class="oi" data-icon="help"></i>');
+                const iconHtml = renderSafeIcon(c.icon, 'fa fa-life-ring', '28px');
                 let linkUrl = (c.url || '').trim();
                 if (!linkUrl && c.value) {
                     if (c.value.includes('@')) linkUrl = `mailto:${c.value.trim()}`;
@@ -790,7 +823,7 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
 
                 const cardInner = `
                     <div class="card h-100 shadow-sm p-3 text-center" style="background-color: ${cardBg}; color: #1e293b; border: 1px solid ${cardBorder}; border-radius: 12px; transition: transform 0.2s, box-shadow 0.2s;">
-                        <div class="mb-2" style="font-size: 28px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; height: 36px; color: ${iconCol} !important;">
+                        <div class="mb-2 d-flex align-items-center justify-content-center" style="font-size: 28px; line-height: 1; height: 38px; color: ${iconCol} !important;">
                             ${iconHtml}
                         </div>
                         <span style="font-size: 12px; color: #64748b; display: block; font-weight: 500; margin-bottom: 2px;">${escapeHTML(c.label || 'Support Channel')}</span>
@@ -804,10 +837,6 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             }).join('');
 
             return `<section class="py-4 my-2" style="background-color: ${bg}; color: ${textCol}; border-radius: 16px;">
-    <style>
-        .oi, i.oi { display: inline-block; font-family: 'Material Symbols Outlined' !important; font-style: normal; font-weight: 400 !important; line-height: 1; letter-spacing: normal; text-transform: none; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; vertical-align: middle; }
-        .oi:before, .oi::before, i.oi:before, i.oi::before { display: inline-block; content: attr(data-icon); text-rendering: geometricPrecision; word-break: keep-all; }
-    </style>
     <div class="container text-center py-2" style="max-width: 960px;">
         ${d.badge ? `<span style="background-color: #ffffff; color: ${bg}; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">${escapeHTML(d.badge)}</span>` : ''}
         <h2 style="font-size: 30px; font-weight: 700; margin-bottom: 10px; color: ${textCol} !important;">${escapeHTML(d.title || '')}</h2>
@@ -880,10 +909,14 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
         case 'footer_brand': {
             const bg = d.bgColor || '#1e293b';
             const textCol = d.textColor || '#94a3b8';
+            let tagline = d.tagline || 'Crafted with ❤️ for the Odoo Global Community';
+            tagline = tagline.replace(/❤️|â\s*¤ï¸|&hearts;|&#10084;&#65039;?/g, '<i class="fa fa-heart" style="color: #ef4444; margin: 0 2px;"></i>');
+            const safeTagline = tagline.includes('<i class="fa') ? tagline : escapeHTML(tagline);
+
             return `<footer class="py-4 text-center" style="background-color: ${bg}; color: ${textCol}; font-size: 14px;">
     <div class="container" style="max-width: 900px;">
         <p style="margin-bottom: 6px; font-weight: 600;">${escapeHTML(d.companyName || 'Company Name')} &copy; ${escapeHTML(d.year || '2026')}</p>
-        <p style="margin: 0; font-size: 13px; opacity: 0.8;">${escapeHTML(d.tagline || '')}</p>
+        <p style="margin: 0; font-size: 13px; opacity: 0.85;">${safeTagline}</p>
     </div>
 </footer>`;
         }

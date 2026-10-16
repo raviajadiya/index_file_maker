@@ -2773,12 +2773,12 @@ if (document.readyState === 'loading') {
                 cardStyleGroup.appendChild(createColorField('Channel Icon Color', d.iconColor, (val) => { d.iconColor = val; updateCanvasLive(); }));
                 form.appendChild(cardStyleGroup);
 
-                // 3. Support Channels Manager (Curated Native Odoo .oi Icons for App Store)
+                // 3. Support Channels Manager (Curated Native Icons for App Store)
                 const SUPPORT_OI_PRESETS = [
-                    { name: 'campaign', label: '📢 Announcements & Releases', html: '<i class="oi" data-icon="campaign"></i>' },
-                    { name: 'forum', label: '🗨️ Discussion Forum', html: '<i class="oi" data-icon="forum"></i>' },
-                    { name: 'email', label: '✉️ Email Support', html: '<i class="oi" data-icon="email"></i>' },
-                    { name: 'help', label: '❓ FAQ & Helpdesk', html: '<i class="oi" data-icon="help"></i>' }
+                    { name: 'campaign', label: '📢 Announcements & Releases', html: '<i class="fa fa-bullhorn"></i>' },
+                    { name: 'forum', label: '🗨️ Discussion Forum', html: '<i class="fa fa-comments"></i>' },
+                    { name: 'email', label: '✉️ Email Support', html: '<i class="fa fa-envelope"></i>' },
+                    { name: 'help', label: '❓ FAQ & Helpdesk', html: '<i class="fa fa-life-ring"></i>' }
                 ];
 
                 const channelsGroup = document.createElement('div');
@@ -2786,7 +2786,7 @@ if (document.readyState === 'loading') {
                 channelsGroup.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <label class="form-label" style="margin: 0; font-weight: 700; font-size: 13px; color: var(--text-main);">
-                            <i class="oi" data-icon="forum" style="color: var(--primary); margin-right: 4px; vertical-align: middle;"></i> Support Channels (${d.channels.length})
+                            <i class="fa fa-comments" style="color: var(--primary); margin-right: 4px; vertical-align: middle;"></i> Support Channels (${d.channels.length})
                         </label>
                         <button type="button" class="btn btn-outline" id="btn-add-channel-top" style="font-size: 11px; padding: 4px 10px; color: var(--primary); border-color: var(--primary); cursor: pointer; font-weight: 600;">
                             <i class="fa fa-plus"></i> Add Channel
@@ -2810,7 +2810,10 @@ if (document.readyState === 'loading') {
                                       curIcon === p.name ||
                                       curIcon.includes(`data-icon="${p.name}"`) ||
                                       curIcon.includes(`data-icon='${p.name}'`) ||
-                                      (curIcon.includes(p.name) && !curIcon.includes('fa-'));
+                                      (p.name === 'campaign' && (curIcon.includes('bullhorn') || curIcon.includes('campaign'))) ||
+                                      (p.name === 'forum' && (curIcon.includes('comment') || curIcon.includes('forum'))) ||
+                                      (p.name === 'email' && (curIcon.includes('envelope') || curIcon.includes('email') || curIcon.includes('mail'))) ||
+                                      (p.name === 'help' && (curIcon.includes('life-ring') || curIcon.includes('question') || curIcon.includes('help')));
                         return `
                             <button type="button" class="ch-preset-btn" data-icon='${escapeHTML(p.html)}' data-name="${p.name}" data-search="${p.name} ${p.label.toLowerCase()}" title="${p.label}" style="font-size: 11px; padding: 7px 10px; border: 1px solid ${isSel ? 'var(--primary)' : '#e2e8f0'}; border-radius: 6px; background: ${isSel ? '#f5eff4' : '#ffffff'}; color: ${isSel ? 'var(--primary)' : '#334155'}; cursor: pointer; font-weight: ${isSel ? '700' : '500'}; display: flex; align-items: center; gap: 8px; text-align: left; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.02); transition: all 0.15s ease;">
                                 <span style="font-size: 18px; display: inline-flex; align-items: center; justify-content: center; width: 22px; color: ${isSel ? 'var(--primary)' : '#714B67'}; flex-shrink: 0;">
@@ -2831,13 +2834,13 @@ if (document.readyState === 'loading') {
                             </div>
                         </div>
 
-                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 8px;">
+                        <div style="background: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 8px;">
                             <label style="font-size: 11px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
                                 <span style="display: flex; align-items: center; gap: 5px;">
-                                    <i class="oi" data-icon="forum" style="color: var(--primary); font-size: 14px;"></i> Odoo Support Icon (App Store Compatible)
+                                    <i class="fa fa-comments" style="color: var(--primary); font-size: 14px;"></i> Support Icon (Font Awesome 4.7)
                                 </span>
                                 <span class="ch-icon-preview-box" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; background: #ffffff; color: ${d.iconColor || '#714B67'}; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); font-size: 20px;">
-                                    ${renderSafeIcon(ch.icon, '<i class="oi" data-icon="email"></i>')}
+                                    ${renderSafeIcon(ch.icon, 'fa fa-envelope')}
                                 </span>
                             </label>
 

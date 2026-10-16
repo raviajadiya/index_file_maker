@@ -76,10 +76,10 @@ const WIDGET_CATALOG = [
                     cardBgColor: '#ffffff',
                     cardBorderColor: '#e2e8f0',
                     items: [
-                        { title: '100% Automated', desc: 'Zero manual calculation errors with real-time formula triggers.', icon: '<i class="oi" data-icon="task_alt"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
-                        { title: 'Multi-Company Ready', desc: 'Seamless support for multiple companies, currencies, and branches.', icon: '<i class="oi" data-icon="business"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
-                        { title: 'Role-Based Security', desc: 'Dedicated portal for sales reps and granular manager approvals.', icon: '<i class="oi" data-icon="lock"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
-                        { title: 'Plug & Play Setup', desc: 'Configure commission rules and start operating in under 5 minutes.', icon: '<i class="oi" data-icon="schedule"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: '100% Automated', desc: 'Zero manual calculation errors with real-time formula triggers.', icon: '<i class="fa fa-check-circle"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: 'Multi-Company Ready', desc: 'Seamless support for multiple companies, currencies, and branches.', icon: '<i class="fa fa-building"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: 'Role-Based Security', desc: 'Dedicated portal for sales reps and granular manager approvals.', icon: '<i class="fa fa-lock"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: 'Plug & Play Setup', desc: 'Configure commission rules and start operating in under 5 minutes.', icon: '<i class="fa fa-clock-o"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
                     ]
                 }
             },
@@ -102,9 +102,9 @@ const WIDGET_CATALOG = [
                     numberColor: '#714B67',
                     labelColor: '#64748b',
                     stats: [
-                        { number: '99.9%', label: 'Calculation Accuracy', icon: '<i class="oi" data-icon="task_alt"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' },
-                        { number: '10,000+', label: 'Active Sales Reps', icon: '<i class="oi" data-icon="group"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' },
-                        { number: '5.0 ★', label: 'User Rating (150+ Reviews)', icon: '<i class="oi" data-icon="favorite"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' }
+                        { number: '99.9%', label: 'Calculation Accuracy', icon: '<i class="fa fa-check-circle"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' },
+                        { number: '10,000+', label: 'Active Sales Reps', icon: '<i class="fa fa-users"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' },
+                        { number: '5.0 ★', label: 'User Rating (150+ Reviews)', icon: '<i class="fa fa-star"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' }
                     ]
                 }
             }
@@ -347,25 +347,25 @@ const WIDGET_CATALOG = [
                     iconColor: '#714B67',
                     channels: [
                         {
-                            icon: '<i class="oi" data-icon="email"></i>',
+                            icon: '<i class="fa fa-envelope"></i>',
                             label: 'Email Support',
                             value: 'support@yourdomain.com',
                             url: 'mailto:support@yourdomain.com'
                         },
                         {
-                            icon: '<i class="oi" data-icon="forum"></i>',
+                            icon: '<i class="fa fa-comments"></i>',
                             label: 'Community Forum',
                             value: 'Join Discussions',
                             url: 'https://yourdomain.com/forum'
                         },
                         {
-                            icon: '<i class="oi" data-icon="campaign"></i>',
+                            icon: '<i class="fa fa-bullhorn"></i>',
                             label: 'Latest Updates',
                             value: 'News & Releases',
                             url: 'https://yourdomain.com/updates'
                         },
                         {
-                            icon: '<i class="oi" data-icon="help"></i>',
+                            icon: '<i class="fa fa-life-ring"></i>',
                             label: 'Helpdesk Portal',
                             value: 'Submit a Ticket',
                             url: 'https://yourdomain.com/helpdesk'
@@ -381,7 +381,7 @@ const WIDGET_CATALOG = [
                 defaultData: {
                     companyName: 'Your Company Name',
                     year: '2026',
-                    tagline: 'Crafted with ❤️ for the Odoo Global Community',
+                    tagline: 'Crafted with <i class="fa fa-heart" style="color: #ef4444;"></i> for the Odoo Global Community',
                     bgColor: '#1e293b',
                     textColor: '#94a3b8'
                 }
