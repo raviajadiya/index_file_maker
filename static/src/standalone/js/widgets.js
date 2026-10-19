@@ -10,15 +10,15 @@ const WIDGET_CATALOG = [
                 desc: 'Top header with title, slogan, custom badges & CTA buttons',
                 icon: 'fa-trophy',
                 defaultData: {
-                    title: 'Advanced Sales Commission & Incentive Pro',
-                    subtitle: 'Automate complex multi-tier sales commissions, bonus tiers, and real-time salesman payouts effortlessly in Odoo.',
+                    title: 'Odoo AppStore Index File Maker Pro',
+                    subtitle: 'Visually design, customize, and export high-converting, 100% compliant Odoo App Store description pages with drag-and-drop ease.',
                     iconUrl: '',
                     showBadges: true,
                     badges: ['Community', 'Enterprise', 'Odoo 20', 'Odoo 19', 'Odoo 18', 'Odoo 17'],
                     badgeBgColor: '#ffffff',
                     badgeTextColor: '#714B67',
                     badgeBorderColor: '#e2e8f0',
-                    primaryBtnText: 'Explore Features',
+                    primaryBtnText: 'Start Building',
                     primaryBtnUrl: '#features',
                     secondaryBtnText: 'Live Demo',
                     secondaryBtnUrl: '#demo',
@@ -33,9 +33,9 @@ const WIDGET_CATALOG = [
                 desc: 'Clean, elegant header for utility extensions',
                 icon: 'fa-header',
                 defaultData: {
-                    title: 'Advanced Sales Commission & Incentive Pro',
-                    subtitle: 'Automate complex multi-tier sales commissions, bonus tiers, and real-time salesman payouts.',
-                    badge: 'ODOO 20 CERTIFIED',
+                    title: 'Odoo AppStore Index File Maker',
+                    subtitle: 'Build responsive, store-compliant module description pages in minutes without writing raw HTML.',
+                    badge: 'ODOO 20 READY',
                     bgColor: '#ffffff',
                     textColor: '#1e293b',
                     accentColor: '#714B67'
@@ -47,7 +47,7 @@ const WIDGET_CATALOG = [
                 desc: 'Top bar notification or discount banner',
                 icon: 'fa-bullhorn',
                 defaultData: {
-                    text: '🎉 NEW: Full Odoo 20 compatibility and automated multi-currency calculation boost released!',
+                    text: '🎉 NEW: Visual drag-and-drop builder with instant multi-device preview & 1-click clean HTML export!',
                     btnText: 'Explore Features',
                     btnUrl: '#features',
                     bgColor: '#714B67',
@@ -65,9 +65,9 @@ const WIDGET_CATALOG = [
                 desc: '4 metric or highlight cards with gradient icons',
                 icon: 'fa-th-large',
                 defaultData: {
-                    title: 'Why Choose This Solution?',
+                    title: 'Why Choose Index File Maker?',
                     titleColor: '#1e293b',
-                    subtitle: 'Engineered for high performance, accuracy, and enterprise scalability',
+                    subtitle: 'Engineered specifically for Odoo developers and partners to create high-converting App Store descriptions',
                     subtitleColor: '#64748b',
                     bgColor: '#ffffff',
                     columns: 4,
@@ -76,10 +76,10 @@ const WIDGET_CATALOG = [
                     cardBgColor: '#ffffff',
                     cardBorderColor: '#e2e8f0',
                     items: [
-                        { title: '100% Automated', desc: 'Zero manual calculation errors with real-time formula triggers.', icon: '<i class="fa fa-check-circle"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
-                        { title: 'Multi-Company Ready', desc: 'Seamless support for multiple companies, currencies, and branches.', icon: '<i class="fa fa-building"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
-                        { title: 'Role-Based Security', desc: 'Dedicated portal for sales reps and granular manager approvals.', icon: '<i class="fa fa-lock"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
-                        { title: 'Plug & Play Setup', desc: 'Configure commission rules and start operating in under 5 minutes.', icon: '<i class="fa fa-clock-o"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: '100% Store Compliant', desc: 'Outputs clean Bootstrap 5 and inline styles strictly compliant with Odoo sanitization guidelines.', icon: '<i class="fa fa-check-circle"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: 'Drag & Drop Canvas', desc: 'Easily assemble heroes, feature showcases, VS comparison tables, FAQs, and footers.', icon: '<i class="fa fa-th-large"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: 'Real-Time Device Preview', desc: 'Instantly toggle between Desktop, Tablet, and Mobile views to ensure pixel-perfect rendering.', icon: '<i class="fa fa-desktop"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
+                        { title: '1-Click HTML Export', desc: 'Export production-ready index.html in one click and place it straight into static/description.', icon: '<i class="fa fa-download"></i>', iconUrl: '', titleColor: '#1e293b', descColor: '#64748b' },
                     ]
                 }
             },
@@ -89,9 +89,9 @@ const WIDGET_CATALOG = [
                 desc: '3 impressive key metric counters',
                 icon: 'fa-tachometer',
                 defaultData: {
-                    title: 'Proven Performance & Enterprise Trust',
+                    title: 'Proven Performance for Odoo Publishers',
                     titleColor: '#1e293b',
-                    subtitle: 'Trusted by top Odoo partners and fast-growing global sales organizations',
+                    subtitle: 'Trusted by top Odoo partners, publishers, and developers worldwide to boost module conversions',
                     subtitleColor: '#64748b',
                     bgColor: '#f8fafc',
                     columns: 3,
@@ -102,9 +102,9 @@ const WIDGET_CATALOG = [
                     numberColor: '#714B67',
                     labelColor: '#64748b',
                     stats: [
-                        { number: '99.9%', label: 'Calculation Accuracy', icon: '<i class="fa fa-check-circle"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' },
-                        { number: '10,000+', label: 'Active Sales Reps', icon: '<i class="fa fa-users"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' },
-                        { number: '5.0 ★', label: 'User Rating (150+ Reviews)', icon: '<i class="fa fa-star"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' }
+                        { number: '10x Faster', label: 'Index Page Creation Speed', icon: '<i class="fa fa-bolt"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' },
+                        { number: '100%', label: 'Odoo App Store Compliant', icon: '<i class="fa fa-shield"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' },
+                        { number: '5.0 ★', label: 'Developer Rating (200+ Reviews)', icon: '<i class="fa fa-star"></i>', iconUrl: '', numberColor: '#714B67', labelColor: '#64748b' }
                     ]
                 }
             }
@@ -120,9 +120,9 @@ const WIDGET_CATALOG = [
                 icon: 'fa-mobile',
                 defaultData: {
                     badgeNumber: '01',
-                    badgeText: 'Mobile Portal',
-                    title: 'Real-Time Mobile Sales Rep Portal',
-                    desc: 'Empower your field sales representatives to check their accrued commission, view target milestones, and request payouts on the go.',
+                    badgeText: 'Responsive Design',
+                    title: 'Pixel-Perfect Mobile & Tablet Preview',
+                    desc: 'Ensure your Odoo app description displays flawlessly on any screen size. Test and preview mobile responsiveness in real time.',
                     layoutPosition: 'image_left',
                     imageCount: '2',
                     image1Url: '',
@@ -130,9 +130,9 @@ const WIDGET_CATALOG = [
                     image1Caption: '',
                     image2Caption: '',
                     points: [
-                        'Instant visibility of earned commissions and pending approvals',
-                        'Real-time push notifications on target achievements',
-                        'Mobile PDF statements export and direct payout requests'
+                        'Live viewport switching between Desktop, Tablet, and Mobile mode',
+                        'Auto-collapsing columns and touch-optimized responsive layouts',
+                        'Zero broken elements or overflowing content on smaller displays'
                     ],
                     bgColor: '#ffffff',
                     accentColor: '#714B67',
@@ -155,19 +155,19 @@ const WIDGET_CATALOG = [
                 icon: 'fa-desktop',
                 defaultData: {
                     badgeNumber: '02',
-                    badgeText: 'Operations Hub',
-                    title: 'Interactive Real-Time Operations Hub',
-                    desc: 'Centralize and monitor your entire business performance with live KPI metrics, dynamic filtering, and interactive data visualization.',
+                    badgeText: 'Visual Builder Studio',
+                    title: 'Interactive Drag & Drop Studio Canvas',
+                    desc: 'Drag widgets onto the canvas, reorder sections with smooth drag handles, customize typography, and inspect properties in real time.',
                     headerAlign: 'center',
                     pointsLayout: 'grid',
                     frameStyle: 'browser',
-                    browserUrl: 'https://my-company.odoo.com/web#dashboard',
+                    browserUrl: 'https://apps.odoo.com/apps/modules/browse?search=index_file_maker',
                     imageUrl: '',
                     imageCaption: '',
                     points: [
-                        'Real-time automated transaction and sales tracking',
-                        'Multi-currency ledger reconciliation with instant filtering',
-                        'One-click export to Excel, PDF, and audit log history'
+                        'Rich widget catalog: Heroes, Highlights, Comparison Tables, FAQs & Support',
+                        'Dynamic brand color palette switcher & live hexadecimal color inspector',
+                        'Instant source code inspector and 1-click clean index.html download'
                     ],
                     bgColor: '#ffffff',
                     accentColor: '#714B67',
@@ -189,9 +189,9 @@ const WIDGET_CATALOG = [
                 desc: 'Numbered step-by-step onboarding cards with custom colors',
                 icon: 'fa-list-ol',
                 defaultData: {
-                    title: 'How It Works in 3 Simple Steps',
+                    title: 'Create Your Index in 3 Simple Steps',
                     titleColor: '#1e293b',
-                    subtitle: 'Streamlined 3-step automation from order validation to payout release',
+                    subtitle: 'Streamlined visual workflow from blank canvas to published Odoo App Store listing',
                     subtitleColor: '#64748b',
                     bgColor: '#f8fafc',
                     cardBgColor: '#ffffff',
@@ -203,9 +203,9 @@ const WIDGET_CATALOG = [
                     columns: 3,
                     align: 'center',
                     steps: [
-                        { num: '1', title: 'Install & Configure Rules', desc: 'Define multi-level commission percentages by product, sales team, or profit margin.' },
-                        { num: '2', title: 'Automatic Calculation', desc: 'System automatically triggers accurate commission lines upon invoice confirmation.' },
-                        { num: '3', title: 'Approve & Payout', desc: 'Manager reviews with one-click approval and automated payroll payout release.' }
+                        { num: '1', title: 'Drag & Drop Widgets', desc: 'Select pre-styled hero banners, feature grids, screenshots, and comparison tables from the catalog.' },
+                        { num: '2', title: 'Customize Content & Theme', desc: 'Insert your module features, screenshots, FAQs, and customize colors to match your brand identity.' },
+                        { num: '3', title: 'Export index.html', desc: 'Download clean, sanitized HTML and drop it directly into your module’s static/description folder.' }
                     ]
                 }
             }
@@ -220,8 +220,8 @@ const WIDGET_CATALOG = [
                 desc: 'Side-by-side comparison table highlighting your app vs standard Odoo / competitors',
                 icon: 'fa-columns',
                 defaultData: {
-                    title: 'Why Choose Our Solution?',
-                    subtitle: 'See how our advanced module delivers superior features and automation compared to standard Odoo',
+                    title: 'Why Choose Index File Maker?',
+                    subtitle: 'See how our visual drag-and-drop builder saves development hours compared to manual HTML coding',
                     bgColor: '#ffffff',
                     cardBgColor: '#ffffff',
                     cardBorderColor: '#e2e8f0',
@@ -231,16 +231,16 @@ const WIDGET_CATALOG = [
                     subtitleColor: '#64748b',
                     accentColor: '#714B67',
                     col1Title: 'Key Capabilities & Features',
-                    col2Title: 'Our Module',
+                    col2Title: 'Index File Maker',
                     col2Badge: 'Recommended',
-                    col3Title: 'Standard Odoo',
+                    col3Title: 'Manual HTML Coding',
                     rows: [
-                        { feature: 'Multi-Level Approval Rules', detail: 'Dynamic tiers by department, manager, and custom amounts', ourApp: true, competitor: false },
-                        { feature: 'Automated Real-Time Triggers', detail: 'Instant calculation on order validation and payment registration', ourApp: true, competitor: false },
-                        { feature: 'Interactive Analytics & KPIs', detail: 'Live graphical drill-down metrics and forecasting cards', ourApp: true, competitor: 'Basic Only' },
-                        { feature: 'Bulk Commission Processing', detail: 'Process hundreds of invoices and payouts in a single batch', ourApp: true, competitor: false },
-                        { feature: 'Custom PDF & Excel Designer', detail: 'Branded export templates with company logos and styles', ourApp: true, competitor: false },
-                        { feature: 'Dedicated Free Support & Upgrades', detail: 'Fast direct assistance via email, community forum, and helpdesk portal', ourApp: '90 Days Free', competitor: 'Paid / None' }
+                        { feature: 'Visual Drag & Drop Canvas', detail: 'Build sections interactively with live visual feedback', ourApp: true, competitor: false },
+                        { feature: 'Odoo App Store Guideline Compliance', detail: 'Strict adherence to Bootstrap 5, sanitization rules, and hex colors', ourApp: true, competitor: 'Error-Prone' },
+                        { feature: 'Pre-Designed Widget Catalog', detail: 'Ready-to-use banners, grids, mockups, comparison tables & FAQs', ourApp: true, competitor: false },
+                        { feature: 'Multi-Device Responsive Preview', detail: 'Instant toggle between Desktop, Tablet, and Mobile viewports', ourApp: true, competitor: 'Manual Testing' },
+                        { feature: '1-Click Clean Code Export', detail: 'Download production-ready index.html with zero disallowed scripts', ourApp: true, competitor: 'Slow & Tedious' },
+                        { feature: 'Dedicated Support & Updates', detail: 'Regular updates for upcoming Odoo versions with free assistance', ourApp: 'Included', competitor: 'None' }
                     ]
                 }
             }
@@ -256,30 +256,30 @@ const WIDGET_CATALOG = [
                 icon: 'fa-question-circle',
                 defaultData: {
                     title: 'Frequently Asked Questions',
-                    subtitle: 'Everything you need to know about installation, compatibility, and rules',
+                    subtitle: 'Everything you need to know about Odoo App Store index generation and compatibility',
                     bgColor: '#ffffff',
                     headerBg: '#fdf8fc',
                     questionColor: '#714B67',
                     borderColor: '#e2e8f0',
                     faqs: [
                         {
-                            q: 'How does the automated calculation trigger work?',
-                            a: 'Commissions are automatically calculated in real-time as soon as a sales order is confirmed or when customer payment is registered, according to your chosen accounting workflow.',
+                            q: 'Is the generated HTML 100% compliant with Odoo App Store rules?',
+                            a: 'Yes! All exported code uses standard Bootstrap grid classes and inline styles with zero external scripts or forbidden tags, ensuring 100% compliance with Odoo App Store sanitization guidelines.',
                             isOpen: true
                         },
                         {
-                            q: 'Does this module support multi-company and multi-currency?',
-                            a: 'Yes, our module fully supports multi-company environments with individual rule separation, as well as automatic currency conversion using live Odoo exchange rates.',
+                            q: 'Where should I place the generated index.html in my module?',
+                            a: 'Save the downloaded file as index.html inside your Odoo module under the static/description/ folder (e.g. your_module/static/description/index.html).',
                             isOpen: false
                         },
                         {
-                            q: 'Is this module compatible with both Community and Enterprise?',
-                            a: 'Yes! It is fully certified and tested on Odoo 20, 19, 18, and 17 for both Community and Enterprise editions with 100% feature parity.',
+                            q: 'Can I customize the color palette and typography?',
+                            a: 'Yes! You can choose from pre-set curated palettes (Odoo Purple, Ocean Blue, Emerald, etc.) or set custom primary and accent hex colors for each individual widget.',
                             isOpen: false
                         },
                         {
-                            q: 'Can we request custom modifications or additional features?',
-                            a: 'Yes! Our team of certified Odoo experts provides tailored customization, dedicated integration services, and comprehensive technical support.',
+                            q: 'Does this module work on both Community and Enterprise?',
+                            a: 'Yes, Index File Maker runs smoothly on both Odoo Community and Enterprise editions across Odoo 17, 18, 19, and 20.',
                             isOpen: false
                         }
                     ]
@@ -296,18 +296,18 @@ const WIDGET_CATALOG = [
                 desc: 'Showcase other Odoo modules with banner image, title, author, price & App Store link',
                 icon: 'fa-th-large',
                 defaultData: {
-                    title: 'Other Popular Odoo Modules',
-                    subtitle: 'Boost your enterprise productivity with our top-rated Odoo extensions',
+                    title: 'Other Recommended Odoo Developer Tools',
+                    subtitle: 'Supercharge your Odoo development and business workflow with our premium extensions',
                     bgColor: '#ffffff',
                     titleColor: '#1e293b',
                     columns: '3',
                     apps: [
                         {
                             bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
-                            title: 'All-in-One Sales Commission Pro',
+                            title: 'Odoo Code Snippets & Builder Pro',
                             company: 'Your Company',
-                            price: '$ 49.00',
-                            appUrl: 'https://apps.odoo.com/apps/modules/browse?search=sales+commission'
+                            price: '$ 29.00',
+                            appUrl: 'https://apps.odoo.com/apps/modules/browse?search=developer+tools'
                         },
                         {
                             bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
@@ -337,9 +337,9 @@ const WIDGET_CATALOG = [
                 desc: 'Dedicated support contacts, email, forum, updates, and warranty badge',
                 icon: 'fa-life-ring',
                 defaultData: {
-                    title: 'Dedicated Support & Tailored Customization',
-                    subtitle: 'Have a question or need custom modifications? Our experienced Odoo team is here to assist you.',
-                    badge: '90 Days Free Support Included',
+                    title: 'Dedicated Support & Custom Widget Development',
+                    subtitle: 'Have a question or need custom widgets for your Odoo module descriptions? Our team is here to help.',
+                    badge: 'Dedicated Support Included',
                     bgColor: '#714B67',
                     textColor: '#ffffff',
                     cardBgColor: '#ffffff',

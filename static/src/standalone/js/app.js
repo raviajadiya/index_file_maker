@@ -2,14 +2,14 @@
 
 // State variables
 let currentTemplateId = null;
-let currentTemplateName = 'My Custom Odoo App';
+let currentTemplateName = 'Odoo AppStore Index File Maker';
 let selectedWidgetId = null;
 let activeLeftTab = 'props';
 let currentViewport = 'desktop';
 
 let pageSettings = {
-    appName: 'My Custom Odoo App',
-    technicalName: 'my_custom_app',
+    appName: 'Odoo AppStore Index File Maker',
+    technicalName: 'index_file_maker',
     odooVersion: '20.0',
     brandColor: '#714B67',
     accentColor: '#00A09D',

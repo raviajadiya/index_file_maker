@@ -6,8 +6,8 @@ class AppstoreIndexTemplate(models.Model):
     _description = 'Odoo AppStore Index Description Template'
     _order = 'write_date desc'
 
-    name = fields.Char(string='App / Template Name', required=True, default='My Awesome App')
-    technical_name = fields.Char(string='Module Technical Name', default='my_awesome_app', help='e.g. sale_order_custom')
+    name = fields.Char(string='App / Template Name', required=True, default='Odoo AppStore Index File Maker')
+    technical_name = fields.Char(string='Module Technical Name', default='index_file_maker', help='e.g. index_file_maker')
     odoo_version = fields.Selection([
         ('20.0', 'Odoo 20.0'),
         ('19.0', 'Odoo 19.0'),
