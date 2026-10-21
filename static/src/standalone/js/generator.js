@@ -790,13 +790,14 @@ function renderWidgetHtml(widget) {
                 const openAttr = isOpen ? ' open' : '';
                 return `
         <details class="faq-accordion-item"${openAttr} style="background-color: #ffffff; border: 1px solid ${borderColor}; border-radius: 10px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-            <summary class="d-flex align-items-center justify-content-between p-3" style="background-color: ${headerBg}; color: ${questionColor}; cursor: pointer; user-select: none; outline: none; border-bottom: 1px solid ${borderColor}; list-style: none;">
+            <summary class="d-flex align-items-center justify-content-between p-3" style="background-color: ${headerBg}; color: ${questionColor}; cursor: pointer; user-select: none; outline: none; list-style: none;">
                 <span style="display: inline-block; padding-right: 12px; color: ${questionColor}; font-weight: 700; font-size: 15px; line-height: 1.4;">${escapeHTML(f.q)}</span>
-                <span style="display: inline-block; color: ${questionColor}; font-size: 14px; margin-left: auto; flex-shrink: 0;">
-                    <i class="fa fa-chevron-down"></i>
+                <span class="faq-accordion-arrow" style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background-color: rgba(0,0,0,0.05); color: ${questionColor}; font-size: 13px; margin-left: auto; flex-shrink: 0; transition: background-color 0.2s ease;">
+                    <i class="fa fa-chevron-down faq-arrow-down" style="display: ${isOpen ? 'none' : 'inline-block'}; line-height: 1;"></i>
+                    <i class="fa fa-chevron-up faq-arrow-up" style="display: ${isOpen ? 'inline-block' : 'none'}; line-height: 1;"></i>
                 </span>
             </summary>
-            <div style="padding: 16px 20px; background-color: #ffffff; color: #334155; font-size: 14.5px; line-height: 1.65;">
+            <div style="padding: 16px 20px; background-color: #ffffff; color: #334155; font-size: 14.5px; line-height: 1.65; border-top: 1px solid ${borderColor};">
                 ${escapeHTML(f.a)}
             </div>
         </details>`;
@@ -804,6 +805,44 @@ function renderWidgetHtml(widget) {
 
             const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
+    <style>
+        details.faq-accordion-item summary {
+            cursor: pointer;
+            list-style: none !important;
+            outline: none !important;
+        }
+        details.faq-accordion-item summary::-webkit-details-marker,
+        details.faq-accordion-item summary::marker {
+            display: none !important;
+        }
+        details.faq-accordion-item .faq-arrow-up {
+            display: none !important;
+        }
+        details.faq-accordion-item .faq-arrow-down {
+            display: inline-block !important;
+        }
+        details.faq-accordion-item[open] .faq-arrow-down {
+            display: none !important;
+        }
+        details.faq-accordion-item[open] .faq-arrow-up {
+            display: inline-block !important;
+        }
+        details.faq-accordion-item:not([open]) .faq-arrow-down {
+            display: inline-block !important;
+        }
+        details.faq-accordion-item:not([open]) .faq-arrow-up {
+            display: none !important;
+        }
+        details.faq-accordion-item[open] .faq-accordion-arrow {
+            background-color: rgba(0, 0, 0, 0.1) !important;
+        }
+        details.faq-accordion-item summary:hover {
+            filter: brightness(0.98);
+        }
+        details.faq-accordion-item summary:hover .faq-accordion-arrow {
+            background-color: rgba(0, 0, 0, 0.09) !important;
+        }
+    </style>
     <div class="container py-1" style="max-width: 920px;">
         ${d.title ? `<div class="row justify-content-center text-center mb-3">
             <div class="col-12">
@@ -875,7 +914,13 @@ function renderWidgetHtml(widget) {
         case 'other_apps': {
             const bg = d.bgColor || '#ffffff';
             const titleCol = d.titleColor || '#1e293b';
-            const colClass = d.columns === '2' ? 'col-12 col-md-6 mb-3' : (d.columns === '4' ? 'col-12 col-sm-6 col-lg-3 mb-3' : 'col-12 col-md-6 col-lg-4 mb-3');
+            const colClass = d.columns === '2' ? 'col-12 col-md-6 mb-4' : (d.columns === '4' ? 'col-12 col-sm-6 col-lg-3 mb-4' : 'col-12 col-md-6 col-lg-4 mb-4');
+            const cardBg = d.cardBgColor || '#ffffff';
+            const cardBorder = d.cardBorderColor || '#e2e8f0';
+            const brandCol = globalBrand || '#714B67';
+            const btnBg = d.btnBgColor || brandCol;
+            const btnText = d.btnTextColor || '#ffffff';
+            const priceCol = d.priceColor || '#059669';
 
             const appsList = Array.isArray(d.apps) ? d.apps : [];
             const appsHTML = appsList.map((app) => {
@@ -883,30 +928,47 @@ function renderWidgetHtml(widget) {
                 const srcMatch = bannerSrc.match(/src=["'](.*?)["']/i);
                 if (srcMatch) bannerSrc = srcMatch[1];
 
+                const badgeText = app.badge || 'Popular';
+                const versionText = app.version || 'Odoo 20';
+                const btnLabel = app.btnText || 'Get App';
+
                 const bannerHTML = bannerSrc
-                    ? `<img src="${escapeHTML(bannerSrc)}" style="width:100%; height:auto; border-bottom:1px solid #e2e8f0; display:block" alt="${escapeHTML(app.title || '')}">`
-                    : `<div style="width: 100%; height: 180px; background: linear-gradient(135deg, ${globalBrand || '#714B67'} 0%, #1e293b 100%); display: flex; align-items: center; justify-content: center; color: #ffffff; padding: 16px; text-align: center; border-bottom: 1px solid #e2e8f0;">
-                        <div>
-                            <i class="fa fa-cubes" style="font-size: 38px; margin-bottom: 8px; opacity: 0.85; display: block;"></i>
-                            <div style="font-size: 13px; font-weight: 600; opacity: 0.95; line-height: 1.3;">${escapeHTML(app.title || 'App Banner')}</div>
+                    ? `<img src="${escapeHTML(bannerSrc)}" style="width: 100%; height: 180px; object-fit: cover; border-bottom: 1px solid #e2e8f0; display: block;" alt="${escapeHTML(app.title || '')}">`
+                    : `<div style="width: 100%; height: 160px; background-color: ${brandCol}; text-align: center; padding: 24px 16px; border-bottom: 1px solid #e2e8f0;">
+                        <div style="width: 52px; height: 52px; line-height: 52px; margin: 0 auto 10px auto; border-radius: 50%; background-color: #ffffff; text-align: center;">
+                            <i class="fa fa-cubes" style="font-size: 24px; color: ${brandCol}; line-height: 52px;"></i>
                         </div>
+                        <div style="font-size: 14px; font-weight: 700; color: #ffffff; line-height: 1.3;">${escapeHTML(app.title || 'Odoo App')}</div>
                     </div>`;
 
                 return `
                 <div class="${colClass}">
                     <a href="${escapeHTML(app.appUrl || '#')}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: block; height: 100%;">
-                        <div class="card h-100 shadow-sm" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;">
+                        <div class="card h-100 shadow-sm" style="background-color: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 12px; overflow: hidden;">
                             ${bannerHTML}
-                            <div class="card-body p-3 d-flex flex-column justify-content-between" style="min-height: 105px;">
-                                <h5 style="font-size: 15px; font-weight: 700; color: #1e293b; line-height: 1.4; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                                    ${escapeHTML(app.title || 'App Title')}
-                                </h5>
+                            <div class="card-body p-3 d-flex flex-column justify-content-between" style="min-height: 140px;">
+                                <div>
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <span style="font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background-color: #f5efff; color: ${brandCol}; border: 1px solid #e9d5ff; text-transform: uppercase; letter-spacing: 0.5px;">
+                                            ${escapeHTML(badgeText)}
+                                        </span>
+                                        <span style="font-size: 11px; color: #059669; font-weight: 700;">
+                                            <i class="fa fa-check-circle" style="color: #10b981; margin-right: 3px;"></i>${escapeHTML(versionText)}
+                                        </span>
+                                    </div>
+                                    <h5 style="font-size: 15px; font-weight: 700; color: #0f172a; line-height: 1.4; margin-bottom: 6px; min-height: 42px;">
+                                        ${escapeHTML(app.title || 'App Title')}
+                                    </h5>
+                                    <div style="font-size: 12px; color: #64748b; margin-bottom: 12px; font-weight: 500;">
+                                        <i class="fa fa-building-o" style="color: #94a3b8; margin-right: 5px;"></i>${escapeHTML(app.company || 'Your Company')}
+                                    </div>
+                                </div>
                                 <div class="d-flex align-items-center justify-content-between pt-2" style="border-top: 1px solid #f1f5f9;">
-                                    <span style="font-size: 13px; color: #64748b; font-weight: 500;">
-                                        ${escapeHTML(app.company || '')}
-                                    </span>
-                                    <span style="font-size: 15px; font-weight: 700; color: #0f172a;">
+                                    <span style="font-size: 15px; font-weight: 800; color: ${priceCol}; background-color: #ecfdf5; padding: 4px 10px; border-radius: 6px; border: 1px solid #a7f3d0;">
                                         ${escapeHTML(app.price || 'Free')}
+                                    </span>
+                                    <span style="font-size: 12px; font-weight: 700; color: ${btnText}; background-color: ${btnBg}; padding: 6px 14px; border-radius: 6px; display: inline-block;">
+                                        ${escapeHTML(btnLabel)} &rarr;
                                     </span>
                                 </div>
                             </div>
@@ -918,10 +980,10 @@ function renderWidgetHtml(widget) {
             const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1" style="max-width: 1140px;">
-        ${d.title ? `<div class="row justify-content-center text-center mb-3">
+        ${d.title ? `<div class="row justify-content-center text-center mb-4">
             <div class="col-12 col-lg-9">
-                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol}; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
-                ${d.subtitle ? `<p style="font-size: 16px; color: #64748b; margin: 0 auto; max-width: 680px; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
+                <h2 style="font-size: 30px; font-weight: 800; color: ${titleCol}; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
+                ${d.subtitle ? `<p style="font-size: 15px; color: #64748b; margin: 0 auto; max-width: 680px; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
         <div class="row justify-content-center">
@@ -934,17 +996,77 @@ function renderWidgetHtml(widget) {
         case 'footer_brand': {
             const bg = d.bgColor || '#1e293b';
             const textCol = d.textColor || '#94a3b8';
+            const compCol = d.companyColor || '#ffffff';
+            const linkCol = d.linkColor || '#38bdf8';
+            const accentCol = d.accentColor || '#ef4444';
+            const layout = d.layout || 'split';
+
             let tagline = d.tagline || 'Crafted with ❤️ for the Odoo Global Community';
-            tagline = tagline.replace(/❤️|â\s*¤ï¸|&hearts;|&#10084;&#65039;?/g, '<i class="fa fa-heart" style="color: #ef4444; margin: 0 2px;"></i>');
+            tagline = tagline.replace(/❤️|â\s*¤ï¸|&hearts;|&#10084;&#65039;?/g, `<i class="fa fa-heart" style="color: ${accentCol}; margin: 0 3px;"></i>`);
             const safeTagline = tagline.includes('<i class="fa') ? tagline : escapeHTML(tagline);
 
+            // Links HTML
+            const showLinks = d.showLinks !== false;
+            const linksList = Array.isArray(d.links) ? d.links : [];
+            let linksHTML = '';
+            if (showLinks && linksList.length > 0) {
+                linksHTML = linksList.map(l => {
+                    const iconHtml = l.icon ? `<i class="fa ${l.icon}" style="margin-right: 5px; color: ${linkCol};"></i>` : '';
+                    return `<a href="${escapeHTML(l.url || '#')}" target="_blank" rel="noopener noreferrer" style="color: ${textCol}; text-decoration: none; font-size: 13px; font-weight: 500; margin: 4px 10px; display: inline-block;">
+                        ${iconHtml}<span style="color: ${linkCol};">${escapeHTML(l.label || 'Link')}</span>
+                    </a>`;
+                }).join('');
+            }
+
+            // Company Logo HTML
+            let logoHTML = '';
+            if (d.logoUrl) {
+                logoHTML = `<img src="${escapeHTML(d.logoUrl)}" alt="${escapeHTML(d.companyName || 'Logo')}" style="max-height: 38px; width: auto; margin-bottom: 8px; display: inline-block;">`;
+            }
+
+            const companyLink = d.companyUrl 
+                ? `<a href="${escapeHTML(d.companyUrl)}" target="_blank" rel="noopener noreferrer" style="color: ${compCol}; text-decoration: none; font-weight: 700;">${escapeHTML(d.companyName || 'Company Name')}</a>`
+                : `<strong style="color: ${compCol};">${escapeHTML(d.companyName || 'Company Name')}</strong>`;
+
+            const copyrightText = d.copyrightNotice 
+                ? `<span style="font-size: 12px; opacity: 0.8; margin-left: 4px;">• ${escapeHTML(d.copyrightNotice)}</span>` 
+                : '';
+
             const borderCss = getSectionBorderStyle(d, 'top', '#334155');
-            return `<footer class="py-4 text-center" style="background-color: ${bg}; color: ${textCol}; font-size: 14px; ${borderCss}">
-    <div class="container" style="max-width: 900px;">
-        <p style="margin-bottom: 6px; font-weight: 600;">${escapeHTML(d.companyName || 'Company Name')} &copy; ${escapeHTML(d.year || '2026')}</p>
-        <p style="margin: 0; font-size: 13px; opacity: 0.85;">${safeTagline}</p>
+
+            if (layout === 'split') {
+                return `<footer class="py-4" style="background-color: ${bg}; color: ${textCol}; font-size: 13px; ${borderCss}">
+    <div class="container" style="max-width: 1140px;">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-6 text-center text-md-start mb-3 mb-md-0">
+                ${logoHTML ? `<div class="mb-2">${logoHTML}</div>` : ''}
+                <div style="font-size: 14px; margin-bottom: 4px;">
+                    ${companyLink} &copy; ${escapeHTML(d.year || '2026')}${copyrightText}
+                </div>
+                <div style="font-size: 12px; opacity: 0.85;">
+                    ${safeTagline}
+                </div>
+            </div>
+            <div class="col-12 col-md-6 text-center text-md-end">
+                ${linksHTML ? `<div style="margin-bottom: 6px;">${linksHTML}</div>` : ''}
+                ${d.contactInfo ? `<div style="font-size: 12px; color: ${textCol}; opacity: 0.85;"><i class="fa fa-envelope-o" style="color: ${linkCol}; margin-right: 4px;"></i>${escapeHTML(d.contactInfo)}</div>` : ''}
+            </div>
+        </div>
     </div>
 </footer>`;
+            } else {
+                return `<footer class="py-4 text-center" style="background-color: ${bg}; color: ${textCol}; font-size: 13px; ${borderCss}">
+    <div class="container" style="max-width: 900px;">
+        ${logoHTML ? `<div class="mb-2">${logoHTML}</div>` : ''}
+        <div style="font-size: 15px; margin-bottom: 6px;">
+            ${companyLink} &copy; ${escapeHTML(d.year || '2026')}${copyrightText}
+        </div>
+        ${linksHTML ? `<div style="margin-bottom: 10px;">${linksHTML}</div>` : ''}
+        <p style="margin: 0; font-size: 13px; opacity: 0.85;">${safeTagline}</p>
+        ${d.contactInfo ? `<div style="font-size: 12px; color: ${textCol}; opacity: 0.85; margin-top: 6px;"><i class="fa fa-envelope-o" style="color: ${linkCol}; margin-right: 4px;"></i>${escapeHTML(d.contactInfo)}</div>` : ''}
+    </div>
+</footer>`;
+            }
         }
 
         default:

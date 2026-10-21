@@ -815,13 +815,38 @@
         }
 
         /* FAQ ACCORDION COMPONENT */
+        details.faq-accordion-item summary {
+            list-style: none !important;
+            outline: none !important;
+        }
         details.faq-accordion-item summary::-webkit-details-marker,
         details.faq-accordion-item summary::marker {
             display: none !important;
         }
-        details.faq-accordion-item[open] .faq-chevron {
-            transform: rotate(180deg);
+        details.faq-accordion-item .faq-arrow-up {
+            display: none !important;
+        }
+        details.faq-accordion-item .faq-arrow-down {
+            display: inline-block !important;
+        }
+        details.faq-accordion-item[open] .faq-arrow-down {
+            display: none !important;
+        }
+        details.faq-accordion-item[open] .faq-arrow-up {
+            display: inline-block !important;
+        }
+        details.faq-accordion-item:not([open]) .faq-arrow-down {
+            display: inline-block !important;
+        }
+        details.faq-accordion-item:not([open]) .faq-arrow-up {
+            display: none !important;
+        }
+        details.faq-accordion-item[open] .faq-accordion-arrow {
+            background-color: rgba(0, 0, 0, 0.1) !important;
         }
         details.faq-accordion-item summary:hover {
-            filter: brightness(0.97);
+            filter: brightness(0.98);
+        }
+        details.faq-accordion-item summary:hover .faq-accordion-arrow {
+            background-color: rgba(0, 0, 0, 0.09) !important;
         }

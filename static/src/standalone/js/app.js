@@ -301,6 +301,20 @@ if (document.readyState === 'loading') {
                 contentDiv.innerHTML = renderWidgetHtml(widget);
                 block.appendChild(contentDiv);
 
+                if (widget.type === 'faq_section') {
+                    contentDiv.querySelectorAll('details.faq-accordion-item').forEach((detEl, detIdx) => {
+                        detEl.addEventListener('toggle', () => {
+                            if (widget.data && Array.isArray(widget.data.faqs) && widget.data.faqs[detIdx]) {
+                                widget.data.faqs[detIdx].isOpen = detEl.open;
+                                if (selectedWidgetId === widget.id) {
+                                    const cbs = document.querySelectorAll('.faq-open-checkbox');
+                                    if (cbs && cbs[detIdx]) cbs[detIdx].checked = detEl.open;
+                                }
+                            }
+                        });
+                    });
+                }
+
                 // Drag over individual block to drop before or after
                 block.addEventListener('dragover', (e) => {
                     e.preventDefault();
@@ -3085,12 +3099,30 @@ if (document.readyState === 'loading') {
                         <div style="display: flex; gap: 8px; margin-bottom: 8px;">
                             <div style="flex: 1;">
                                 <label style="font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">Company / Author</label>
-                                <input type="text" class="form-input app-company-input" value="${escapeHTML(app.company || '')}" placeholder="e.g. Evozard" style="font-size: 12px; padding: 5px 8px;">
+                                <input type="text" class="form-input app-company-input" value="${escapeHTML(app.company || '')}" placeholder="e.g. Your Company" style="font-size: 12px; padding: 5px 8px;">
                             </div>
                             <div style="width: 100px;">
                                 <label style="font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">Price</label>
-                                <input type="text" class="form-input app-price-input" value="${escapeHTML(app.price || '')}" placeholder="e.g. $ 139 / Free" style="font-size: 12px; padding: 5px 8px;">
+                                <input type="text" class="form-input app-price-input" value="${escapeHTML(app.price || '')}" placeholder="e.g. $ 29 / Free" style="font-size: 12px; padding: 5px 8px;">
                             </div>
+                        </div>
+
+                        <!-- Card Badge & Version Tag in 2 columns -->
+                        <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                            <div style="flex: 1;">
+                                <label style="font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">Card Badge</label>
+                                <input type="text" class="form-input app-badge-input" value="${escapeHTML(app.badge || 'Popular')}" placeholder="e.g. Featured / Bestseller" style="font-size: 12px; padding: 5px 8px;">
+                            </div>
+                            <div style="width: 100px;">
+                                <label style="font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">Version Tag</label>
+                                <input type="text" class="form-input app-version-input" value="${escapeHTML(app.version || 'Odoo 20')}" placeholder="e.g. Odoo 20" style="font-size: 12px; padding: 5px 8px;">
+                            </div>
+                        </div>
+
+                        <!-- Button Text -->
+                        <div style="margin-bottom: 8px;">
+                            <label style="font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 2px;">Button Text</label>
+                            <input type="text" class="form-input app-btn-input" value="${escapeHTML(app.btnText || 'Get App')}" placeholder="e.g. Get App / Explore" style="font-size: 12px; padding: 5px 8px;">
                         </div>
 
                         <!-- Odoo App Store URL -->
@@ -3220,6 +3252,30 @@ if (document.readyState === 'loading') {
                         updateCanvasLive();
                     });
 
+                    const badgeInput = itemBox.querySelector('.app-badge-input');
+                    if (badgeInput) {
+                        badgeInput.addEventListener('input', (e) => {
+                            app.badge = e.target.value;
+                            updateCanvasLive();
+                        });
+                    }
+
+                    const versionInput = itemBox.querySelector('.app-version-input');
+                    if (versionInput) {
+                        versionInput.addEventListener('input', (e) => {
+                            app.version = e.target.value;
+                            updateCanvasLive();
+                        });
+                    }
+
+                    const btnTextInput = itemBox.querySelector('.app-btn-input');
+                    if (btnTextInput) {
+                        btnTextInput.addEventListener('input', (e) => {
+                            app.btnText = e.target.value;
+                            updateCanvasLive();
+                        });
+                    }
+
                     // Up / Down / Delete listeners
                     const upBtn = itemBox.querySelector('.btn-app-up');
                     if (upBtn && idx > 0) {
@@ -3268,8 +3324,11 @@ if (document.readyState === 'loading') {
                     d.apps.push({
                         bannerUrl: defaultBanner,
                         title: 'New Odoo Module',
-                        company: (d.apps.length > 0 && d.apps[0].company) ? d.apps[0].company : 'My Company',
-                        price: '$ 49',
+                        company: (d.apps.length > 0 && d.apps[0].company) ? d.apps[0].company : 'Your Company',
+                        price: '$ 29.00',
+                        badge: 'Featured',
+                        version: 'Odoo 20',
+                        btnText: 'Get App',
                         appUrl: 'https://apps.odoo.com/apps/modules'
                     });
                     renderPropertyInspector();
@@ -3281,6 +3340,284 @@ if (document.readyState === 'loading') {
                 grp.querySelector('#btn-add-app-card-bottom').addEventListener('click', addAppFn);
 
                 form.appendChild(grp);
+            }
+
+            // Card Color Styling for other_apps
+            if (widget.type === 'other_apps') {
+                const stylingCard = document.createElement('div');
+                stylingCard.style.cssText = 'background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-top: 14px;';
+                stylingCard.innerHTML = `<div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 10px;"><i class="fa fa-paint-brush" style="color: var(--primary); margin-right: 6px;"></i>App Card Colors</div>`;
+                stylingCard.appendChild(createColorField('Price Badge Color', d.priceColor || '#059669', (val) => { d.priceColor = val; updateCanvasLive(); }));
+                stylingCard.appendChild(createColorField('Button Background', d.btnBgColor || (pageSettings.brandColor || '#714B67'), (val) => { d.btnBgColor = val; updateCanvasLive(); }));
+                stylingCard.appendChild(createColorField('Card Border Color', d.cardBorderColor || '#e2e8f0', (val) => { d.cardBorderColor = val; updateCanvasLive(); }));
+                form.appendChild(stylingCard);
+            }
+
+            // Dedicated Full Custom Inspector for footer_brand
+            if (widget.type === 'footer_brand') {
+                const footerCard = document.createElement('div');
+                footerCard.style.cssText = 'background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-top: 16px; margin-bottom: 12px;';
+                
+                footerCard.innerHTML = `
+                    <div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="display: flex; align-items: center; gap: 7px;">
+                            <i class="fa fa-bookmark" style="color: var(--primary);"></i> Brand &amp; Footer Settings
+                        </span>
+                        <span style="font-size: 10px; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 2px 7px; border-radius: 4px;">Custom Widget</span>
+                    </div>
+
+                    <!-- Layout Selector -->
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Footer Layout</label>
+                        <select class="form-input" id="footer-layout-select" style="font-size: 12px; padding: 6px 10px;">
+                            <option value="split" ${d.layout !== 'centered' ? 'selected' : ''}>Split (Brand on Left, Links on Right)</option>
+                            <option value="centered" ${d.layout === 'centered' ? 'selected' : ''}>Centered (Single Column Stacked)</option>
+                        </select>
+                    </div>
+
+                    <!-- Company Info -->
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Company / Brand Name</label>
+                        <input type="text" class="form-input" id="footer-comp-name" value="${escapeHTML(d.companyName || '')}" placeholder="e.g. Your Company Name" style="font-size: 12px; padding: 6px 10px;">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Company Website URL</label>
+                        <input type="text" class="form-input" id="footer-comp-url" value="${escapeHTML(d.companyUrl || '')}" placeholder="https://yourdomain.com" style="font-size: 12px; padding: 6px 10px;">
+                    </div>
+
+                    <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                        <div>
+                            <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Copyright Year</label>
+                            <input type="text" class="form-input" id="footer-year" value="${escapeHTML(d.year || '2026')}" placeholder="2026" style="font-size: 12px; padding: 6px 8px;">
+                        </div>
+                        <div>
+                            <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Rights / License</label>
+                            <input type="text" class="form-input" id="footer-rights" value="${escapeHTML(d.copyrightNotice || 'All Rights Reserved')}" placeholder="All Rights Reserved" style="font-size: 12px; padding: 6px 8px;">
+                        </div>
+                    </div>
+
+                    <!-- Brand Logo Image -->
+                    <div style="margin-bottom: 12px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                        <label style="font-size: 11px; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">Brand Logo (Optional)</label>
+                        <input type="text" class="form-input" id="footer-logo-input" value="${escapeHTML(d.logoUrl || '')}" placeholder="Logo image URL (https://... or logo.png)" style="font-size: 11px; padding: 6px 8px; margin-bottom: 6px;">
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <label class="btn btn-outline" style="font-size: 11px; padding: 4px 8px; cursor: pointer; color: var(--primary); border-color: var(--primary); margin: 0;">
+                                <i class="fa fa-upload"></i> Upload Logo
+                                <input type="file" accept="image/*" id="footer-logo-uploader" style="display: none;">
+                            </label>
+                            ${d.logoUrl ? `<button type="button" class="btn btn-outline" id="footer-clear-logo" style="font-size: 11px; padding: 4px 8px; color: #ef4444; border-color: #fca5a5;">Remove</button>` : ''}
+                        </div>
+                    </div>
+
+                    <!-- Tagline -->
+                    <div class="form-group" style="margin-bottom: 10px;">
+                        <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Tagline / Slogan</label>
+                        <textarea class="form-textarea" id="footer-tagline" style="font-size: 12px; height: 55px;">${escapeHTML(d.tagline || '')}</textarea>
+                    </div>
+
+                    <!-- Contact / Email Info -->
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Contact / Support Info</label>
+                        <input type="text" class="form-input" id="footer-contact-info" value="${escapeHTML(d.contactInfo || '')}" placeholder="e.g. support@yourdomain.com" style="font-size: 12px; padding: 6px 10px;">
+                    </div>
+
+                    <!-- Quick Links Toggle & Manager -->
+                    <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid #e2e8f0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <label class="form-label" style="margin: 0; font-size: 12px; font-weight: 700;">
+                                <i class="fa fa-link" style="color: var(--primary); margin-right: 4px;"></i> Footer Quick Links
+                            </label>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <label style="font-size: 11px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; gap: 4px;">
+                                    <input type="checkbox" id="chk-footer-show-links" ${d.showLinks !== false ? 'checked' : ''} style="cursor: pointer;"> Show Links
+                                </label>
+                                <button type="button" class="btn btn-outline" id="btn-add-footer-link" style="font-size: 10px; padding: 3px 8px; color: var(--primary); border-color: var(--primary); cursor: pointer;">
+                                    <i class="fa fa-plus"></i> Add
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="footer-links-list" style="display: flex; flex-direction: column; gap: 8px;"></div>
+                    </div>
+
+                    <!-- Color Styling -->
+                    <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid #e2e8f0;">
+                        <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">
+                            <i class="fa fa-paint-brush" style="color: var(--primary); margin-right: 5px;"></i> Footer Colors
+                        </div>
+                        <div id="footer-colors-container"></div>
+                    </div>
+                `;
+
+                // Layout listener
+                footerCard.querySelector('#footer-layout-select').addEventListener('change', (e) => {
+                    d.layout = e.target.value;
+                    updateCanvasLive();
+                });
+
+                // Company name listener
+                footerCard.querySelector('#footer-comp-name').addEventListener('input', (e) => {
+                    d.companyName = e.target.value;
+                    updateCanvasLive();
+                });
+
+                // Company url listener
+                footerCard.querySelector('#footer-comp-url').addEventListener('input', (e) => {
+                    d.companyUrl = e.target.value;
+                    updateCanvasLive();
+                });
+
+                // Year listener
+                footerCard.querySelector('#footer-year').addEventListener('input', (e) => {
+                    d.year = e.target.value;
+                    updateCanvasLive();
+                });
+
+                // Rights listener
+                footerCard.querySelector('#footer-rights').addEventListener('input', (e) => {
+                    d.copyrightNotice = e.target.value;
+                    updateCanvasLive();
+                });
+
+                // Logo input listener
+                const logoInput = footerCard.querySelector('#footer-logo-input');
+                logoInput.addEventListener('input', (e) => {
+                    d.logoUrl = e.target.value;
+                    updateCanvasLive();
+                });
+
+                // Logo uploader
+                const logoUploader = footerCard.querySelector('#footer-logo-uploader');
+                if (logoUploader) {
+                    logoUploader.addEventListener('change', (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (evt) => {
+                                d.logoUrl = evt.target.result;
+                                logoInput.value = '(Uploaded Logo Image)';
+                                updateCanvasLive();
+                                renderPropertyInspector();
+                                showToast('Footer logo uploaded');
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                }
+
+                // Clear logo button
+                const clearLogoBtn = footerCard.querySelector('#footer-clear-logo');
+                if (clearLogoBtn) {
+                    clearLogoBtn.addEventListener('click', () => {
+                        d.logoUrl = '';
+                        updateCanvasLive();
+                        renderPropertyInspector();
+                    });
+                }
+
+                // Tagline listener
+                footerCard.querySelector('#footer-tagline').addEventListener('input', (e) => {
+                    d.tagline = e.target.value;
+                    updateCanvasLive();
+                });
+
+                // Contact listener
+                footerCard.querySelector('#footer-contact-info').addEventListener('input', (e) => {
+                    d.contactInfo = e.target.value;
+                    updateCanvasLive();
+                });
+
+                // Show links checkbox
+                footerCard.querySelector('#chk-footer-show-links').addEventListener('change', (e) => {
+                    d.showLinks = e.target.checked;
+                    updateCanvasLive();
+                });
+
+                // Render links list
+                if (!Array.isArray(d.links)) d.links = [];
+                const linksContainer = footerCard.querySelector('#footer-links-list');
+                d.links.forEach((link, lIdx) => {
+                    const lRow = document.createElement('div');
+                    lRow.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 8px;';
+                    lRow.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; font-weight: 700; color: #475569;">Link #${lIdx + 1}</span>
+                            <div style="display: flex; gap: 4px;">
+                                <button type="button" class="btn-fl-up" style="padding: 1px 5px; font-size: 9px; cursor: pointer;" ${lIdx === 0 ? 'disabled' : ''}><i class="fa fa-arrow-up"></i></button>
+                                <button type="button" class="btn-fl-down" style="padding: 1px 5px; font-size: 9px; cursor: pointer;" ${lIdx === d.links.length - 1 ? 'disabled' : ''}><i class="fa fa-arrow-down"></i></button>
+                                <button type="button" class="btn-fl-del" style="padding: 1px 5px; font-size: 9px; color: #ef4444; cursor: pointer;"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 4px;">
+                            <input type="text" class="form-input fl-label" value="${escapeHTML(link.label || '')}" placeholder="Label (e.g. Docs)" style="font-size: 11px; padding: 4px 6px;">
+                            <input type="text" class="form-input fl-icon" value="${escapeHTML(link.icon || '')}" placeholder="Icon (e.g. fa-book)" style="font-size: 11px; padding: 4px 6px;">
+                        </div>
+                        <input type="text" class="form-input fl-url" value="${escapeHTML(link.url || '')}" placeholder="URL (https://... or mailto:...)" style="font-size: 11px; padding: 4px 6px;">
+                    `;
+
+                    lRow.querySelector('.fl-label').addEventListener('input', (e) => {
+                        link.label = e.target.value;
+                        updateCanvasLive();
+                    });
+                    lRow.querySelector('.fl-icon').addEventListener('input', (e) => {
+                        link.icon = e.target.value;
+                        updateCanvasLive();
+                    });
+                    lRow.querySelector('.fl-url').addEventListener('input', (e) => {
+                        link.url = e.target.value;
+                        updateCanvasLive();
+                    });
+
+                    const up = lRow.querySelector('.btn-fl-up');
+                    if (up && lIdx > 0) {
+                        up.addEventListener('click', () => {
+                            const tmp = d.links[lIdx];
+                            d.links[lIdx] = d.links[lIdx - 1];
+                            d.links[lIdx - 1] = tmp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+                    const dn = lRow.querySelector('.btn-fl-down');
+                    if (dn && lIdx < d.links.length - 1) {
+                        dn.addEventListener('click', () => {
+                            const tmp = d.links[lIdx];
+                            d.links[lIdx] = d.links[lIdx + 1];
+                            d.links[lIdx + 1] = tmp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+                    lRow.querySelector('.btn-fl-del').addEventListener('click', () => {
+                        d.links.splice(lIdx, 1);
+                        renderPropertyInspector();
+                        updateCanvasLive();
+                    });
+
+                    linksContainer.appendChild(lRow);
+                });
+
+                // Add link button listener
+                footerCard.querySelector('#btn-add-footer-link').addEventListener('click', () => {
+                    d.links.push({
+                        label: 'New Link',
+                        url: 'https://yourdomain.com',
+                        icon: 'fa-link'
+                    });
+                    renderPropertyInspector();
+                    updateCanvasLive();
+                });
+
+                // Color fields
+                const colorsBox = footerCard.querySelector('#footer-colors-container');
+                colorsBox.appendChild(createColorField('Background Color', d.bgColor || '#1e293b', (val) => { d.bgColor = val; updateCanvasLive(); }));
+                colorsBox.appendChild(createColorField('Text Color', d.textColor || '#94a3b8', (val) => { d.textColor = val; updateCanvasLive(); }));
+                colorsBox.appendChild(createColorField('Company Name Color', d.companyColor || '#ffffff', (val) => { d.companyColor = val; updateCanvasLive(); }));
+                colorsBox.appendChild(createColorField('Link Color', d.linkColor || '#38bdf8', (val) => { d.linkColor = val; updateCanvasLive(); }));
+                colorsBox.appendChild(createColorField('Heart / Accent Color', d.accentColor || '#ef4444', (val) => { d.accentColor = val; updateCanvasLive(); }));
+
+                form.appendChild(footerCard);
             }
 
             // Section Border & Divider Controls for ALL widgets (Odoo App Store Safe CSS)
@@ -3526,7 +3863,8 @@ if (document.readyState === 'loading') {
                     createWidgetInstance('vs_table'),
                     createWidgetInstance('faq_section'),
                     createWidgetInstance('other_apps'),
-                    createWidgetInstance('support_banner')
+                    createWidgetInstance('support_banner'),
+                    createWidgetInstance('footer_brand')
                 ];
                 selectedWidgetId = activeWidgets[0].id;
             }

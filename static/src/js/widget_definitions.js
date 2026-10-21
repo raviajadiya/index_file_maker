@@ -463,7 +463,7 @@ export const WIDGET_CATALOG = [
             {
                 type: 'other_apps',
                 name: 'Other Apps Showcase',
-                desc: 'Showcase other Odoo modules with banner image, title, author, price & App Store link',
+                desc: 'Showcase other Odoo modules with vibrant cards, author, price, badge & CTA button',
                 icon: 'fa-th-large',
                 defaultData: {
                     title: 'Other Recommended Odoo Developer Tools',
@@ -471,12 +471,20 @@ export const WIDGET_CATALOG = [
                     bgColor: '#ffffff',
                     titleColor: '#1e293b',
                     columns: '3',
+                    cardBgColor: '#ffffff',
+                    cardBorderColor: '#e2e8f0',
+                    priceColor: '#059669',
+                    btnBgColor: '#714B67',
+                    btnTextColor: '#ffffff',
                     apps: [
                         {
                             bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
                             title: 'Odoo Code Snippets & Builder Pro',
                             company: 'Your Company',
                             price: '$ 29.00',
+                            badge: 'Bestseller',
+                            version: 'Odoo 20',
+                            btnText: 'Get App',
                             appUrl: 'https://apps.odoo.com/apps/modules/browse?search=developer+tools'
                         },
                         {
@@ -484,6 +492,9 @@ export const WIDGET_CATALOG = [
                             title: 'Automated WhatsApp & SMS Gateway',
                             company: 'Your Company',
                             price: '$ 39.00',
+                            badge: 'Featured',
+                            version: 'Odoo 20',
+                            btnText: 'Get App',
                             appUrl: 'https://apps.odoo.com/apps/modules/browse?search=whatsapp'
                         },
                         {
@@ -491,6 +502,9 @@ export const WIDGET_CATALOG = [
                             title: 'Universal Document & PDF Watermark',
                             company: 'Your Company',
                             price: '$ 19.00',
+                            badge: 'Popular',
+                            version: 'Odoo 20',
+                            btnText: 'Get App',
                             appUrl: 'https://apps.odoo.com/apps/modules/browse?search=pdf+watermark'
                         }
                     ]
@@ -546,14 +560,29 @@ export const WIDGET_CATALOG = [
             {
                 type: 'footer_brand',
                 name: 'Brand & Copyright Footer',
-                desc: 'Simple developer brand signature',
+                desc: 'Fully customizable brand, copyright, quick links & developer signature',
                 icon: 'fa-bookmark',
                 defaultData: {
                     companyName: 'Your Company Name',
+                    companyUrl: 'https://yourdomain.com',
                     year: '2026',
+                    copyrightNotice: 'All Rights Reserved',
                     tagline: 'Crafted with <i class="fa fa-heart" style="color: #ef4444;"></i> for the Odoo Global Community',
+                    logoUrl: '',
+                    contactInfo: 'support@yourdomain.com',
+                    layout: 'split',
+                    showLinks: true,
+                    links: [
+                        { label: 'Documentation', url: 'https://yourdomain.com/docs', icon: 'fa-book' },
+                        { label: 'Helpdesk Portal', url: 'https://yourdomain.com/helpdesk', icon: 'fa-life-ring' },
+                        { label: 'More Odoo Apps', url: 'https://apps.odoo.com', icon: 'fa-th-large' },
+                        { label: 'Official Website', url: 'https://yourdomain.com', icon: 'fa-globe' }
+                    ],
                     bgColor: '#1e293b',
-                    textColor: '#94a3b8'
+                    textColor: '#94a3b8',
+                    companyColor: '#ffffff',
+                    linkColor: '#38bdf8',
+                    accentColor: '#ef4444'
                 }
             }
         ]
