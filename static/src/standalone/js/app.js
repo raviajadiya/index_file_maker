@@ -2348,16 +2348,21 @@ if (document.readyState === 'loading') {
                 if (d.subtitle === undefined) d.subtitle = 'See how our advanced module delivers superior features and automation compared to standard Odoo';
                 if (d.bgColor === undefined) d.bgColor = '#f8fafc';
                 if (d.cardBgColor === undefined) d.cardBgColor = '#ffffff';
-                if (d.cardBorderColor === undefined) d.cardBorderColor = '#e2e8f0';
-                if (d.headerBgColor === undefined) d.headerBgColor = '#f8fafc';
-                if (d.headerTextColor === undefined) d.headerTextColor = '#334155';
+                if (d.tableBorderColor === undefined) d.tableBorderColor = d.cardBorderColor || d.dividerColor || '#cbd5e1';
+                d.cardBorderColor = d.tableBorderColor;
+                d.dividerColor = d.tableBorderColor;
+                if (d.headerBgColor === undefined) d.headerBgColor = '#f1f5f9';
+                if (d.headerTextColor === undefined) d.headerTextColor = '#1e293b';
                 if (d.titleColor === undefined) d.titleColor = '#1e293b';
                 if (d.subtitleColor === undefined) d.subtitleColor = '#64748b';
-                if (d.accentColor === undefined) d.accentColor = '#007bff';
+                if (d.accentColor === undefined) d.accentColor = '#714B67';
                 if (d.col1Title === undefined) d.col1Title = 'Key Capabilities & Features';
-                if (d.col2Title === undefined) d.col2Title = 'Our Module';
+                if (d.col2Title === undefined) d.col2Title = 'Index File Maker';
                 if (d.col2Badge === undefined) d.col2Badge = 'Recommended';
-                if (d.col3Title === undefined) d.col3Title = 'Standard Odoo';
+                if (d.col2HeaderBg === undefined) d.col2HeaderBg = '#714B67';
+                if (d.col2HeaderTextColor === undefined) d.col2HeaderTextColor = '#ffffff';
+                if (d.col2HighlightBg === undefined) d.col2HighlightBg = '#faf5ff';
+                if (d.col3Title === undefined) d.col3Title = 'Manual HTML Coding';
                 if (!Array.isArray(d.rows)) d.rows = [];
 
                 // 1. Header Group
@@ -2380,14 +2385,17 @@ if (document.readyState === 'loading') {
                 colsGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
                 colsGroup.innerHTML = `
                     <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                        <i class="fa fa-columns" style="color: var(--primary);"></i> Column Headers &amp; Highlights
+                        <i class="fa fa-columns" style="color: var(--primary);"></i> Column Headers &amp; Recommended Column
                     </div>
                 `;
                 colsGroup.appendChild(createInputField('Column 1 Header (Features)', d.col1Title, (val) => { d.col1Title = val; updateCanvasLive(); }));
-                colsGroup.appendChild(createInputField('Column 2 Header (Our App / Module)', d.col2Title, (val) => { d.col2Title = val; updateCanvasLive(); }));
-                colsGroup.appendChild(createInputField('Our App Top Badge Label', d.col2Badge, (val) => { d.col2Badge = val; updateCanvasLive(); }));
+                colsGroup.appendChild(createInputField('Column 2 Header (Recommended App)', d.col2Title, (val) => { d.col2Title = val; updateCanvasLive(); }));
+                colsGroup.appendChild(createInputField('Recommended Top Badge Label', d.col2Badge, (val) => { d.col2Badge = val; updateCanvasLive(); }));
+                colsGroup.appendChild(createColorField('Recommended (Col 2) Header Background', d.col2HeaderBg || d.accentColor || '#714B67', (val) => { d.col2HeaderBg = val; updateCanvasLive(); }));
+                colsGroup.appendChild(createColorField('Recommended (Col 2) Header Text Color', d.col2HeaderTextColor || '#ffffff', (val) => { d.col2HeaderTextColor = val; updateCanvasLive(); }));
+                colsGroup.appendChild(createColorField('Recommended (Col 2) Column Background', d.col2HighlightBg || '#faf5ff', (val) => { d.col2HighlightBg = val; updateCanvasLive(); }));
                 colsGroup.appendChild(createInputField('Column 3 Header (Competitor / Standard)', d.col3Title, (val) => { d.col3Title = val; updateCanvasLive(); }));
-                colsGroup.appendChild(createColorField('Our App Accent / Highlight Color', d.accentColor, (val) => { d.accentColor = val; updateCanvasLive(); }));
+                colsGroup.appendChild(createColorField('Theme Accent / Highlight Color', d.accentColor, (val) => { d.accentColor = val; updateCanvasLive(); }));
                 form.appendChild(colsGroup);
 
                 // 3. Table Styling Colors
@@ -2395,13 +2403,18 @@ if (document.readyState === 'loading') {
                 styleGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
                 styleGroup.innerHTML = `
                     <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                        <i class="fa fa-paint-brush" style="color: var(--primary);"></i> Table Card Styling
+                        <i class="fa fa-paint-brush" style="color: var(--primary);"></i> Table Card &amp; Border Styling
                     </div>
                 `;
                 styleGroup.appendChild(createColorField('Card Background Color', d.cardBgColor, (val) => { d.cardBgColor = val; updateCanvasLive(); }));
-                styleGroup.appendChild(createColorField('Card Border Color', d.cardBorderColor, (val) => { d.cardBorderColor = val; updateCanvasLive(); }));
-                styleGroup.appendChild(createColorField('Header Row Background', d.headerBgColor, (val) => { d.headerBgColor = val; updateCanvasLive(); }));
-                styleGroup.appendChild(createColorField('Header Row Text Color', d.headerTextColor, (val) => { d.headerTextColor = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Table Border Color (All Borders & Dividers)', d.tableBorderColor || d.cardBorderColor || d.dividerColor || '#cbd5e1', (val) => {
+                    d.tableBorderColor = val;
+                    d.cardBorderColor = val;
+                    d.dividerColor = val;
+                    updateCanvasLive();
+                }));
+                styleGroup.appendChild(createColorField('Header Row Background (Col 1 & 3)', d.headerBgColor || '#f1f5f9', (val) => { d.headerBgColor = val; updateCanvasLive(); }));
+                styleGroup.appendChild(createColorField('Header Row Text Color (Col 1 & 3)', d.headerTextColor || '#1e293b', (val) => { d.headerTextColor = val; updateCanvasLive(); }));
                 form.appendChild(styleGroup);
 
                 // 4. Feature Rows Manager
@@ -3898,6 +3911,7 @@ if (document.readyState === 'loading') {
                 if (inst.data.iconColor === '#714B67') inst.data.iconColor = currentBrand;
                 if (inst.data.questionColor === '#714B67') inst.data.questionColor = currentBrand;
                 if (inst.data.numberColor === '#714B67') inst.data.numberColor = currentBrand;
+                if (inst.data.col2HeaderBg === '#714B67') inst.data.col2HeaderBg = currentBrand;
             }
             return inst;
         }

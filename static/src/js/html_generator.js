@@ -61,6 +61,17 @@ function formatFaIconClass(iconStr, defaultClass = 'fa fa-bolt') {
     return clean ? `fa fa-${clean}` : defaultClass;
 }
 
+function hexToRgba(hex, alpha = 1) {
+    if (!hex || typeof hex !== 'string') return `rgba(113, 75, 103, ${alpha})`;
+    let c = hex.replace('#', '').trim();
+    if (c.length === 3) c = c.split('').map(x => x + x).join('');
+    if (c.length !== 6) return `rgba(113, 75, 103, ${alpha})`;
+    const r = parseInt(c.substring(0, 2), 16);
+    const g = parseInt(c.substring(2, 4), 16);
+    const b = parseInt(c.substring(4, 6), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
 const ICON_TO_FA_MAP = {
     // Communication & Support
     'email': 'fa fa-envelope',
@@ -175,11 +186,22 @@ function renderSafeIcon(iconStr, defaultFaClass = 'fa fa-check-circle', fontSize
 
 function renderTableCheck(val) {
     if (val === true || String(val).toLowerCase() === 'true' || val === 'yes' || val === '1') {
-        return `<i class="fa fa-check-circle" style="color: #10b981; font-size: 22px; vertical-align: middle;"></i>`;
+        return `<i class="fa fa-check-circle" style="color: #10b981; font-size: 22px; vertical-align: middle; display: inline-block;"></i>`;
     } else if (val === false || String(val).toLowerCase() === 'false' || val === 'no' || val === '0' || val === '' || val === null || val === undefined) {
-        return `<i class="fa fa-times-circle" style="color: #cbd5e1; font-size: 20px; vertical-align: middle;"></i>`;
+        return `<i class="fa fa-times-circle" style="color: #cbd5e1; font-size: 20px; vertical-align: middle; display: inline-block;"></i>`;
     } else {
-        return `<span style="display: inline-block; padding: 4px 10px; border-radius: 12px; background-color: #eff6ff; color: #1d4ed8; font-size: 12px; font-weight: 700; border: 1px solid #bfdbfe; font-family: inherit;">${escapeHTML(String(val))}</span>`;
+        const strVal = String(val).trim();
+        const lower = strVal.toLowerCase();
+        const isNegative = ['error', 'none', 'slow', 'tedious', 'manual', 'missing', 'fail', 'no', 'bug', 'limited', 'without'].some(w => lower.includes(w));
+        const isPositive = !isNegative && ['included', 'yes', 'full', 'all', 'free', 'ready', 'active', 'supported', 'available'].some(w => lower.includes(w));
+
+        if (isNegative) {
+            return `<span style="display: inline-block; padding: 4px 12px; border-radius: 20px; background-color: #fef2f2; color: #dc2626; font-size: 12px; font-weight: 700; border: 1px solid #fecaca; line-height: 1.4; vertical-align: middle; white-space: nowrap;"><i class="fa fa-times-circle" style="color: #dc2626; font-size: 11px; margin-right: 4px; vertical-align: middle;"></i>${escapeHTML(strVal)}</span>`;
+        } else if (isPositive) {
+            return `<span style="display: inline-block; padding: 4px 12px; border-radius: 20px; background-color: #ecfdf5; color: #059669; font-size: 12px; font-weight: 700; border: 1px solid #a7f3d0; line-height: 1.4; vertical-align: middle; white-space: nowrap;"><i class="fa fa-check-circle" style="color: #059669; font-size: 11px; margin-right: 4px; vertical-align: middle;"></i>${escapeHTML(strVal)}</span>`;
+        } else {
+            return `<span style="display: inline-block; padding: 4px 12px; border-radius: 20px; background-color: #eff6ff; color: #1d4ed8; font-size: 12px; font-weight: 700; border: 1px solid #bfdbfe; line-height: 1.4; vertical-align: middle; white-space: nowrap;">${escapeHTML(strVal)}</span>`;
+        }
     }
 }
 
@@ -736,55 +758,86 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
         }
 
         case 'vs_table': {
-            const bg = d.bgColor || '#f8fafc';
+            const bg = d.bgColor || '#ffffff';
             const cardBg = d.cardBgColor || '#ffffff';
-            const cardBorder = d.cardBorderColor || '#e2e8f0';
-            const headerBg = d.headerBgColor || '#f8fafc';
-            const headerTextColor = d.headerTextColor || '#334155';
+            const tableBorder = d.tableBorderColor || d.cardBorderColor || d.dividerColor || '#cbd5e1';
+            const headerBg = d.headerBgColor || '#f1f5f9';
+            const headerTextColor = d.headerTextColor || '#1e293b';
             const titleColor = d.titleColor || '#1e293b';
             const subtitleColor = d.subtitleColor || '#64748b';
             const accent = d.accentColor || globalBrand || '#714B67';
             const rows = d.rows || [];
 
-            const rowsHTML = rows.map((r, i) => `
-            <tr style="border-bottom: 1px solid #f1f5f9; background-color: ${i % 2 === 0 ? '#ffffff' : '#fafafa'};">
-                <td style="padding: 14px 22px;">
-                    <div style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 2px;">${escapeHTML(r.feature || '')}</div>
-                    ${r.detail ? `<div style="font-size: 12px; color: #64748b; line-height: 1.4;">${escapeHTML(r.detail)}</div>` : ''}
+            // Highlighted styling for Column 2 (Our App - Hero Column)
+            const col2HdrBg = d.col2HeaderBg || accent;
+            const col2HdrTextCol = d.col2HeaderTextColor || '#ffffff';
+            const col2Bg = d.col2HighlightBg || '#faf5ff';
+
+            const rowsCount = rows.length;
+            const rowsHTML = rows.map((r, i) => {
+                const isLast = (i === rowsCount - 1);
+                const rowBaseBg = (i % 2 === 0) ? '#ffffff' : '#f8fafc';
+                const bottomBorder = isLast ? 'none' : `1px solid ${tableBorder}`;
+
+                return `
+            <tr style="background-color: ${rowBaseBg}; border-bottom: ${bottomBorder};">
+                <td style="width: 50%; padding: 14px 20px; border-right: 1px solid ${tableBorder}; text-align: left; vertical-align: middle;">
+                    <div style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 3px; line-height: 1.4;">${escapeHTML(r.feature || '')}</div>
+                    ${r.detail ? `<div style="font-size: 12px; color: #64748b; line-height: 1.45;">${escapeHTML(r.detail)}</div>` : ''}
                 </td>
-                <td style="padding: 14px 16px; text-align: center; background-color: #fdf8fc; border-left: 2px solid #f0e6ed; border-right: 2px solid #f0e6ed;">
-                    ${renderTableCheck(r.ourApp !== undefined ? r.ourApp : true)}
+                <td style="width: 25%; padding: 14px 10px; background-color: ${col2Bg}; border-right: 1px solid ${tableBorder}; text-align: center; vertical-align: middle;">
+                    <div style="text-align: center; margin: 0 auto; line-height: 1.2;">
+                        ${renderTableCheck(r.ourApp !== undefined ? r.ourApp : true)}
+                    </div>
                 </td>
-                <td style="padding: 14px 16px; text-align: center;">
-                    ${renderTableCheck(r.competitor !== undefined ? r.competitor : false)}
+                <td style="width: 25%; padding: 14px 10px; background-color: ${rowBaseBg}; text-align: center; vertical-align: middle;">
+                    <div style="text-align: center; margin: 0 auto; line-height: 1.2;">
+                        ${renderTableCheck(r.competitor !== undefined ? r.competitor : false)}
+                    </div>
                 </td>
-            </tr>`).join('');
+            </tr>`;
+            }).join('');
 
             const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1" style="max-width: 980px;">
-        <div class="row justify-content-center text-center mb-3">
+        ${d.title ? `<div class="row justify-content-center text-center mb-4">
             <div class="col-12 col-lg-10">
-                ${d.title ? `<h2 style="font-size: 30px; font-weight: 700; color: ${titleColor} !important; margin: 0 0 8px 0; line-height: 1.3;">${escapeHTML(d.title)}</h2>` : ''}
+                <span style="display: inline-block; background-color: #f5efff; color: ${accent}; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px;">Feature Comparison</span>
+                <h2 style="font-size: 30px; font-weight: 700; color: ${titleColor} !important; margin: 0 0 8px 0; line-height: 1.3;">${escapeHTML(d.title)}</h2>
                 ${d.subtitle ? `<p style="font-size: 15px; color: ${subtitleColor} !important; margin: 0 auto; line-height: 1.6; max-width: 720px;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
-        </div>
-        <div style="background: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); overflow: hidden;">
-            <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-                <table style="width: 100%; border-collapse: collapse; text-align: left; margin: 0; background-color: ${cardBg};">
-                    <thead>
-                        <tr style="background-color: ${headerBg}; border-bottom: 2px solid ${cardBorder};">
-                            <th style="padding: 18px 22px; font-size: 13px; font-weight: 700; color: ${headerTextColor}; text-transform: uppercase; letter-spacing: 0.5px; width: 48%;">${escapeHTML(d.col1Title || 'Key Capabilities & Features')}</th>
-                            <th style="padding: 16px 16px; text-align: center; background-color: #fdf8fc; border-left: 2px solid #f0e6ed; border-right: 2px solid #f0e6ed; border-top: 3px solid ${accent}; width: 26%;">
-                                ${d.col2Badge ? `<span style="display: inline-block; background-color: ${accent}; color: #ffffff; padding: 2px 8px; border-radius: 10px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">${escapeHTML(d.col2Badge)}</span><br>` : ''}
-                                <span style="font-size: 14px; font-weight: 800; color: ${accent};">${escapeHTML(d.col2Title || 'Our Module')}</span>
-                            </th>
-                            <th style="padding: 18px 16px; font-size: 13px; font-weight: 700; color: ${headerTextColor}; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; width: 26%;">${escapeHTML(d.col3Title || 'Standard Odoo')}</th>
-                        </tr>
-                    </thead>
-                    <tbody>${rowsHTML}</tbody>
-                </table>
-            </div>
+        </div>` : ''}
+        <div style="background-color: ${cardBg}; border: 1px solid ${tableBorder}; border-radius: 14px; overflow: hidden; box-shadow: none;">
+            <table style="width: 100%; border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;">
+                <thead>
+                    <tr style="background-color: ${headerBg}; border-bottom: 1px solid ${tableBorder};">
+                        <th style="width: 50%; padding: 16px 20px; background-color: ${headerBg}; border-right: 1px solid ${tableBorder}; text-align: left; vertical-align: middle; font-weight: 700;">
+                            <i class="fa fa-th-list" style="color: ${accent}; font-size: 14px; margin-right: 8px; vertical-align: middle;"></i>
+                            <span style="font-size: 13px; font-weight: 700; color: ${headerTextColor}; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: middle;">
+                                ${escapeHTML(d.col1Title || 'Key Capabilities & Features')}
+                            </span>
+                        </th>
+                        <th style="width: 25%; padding: 14px 10px; background-color: ${col2HdrBg}; border-top: 4px solid #00A09D; border-right: 1px solid ${tableBorder}; text-align: center; vertical-align: middle;">
+                            ${d.col2Badge ? `
+                            <div style="margin-bottom: 6px; text-align: center;">
+                                <span style="display: inline-block; background-color: #ffffff; color: ${col2HdrBg}; padding: 2px 10px; border-radius: 12px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"><i class="fa fa-star" style="color: #f59e0b; margin-right: 3px;"></i>${escapeHTML(d.col2Badge)}</span>
+                            </div>` : ''}
+                            <div style="font-size: 15px; font-weight: 800; color: ${col2HdrTextCol}; line-height: 1.2; text-align: center;">
+                                ${escapeHTML(d.col2Title || 'Our Module')}
+                            </div>
+                        </th>
+                        <th style="width: 25%; padding: 16px 10px; background-color: ${headerBg}; text-align: center; vertical-align: middle; font-weight: 700;">
+                            <span style="font-size: 13px; font-weight: 700; color: ${headerTextColor}; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: middle;">
+                                ${escapeHTML(d.col3Title || 'Standard Odoo')}
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${rowsHTML}
+                </tbody>
+            </table>
         </div>
     </div>
 </section>`;
