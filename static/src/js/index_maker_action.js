@@ -13,9 +13,9 @@ export class IndexMakerAction extends Component {
             const params = (this.props && this.props.action && this.props.action.params) || {};
             const context = (this.props && this.props.action && this.props.action.context) || {};
             const tId = params.template_id || context.active_id || '';
-            this.iframeUrl = `/index_file_maker/static/src/standalone/index.html?v=20.0.60${tId ? `&template_id=${encodeURIComponent(tId)}` : ''}`;
+            this.iframeUrl = `/index_file_maker/static/src/standalone/index.html?v=20.0.61${tId ? `&template_id=${encodeURIComponent(tId)}` : ''}`;
         } catch (e) {
-            this.iframeUrl = "/index_file_maker/static/src/standalone/index.html?v=20.0.60";
+            this.iframeUrl = "/index_file_maker/static/src/standalone/index.html?v=20.0.61";
         }
     }
 

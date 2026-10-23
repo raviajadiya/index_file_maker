@@ -766,20 +766,20 @@ function renderWidgetHtml(widget) {
             const rowsHTML = rows.map((r, i) => {
                 const isLast = (i === rowsCount - 1);
                 const rowBaseBg = (i % 2 === 0) ? '#ffffff' : '#f8fafc';
-                const bottomBorder = isLast ? 'none' : `1px solid ${tableBorder}`;
+                const cellBottom = isLast ? 'none' : `1px solid ${tableBorder}`;
 
                 return `
-            <tr style="background-color: ${rowBaseBg}; border-bottom: ${bottomBorder};">
-                <td style="width: 50%; padding: 14px 20px; border-right: 1px solid ${tableBorder}; text-align: left; vertical-align: middle;">
+            <tr style="background-color: ${rowBaseBg};">
+                <td style="width: 50%; padding: 14px 20px; background-color: ${rowBaseBg}; border-right: 1px solid ${tableBorder}; border-bottom: ${cellBottom}; text-align: left; vertical-align: middle; ${isLast ? 'border-bottom-left-radius: 13px;' : ''}">
                     <div style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 3px; line-height: 1.4;">${escapeHTML(r.feature || '')}</div>
                     ${r.detail ? `<div style="font-size: 12px; color: #64748b; line-height: 1.45;">${escapeHTML(r.detail)}</div>` : ''}
                 </td>
-                <td style="width: 25%; padding: 14px 10px; background-color: ${col2Bg}; border-right: 1px solid ${tableBorder}; text-align: center; vertical-align: middle;">
+                <td style="width: 25%; padding: 14px 10px; background-color: ${col2Bg}; border-right: 1px solid ${tableBorder}; border-bottom: ${cellBottom}; text-align: center; vertical-align: middle;">
                     <div style="text-align: center; margin: 0 auto; line-height: 1.2;">
                         ${renderTableCheck(r.ourApp !== undefined ? r.ourApp : true)}
                     </div>
                 </td>
-                <td style="width: 25%; padding: 14px 10px; background-color: ${rowBaseBg}; text-align: center; vertical-align: middle;">
+                <td style="width: 25%; padding: 14px 10px; background-color: ${rowBaseBg}; border-bottom: ${cellBottom}; text-align: center; vertical-align: middle; ${isLast ? 'border-bottom-right-radius: 13px;' : ''}">
                     <div style="text-align: center; margin: 0 auto; line-height: 1.2;">
                         ${renderTableCheck(r.competitor !== undefined ? r.competitor : false)}
                     </div>
@@ -798,16 +798,16 @@ function renderWidgetHtml(widget) {
             </div>
         </div>` : ''}
         <div style="background-color: ${cardBg}; border: 1px solid ${tableBorder}; border-radius: 14px; overflow: hidden; box-shadow: none;">
-            <table style="width: 100%; border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;">
+            <table style="width: 100%; border-collapse: separate; border-spacing: 0; margin: 0; padding: 0;">
                 <thead>
-                    <tr style="background-color: ${headerBg}; border-bottom: 1px solid ${tableBorder};">
-                        <th style="width: 50%; padding: 16px 20px; background-color: ${headerBg}; border-right: 1px solid ${tableBorder}; text-align: left; vertical-align: middle; font-weight: 700;">
+                    <tr style="background-color: ${headerBg};">
+                        <th style="width: 50%; padding: 16px 20px; background-color: ${headerBg}; border-right: 1px solid ${tableBorder}; border-bottom: 1px solid ${tableBorder}; text-align: left; vertical-align: middle; font-weight: 700; border-top-left-radius: 13px;">
                             <i class="fa fa-th-list" style="color: ${accent}; font-size: 14px; margin-right: 8px; vertical-align: middle;"></i>
                             <span style="font-size: 13px; font-weight: 700; color: ${headerTextColor}; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: middle;">
                                 ${escapeHTML(d.col1Title || 'Key Capabilities & Features')}
                             </span>
                         </th>
-                        <th style="width: 25%; padding: 14px 10px; background-color: ${col2HdrBg}; border-top: 4px solid #00A09D; border-right: 1px solid ${tableBorder}; text-align: center; vertical-align: middle;">
+                        <th style="width: 25%; padding: 14px 10px; background-color: ${col2HdrBg}; border-top: 4px solid #00A09D; border-right: 1px solid ${tableBorder}; border-bottom: 1px solid ${tableBorder}; text-align: center; vertical-align: middle;">
                             ${d.col2Badge ? `
                             <div style="margin-bottom: 6px; text-align: center;">
                                 <span style="display: inline-block; background-color: #ffffff; color: ${col2HdrBg}; padding: 2px 10px; border-radius: 12px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"><i class="fa fa-star" style="color: #f59e0b; margin-right: 3px;"></i>${escapeHTML(d.col2Badge)}</span>
@@ -816,7 +816,7 @@ function renderWidgetHtml(widget) {
                                 ${escapeHTML(d.col2Title || 'Our Module')}
                             </div>
                         </th>
-                        <th style="width: 25%; padding: 16px 10px; background-color: ${headerBg}; text-align: center; vertical-align: middle; font-weight: 700;">
+                        <th style="width: 25%; padding: 16px 10px; background-color: ${headerBg}; border-bottom: 1px solid ${tableBorder}; text-align: center; vertical-align: middle; font-weight: 700; border-top-right-radius: 13px;">
                             <span style="font-size: 13px; font-weight: 700; color: ${headerTextColor}; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: middle;">
                                 ${escapeHTML(d.col3Title || 'Standard Odoo')}
                             </span>
