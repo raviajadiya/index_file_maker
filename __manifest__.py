@@ -7,6 +7,7 @@
     'sequence': 10,
     'author': 'Ravi / Odoo Developer',
     'website': 'https://www.odoo.com',
+    'support': 'supportnuvexaonline@gmail.com',
     'license': 'LGPL-3',
     'description': """
 Odoo AppStore Index File Maker (Odoo 20)

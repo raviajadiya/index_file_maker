@@ -2765,7 +2765,7 @@ if (document.readyState === 'loading') {
                 // Normalize channels with standard 4 native Odoo .oi channels
                 if (!Array.isArray(d.channels) || d.channels.length === 0) {
                     d.channels = [
-                        { icon: '<i class="oi" data-icon="email"></i>', label: 'Email Support', value: d.email || 'support@yourdomain.com', url: `mailto:${d.email || 'support@yourdomain.com'}` },
+                        { icon: '<i class="oi" data-icon="email"></i>', label: 'Email Support', value: d.email || 'supportnuvexaonline@gmail.com', url: `mailto:${d.email || 'supportnuvexaonline@gmail.com'}` },
                         { icon: '<i class="oi" data-icon="forum"></i>', label: 'Community Forum', value: 'Join Discussions', url: 'https://yourdomain.com/forum' },
                         { icon: '<i class="oi" data-icon="campaign"></i>', label: 'Latest Updates', value: 'News & Releases', url: 'https://yourdomain.com/updates' },
                         { icon: '<i class="oi" data-icon="help"></i>', label: 'Helpdesk Portal', value: 'Submit a Ticket', url: 'https://yourdomain.com/helpdesk' }
@@ -2891,7 +2891,7 @@ if (document.readyState === 'loading') {
                         </div>
                         <div style="margin-bottom: 6px;">
                             <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Display Value / Contact Info</label>
-                            <input type="text" class="form-input ch-value-input" value="${escapeHTML(ch.value || '')}" placeholder="e.g. support@yourdomain.com or Join Discussions">
+                            <input type="text" class="form-input ch-value-input" value="${escapeHTML(ch.value || '')}" placeholder="e.g. supportnuvexaonline@gmail.com or Join Discussions">
                         </div>
                         <div>
                             <label style="font-size: 10.5px; font-weight: 600; color: #64748b; margin-bottom: 2px; display: block;">Action Link URL (Optional)</label>
@@ -2996,8 +2996,8 @@ if (document.readyState === 'loading') {
                     d.channels.push({
                         icon: '<i class="oi" data-icon="email"></i>',
                         label: 'Email Support',
-                        value: 'support@yourdomain.com',
-                        url: 'mailto:support@yourdomain.com'
+                        value: 'supportnuvexaonline@gmail.com',
+                        url: 'mailto:supportnuvexaonline@gmail.com'
                     });
                     renderPropertyInspector();
                     updateCanvasLive();
@@ -3432,7 +3432,7 @@ if (document.readyState === 'loading') {
                     <!-- Contact / Email Info -->
                     <div class="form-group" style="margin-bottom: 12px;">
                         <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Contact / Support Info</label>
-                        <input type="text" class="form-input" id="footer-contact-info" value="${escapeHTML(d.contactInfo || '')}" placeholder="e.g. support@yourdomain.com" style="font-size: 12px; padding: 6px 10px;">
+                        <input type="text" class="form-input" id="footer-contact-info" value="${escapeHTML(d.contactInfo || '')}" placeholder="e.g. supportnuvexaonline@gmail.com" style="font-size: 12px; padding: 6px 10px;">
                     </div>
 
                     <!-- Quick Links Toggle & Manager -->

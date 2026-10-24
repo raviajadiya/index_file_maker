@@ -149,8 +149,8 @@ export const STARTER_WIDGETS = [
                 {
                     icon: '<i class="oi" data-icon="email"></i>',
                     label: 'Email Support',
-                    value: 'support@yourdomain.com',
-                    url: 'mailto:support@yourdomain.com'
+                    value: 'supportnuvexaonline@gmail.com',
+                    url: 'mailto:supportnuvexaonline@gmail.com'
                 },
                 {
                     icon: '<i class="oi" data-icon="forum"></i>',
@@ -543,8 +543,8 @@ export const WIDGET_CATALOG = [
                         {
                             icon: '<i class="fa fa-envelope"></i>',
                             label: 'Email Support',
-                            value: 'support@yourdomain.com',
-                            url: 'mailto:support@yourdomain.com'
+                            value: 'supportnuvexaonline@gmail.com',
+                            url: 'mailto:supportnuvexaonline@gmail.com'
                         },
                         {
                             icon: '<i class="fa fa-comments"></i>',
@@ -579,7 +579,7 @@ export const WIDGET_CATALOG = [
                     copyrightNotice: 'All Rights Reserved',
                     tagline: 'Crafted with <i class="fa fa-heart" style="color: #ef4444;"></i> for the Odoo Global Community',
                     logoUrl: '',
-                    contactInfo: 'support@yourdomain.com',
+                    contactInfo: 'supportnuvexaonline@gmail.com',
                     layout: 'split',
                     showLinks: true,
                     links: [
