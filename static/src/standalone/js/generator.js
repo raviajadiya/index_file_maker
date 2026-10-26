@@ -1145,6 +1145,15 @@ function compileFinalAppStoreHTML(forPreview = false) {
     });
 
     const fragmentHTML = `<div class="container-fluid p-0" style="color: #1e293b; background-color: #f8f9fa;">
+<!-- Font Awesome 4 & Google Material Symbols for AppStore & Backend HTML Preview -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+<style>
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+.oi, i.oi { display: inline-block; font-family: 'Material Symbols Outlined' !important; font-style: normal; font-weight: 400 !important; line-height: 1; letter-spacing: normal; text-transform: none; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; vertical-align: middle; }
+.oi:before, .oi::before, i.oi:before, i.oi::before { display: inline-block; content: attr(data-icon); text-rendering: geometricPrecision; word-break: keep-all; }
+</style>
 ${sections}
 </div>`;
 

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Load Font Awesome 4 and Google Material Symbols in Backend for HTML Preview -->
+    <template id="index_maker_web_layout_icons" inherit_id="web.layout" name="Index Maker Backend Icons">
+        <xpath expr="//head" position="inside">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+        </xpath>
+    </template>
+
     <!-- Tree View -->
     <record id="view_appstore_index_template_tree" model="ir.ui.view">
         <field name="name">appstore.index.template.tree</field>
@@ -10,7 +18,7 @@
                 <field name="technical_name"/>
                 <field name="odoo_version"/>
                 <field name="write_date"/>
-                <button name="action_open_builder" string="Open Builder" type="object" icon="fa-paint-brush" class="btn-primary"/>
+                <button name="action_open_builder" string="Launch Drag &amp; Drop Builder" type="object" class="btn-primary"/>
             </list>
         </field>
     </record>
@@ -22,7 +30,7 @@
         <field name="arch" type="xml">
             <form string="AppStore Index Template">
                 <header>
-                    <button name="action_open_builder" string="Launch Drag &amp; Drop Builder" type="object" class="oe_highlight" icon="fa-magic"/>
+                    <button name="action_open_builder" string="Launch Drag &amp; Drop Builder" type="object" class="oe_highlight"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
