@@ -167,10 +167,10 @@
 
     <!-- TEMPLATES MODAL -->
     <div class="modal-overlay" id="templates-modal">
-        <div class="modal-card" style="max-width: 650px;">
+        <div class="modal-card" style="max-width: 680px;">
             <div class="modal-header">
                 <div style="display: flex; align-items: center; gap: 10px;">
-                    <i class="fa fa-folder-open-o" style="color: var(--primary);"></i>
+                    <i class="fa fa-folder-open-o" style="color: var(--primary); font-size: 18px;"></i>
                     <h3 style="font-size: 16px; font-weight: 700;">Starter Templates</h3>
                 </div>
                 <button class="btn btn-outline" style="color: #64748b; border-color: #cbd5e1;"
@@ -179,26 +179,70 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">Choose a pre-designed layout to
-                    jumpstart your Odoo App Store description:</p>
+                <p style="font-size: 14px; color: #64748b; margin-bottom: 16px;">Choose a pre-designed layout to jumpstart your Odoo App Store description:</p>
                 <div style="display: flex; flex-direction: column; gap: 12px;">
-                    <div class="item-card" style="cursor: pointer; padding: 16px;" onclick="loadTemplate('full')">
-                        <h4 style="font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">🚀
-                            Comprehensive Pro App</h4>
-                        <p style="font-size: 13px; color: #64748b; margin: 0;">Full layout with Hero Banner, Highlights,
-                            Split Features, Screenshots, FAQ, and Support.</p>
+                    <!-- Template 1: Odoo Theme -->
+                    <div class="item-card" style="cursor: pointer; padding: 16px; border: 1px solid #e2e8f0; border-radius: 10px; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.03);" onclick="loadTemplate('odoo_theme')">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0;">
+                                <div style="width: 44px; height: 44px; border-radius: 10px; background-color: rgba(113, 75, 103, 0.12); color: #714B67; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                                    <i class="fa fa-cube"></i>
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                        <h4 style="font-size: 15px; font-weight: 700; color: #714B67; margin: 0;">Odoo Theme</h4>
+                                        <span style="font-size: 10px; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px;">DEFAULT PURPLE</span>
+                                    </div>
+                                    <p style="font-size: 12.5px; color: #64748b; margin: 0;">
+                                        Standard Odoo App Store presentation with Purple &amp; Teal branding, comparison table, showcases, and FAQs.
+                                    </p>
+                                </div>
+                            </div>
+                            <div style="margin-left: 14px; flex-shrink: 0;">
+                                <button class="btn btn-primary" style="font-size: 12px; padding: 6px 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                                    <i class="fa fa-folder-open-o"></i> Load Template
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="item-card" style="cursor: pointer; padding: 16px;" onclick="loadTemplate('utility')">
-                        <h4 style="font-size: 15px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">⚡
-                            Lightweight Utility Module</h4>
-                        <p style="font-size: 13px; color: #64748b; margin: 0;">Minimal header, 3 feature cards,
-                            configuration screenshot, and contact card.</p>
+
+                    <!-- Template 2: Black Theme -->
+                    <div class="item-card" style="cursor: pointer; padding: 16px; border: 1px solid #e2e8f0; border-radius: 10px; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.03);" onclick="loadTemplate('black_theme')">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0;">
+                                <div style="width: 44px; height: 44px; border-radius: 10px; background-color: rgba(0, 0, 0, 0.08); color: #1e293b; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                                    <i class="fa fa-moon-o"></i>
+                                </div>
+                                <div style="flex: 1; min-width: 0;">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                        <h4 style="font-size: 15px; font-weight: 700; color: #0f172a; margin: 0;">Black Theme</h4>
+                                        <span style="font-size: 10px; font-weight: 700; background: #fef3c7; color: #b45309; padding: 2px 6px; border-radius: 4px;">DARK &amp; GOLD</span>
+                                    </div>
+                                    <p style="font-size: 12.5px; color: #64748b; margin: 0;">
+                                        High-contrast luxury dark layout with gold accents, 3-step workflow, desktop showcase, and dark banners.
+                                    </p>
+                                </div>
+                            </div>
+                            <div style="margin-left: 14px; flex-shrink: 0;">
+                                <button class="btn btn-outline" style="font-size: 12px; padding: 6px 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; color: #0f172a; border-color: #cbd5e1;">
+                                    <i class="fa fa-folder-open-o"></i> Load Template
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="item-card" style="cursor: pointer; padding: 16px;" onclick="loadTemplate('blank')">
-                        <h4 style="font-size: 15px; font-weight: 700; color: #ef4444; margin-bottom: 4px;">🗑 Blank
-                            Canvas</h4>
-                        <p style="font-size: 13px; color: #64748b; margin: 0;">Start fresh and build your description
-                            from scratch.</p>
+
+                    <!-- Template 3: Blank Canvas -->
+                    <div class="item-card" style="cursor: pointer; padding: 12px 16px; border: 1px dashed #cbd5e1; background: #fafafa; border-radius: 8px; margin-top: 4px;" onclick="loadTemplate('blank')">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <i class="fa fa-trash-o" style="color: #ef4444; font-size: 16px;"></i>
+                                <div>
+                                    <strong style="font-size: 13px; color: #ef4444;">Start from Blank Canvas</strong>
+                                    <span style="font-size: 12px; color: #94a3b8; margin-left: 8px;">Clear canvas and design from scratch</span>
+                                </div>
+                            </div>
+                            <span style="font-size: 12px; color: #94a3b8;"><i class="fa fa-chevron-right"></i></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -261,9 +305,9 @@
         }
     </script>
     <!-- Modular JavaScript Files -->
-    <script src="js/widgets.js?v=20.0.64"></script>
-    <script src="js/generator.js?v=20.0.64"></script>
-    <script src="js/app.js?v=20.0.64"></script>
+    <script src="js/widgets.js?v=20.0.67"></script>
+    <script src="js/generator.js?v=20.0.67"></script>
+    <script src="js/app.js?v=20.0.67"></script>
 </body>
 
 </html>

@@ -20,7 +20,7 @@ let pageSettings = {
 let activeWidgets = [];
 
 // INITIALIZE APP
-function initApp() {
+async function initApp() {
     let tId = null;
     try {
         const urlParams = new URLSearchParams(window.location.search);
@@ -39,10 +39,11 @@ function initApp() {
     }
 
     if (tId) {
-        loadTemplateFromBackend(tId);
+        await loadTemplateFromBackend(tId);
     } else {
         renderWidgetCatalog();
-        loadTemplate('blank', true);
+        // Load default static starter template (Odoo Theme)
+        loadTemplate('odoo_theme', true);
         renderGlobalSettingsPanel();
         updateTemplateHeaderDisplay();
     }
@@ -3984,37 +3985,58 @@ if (document.readyState === 'loading') {
         // LOAD STARTER TEMPLATES
         function loadTemplate(name, silent = false) {
             closeModal('templates-modal');
+            currentTemplateId = null;
+
             if (name === 'blank') {
                 activeWidgets = [];
                 selectedWidgetId = null;
-            } else if (name === 'utility') {
-                activeWidgets = [
-                    createWidgetInstance('minimal_header'),
-                    createWidgetInstance('desktop_showcase'),
-                    createWidgetInstance('support_banner')
-                ];
-                selectedWidgetId = activeWidgets[0].id;
+                currentTemplateName = 'My Custom Odoo 20 App';
+                pageSettings.appName = 'My Custom Odoo 20 App';
+                pageSettings.technicalName = '';
+                pageSettings.odooVersion = '20.0';
+            } else if (typeof STARTER_TEMPLATES !== 'undefined' && STARTER_TEMPLATES[name]) {
+                const tpl = STARTER_TEMPLATES[name];
+                activeWidgets = JSON.parse(JSON.stringify(tpl.widgets || []));
+                selectedWidgetId = (activeWidgets.length > 0) ? activeWidgets[0].id : null;
+                currentTemplateName = tpl.name;
+                pageSettings.appName = tpl.appName || tpl.name;
+                pageSettings.technicalName = tpl.technicalName || 'index_file_maker';
+                pageSettings.odooVersion = '20.0';
+                if (tpl.brandColor) pageSettings.brandColor = tpl.brandColor;
+                if (tpl.accentColor) pageSettings.accentColor = tpl.accentColor;
             } else {
-                // Full pro layout
-                activeWidgets = [
-                    createWidgetInstance('hero_banner'),
-                    createWidgetInstance('highlights_grid'),
-                    createWidgetInstance('mobile_showcase'),
-                    createWidgetInstance('desktop_showcase'),
-                    createWidgetInstance('vs_table'),
-                    createWidgetInstance('faq_section'),
-                    createWidgetInstance('other_apps'),
-                    createWidgetInstance('support_banner'),
-                    createWidgetInstance('footer_brand')
-                ];
-                selectedWidgetId = activeWidgets[0].id;
+                // Fallback default
+                const tpl = typeof STARTER_TEMPLATES !== 'undefined' ? (STARTER_TEMPLATES['odoo_theme'] || STARTER_TEMPLATES['black_theme']) : null;
+                if (tpl) {
+                    activeWidgets = JSON.parse(JSON.stringify(tpl.widgets || []));
+                    selectedWidgetId = (activeWidgets.length > 0) ? activeWidgets[0].id : null;
+                    currentTemplateName = tpl.name;
+                    pageSettings.appName = tpl.appName || tpl.name;
+                    pageSettings.technicalName = tpl.technicalName || 'index_file_maker';
+                    if (tpl.brandColor) pageSettings.brandColor = tpl.brandColor;
+                    if (tpl.accentColor) pageSettings.accentColor = tpl.accentColor;
+                } else {
+                    activeWidgets = [];
+                    selectedWidgetId = null;
+                }
             }
+
+            renderWidgetCatalog();
             renderCanvas();
             renderPropertyInspector();
+            renderGlobalSettingsPanel();
+            updateTemplateHeaderDisplay();
+
             if (!silent) {
-                showToast(`Loaded template: ${name}`);
+                const label = name === 'blank' ? 'Blank Canvas' : (name === 'odoo_theme' ? 'Odoo Theme' : (name === 'black_theme' ? 'Black Theme' : name));
+                showToast(`Loaded ${label}`);
             }
         }
+
+        function openTemplatesModal() {
+            openModal('templates-modal');
+        }
+        window.openTemplatesModal = openTemplatesModal;
 
         function createWidgetInstance(type) {
             let found = null;
@@ -4159,11 +4181,11 @@ if (document.readyState === 'loading') {
                             activeWidgets = JSON.parse(t.schema_json);
                             selectedWidgetId = (activeWidgets && activeWidgets.length > 0) ? activeWidgets[0].id : null;
                         } catch (e) {
-                            console.warn('Could not parse schema JSON, loading full starter', e);
-                            loadTemplate('full');
+                            console.warn('Could not parse schema JSON, loading blank', e);
+                            loadTemplate('blank', true);
                         }
                     } else {
-                        loadTemplate('full');
+                        loadTemplate('blank', true);
                     }
 
                     renderWidgetCatalog();
@@ -4175,7 +4197,7 @@ if (document.readyState === 'loading') {
                 } else {
                     showToast('Template not found or error loading.');
                     renderWidgetCatalog();
-                    loadTemplate('full');
+                    loadTemplate('blank', true);
                     renderGlobalSettingsPanel();
                     updateTemplateHeaderDisplay();
                 }
@@ -4183,7 +4205,7 @@ if (document.readyState === 'loading') {
                 console.error('Error fetching template:', err);
                 showToast('Failed to load template from Odoo.');
                 renderWidgetCatalog();
-                loadTemplate('full');
+                loadTemplate('blank', true);
                 renderGlobalSettingsPanel();
                 updateTemplateHeaderDisplay();
             }
