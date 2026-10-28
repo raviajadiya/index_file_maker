@@ -444,8 +444,8 @@
         .canvas-wrapper .container {
             width: 100% !important;
             max-width: 100% !important;
-            padding-right: 20px !important;
-            padding-left: 20px !important;
+            padding-right: 12px !important;
+            padding-left: 12px !important;
             margin-right: auto !important;
             margin-left: auto !important;
         }
@@ -854,3 +854,6 @@
         details.faq-accordion-item summary:hover .faq-accordion-arrow {
             background-color: rgba(0, 0, 0, 0.09) !important;
         }
+
+
+

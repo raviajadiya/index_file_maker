@@ -196,21 +196,21 @@ function getSectionBorderStyle(d, defaultType = 'all', defaultColor = '#e2e8f0')
 
     if (borderType === 'none' || borderType === false || borderType === 'hide') {
         if (d.sectionBorderRadius && d.sectionBorderRadius !== '0px' && d.sectionBorderRadius !== '0') {
-            return `border: none; border-radius: ${radiusVal}; margin: 18px 12px; overflow: hidden;`;
+            return `border: none; border-radius: ${radiusVal}; margin: 20px 0; overflow: hidden;`;
         }
-        return `border: none; margin: 14px 0;`;
+        return `border: none; margin: 20px 0;`;
     }
 
     if (borderType === 'all' || borderType === 'box') {
-        return `border: ${borderVal}; border-radius: ${radiusVal}; margin: 18px 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);`;
+        return `border: ${borderVal}; border-radius: ${radiusVal}; margin: 20px 0; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);`;
     } else if (borderType === 'bottom') {
-        return `border-bottom: ${borderVal}; margin: 14px 0;`;
+        return `border-bottom: ${borderVal}; margin: 20px 0;`;
     } else if (borderType === 'top') {
-        return `border-top: ${borderVal}; margin: 14px 0;`;
+        return `border-top: ${borderVal}; margin: 20px 0;`;
     } else if (borderType === 'top_bottom') {
-        return `border-top: ${borderVal}; border-bottom: ${borderVal}; margin: 14px 0;`;
+        return `border-top: ${borderVal}; border-bottom: ${borderVal}; margin: 20px 0;`;
     }
-    return `border: ${borderVal}; border-radius: ${radiusVal}; margin: 18px 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);`;
+    return `border: ${borderVal}; border-radius: ${radiusVal}; margin: 20px 0; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);`;
 }
 
 // HTML GENERATOR FOR LIVE & DOWNLOAD
@@ -237,15 +237,15 @@ function renderWidgetHtml(widget) {
             ).join(' ');
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4 text-center" style="background-color: ${bg}; color: ${textCol}; ${borderCss}">
-    <div class="container py-2">
+            return `<section class="text-center" style="background-color: ${bg}; color: ${textCol}; padding: 42px 28px 36px 28px; ${borderCss}">
+    <div class="container py-0">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10">
                 ${d.iconUrl ? `<div class="mb-3"><img src="${d.iconUrl}" alt="App Icon" style="width: 80px; height: 80px; border-radius: 18px; object-fit: contain; background-color: #ffffff; padding: 8px; border: 1px solid #e2e8f0;"/></div>` : ''}
-                <h1 style="font-size: 40px; font-weight: 700; line-height: 1.25; margin-bottom: 14px; color: ${textCol} !important;">
+                <h1 style="font-size: 38px; font-weight: 700; line-height: 1.25; margin-bottom: 14px; color: ${textCol} !important;">
                     ${escapeHTML(d.title || 'App Title')}
                 </h1>
-                <p style="font-size: 18px; max-width: 780px; margin: 0 auto 20px auto; opacity: 0.95; line-height: 1.6; color: ${textCol} !important;">
+                <p style="font-size: 17px; max-width: 780px; margin: 0 auto 20px auto; opacity: 0.95; line-height: 1.6; color: ${textCol} !important;">
                     ${escapeHTML(d.subtitle || '')}
                 </p>
                 ${d.showBadges && badgesHTML ? `<div class="mb-3 d-flex flex-wrap justify-content-center">${badgesHTML}</div>` : ''}
@@ -263,12 +263,12 @@ function renderWidgetHtml(widget) {
             const bg = d.bgColor || '#ffffff';
             const accent = d.accentColor || globalBrand || '#714B67';
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4 text-center" style="background-color: ${bg}; ${borderCss}">
-    <div class="container py-1">
+            return `<section class="text-center" style="background-color: ${bg}; padding: 36px 28px 32px 28px; ${borderCss}">
+    <div class="container py-0">
         <div class="row justify-content-center">
             <div class="col-12 col-md-8">
-                ${d.badge ? `<span style="background-color: #f5efff; color: ${accent}; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase;">${escapeHTML(d.badge)}</span>` : ''}
-                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-top: 12px; margin-bottom: 10px;">${escapeHTML(d.title || '')}</h2>
+                ${d.badge ? `<span style="background-color: #f5efff; color: ${accent}; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; display: inline-block; margin-bottom: 10px;">${escapeHTML(d.badge)}</span>` : ''}
+                <h2 style="font-size: 30px; font-weight: 700; color: #1e293b; margin-top: 4px; margin-bottom: 10px; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
                 <p style="font-size: 16px; color: #64748b; margin: 0 auto; max-width: 680px; line-height: 1.6;">${escapeHTML(d.subtitle || '')}</p>
             </div>
         </div>
@@ -279,11 +279,13 @@ function renderWidgetHtml(widget) {
         case 'discount_ribbon': {
             const bg = d.bgColor || globalBrand || '#714B67';
             const textCol = d.textColor || '#ffffff';
+            let ribbonText = escapeHTML(d.text || '');
+            ribbonText = ribbonText.replace(/🎉|ð\s*□\s*□\s*□|&party;/g, '').trim();
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-2 text-center" style="background-color: ${bg}; color: ${textCol}; font-weight: 600; font-size: 15px; ${borderCss}">
-    <div class="container d-flex flex-wrap align-items-center justify-content-center">
-        <span class="mx-2 my-1">${escapeHTML(d.text || '')}</span>
-        ${d.btnText ? `<span class="mx-2 my-1" style="background-color: #ffffff; color: ${bg}; padding: 4px 14px; border-radius: 20px; font-weight: 700; font-size: 13px; display: inline-block;">${escapeHTML(d.btnText)}</span>` : ''}
+            return `<section class="text-center" style="background-color: ${bg}; color: ${textCol}; font-weight: 600; font-size: 14.5px; padding: 14px 24px; ${borderCss}">
+    <div class="container py-0 d-flex flex-wrap align-items-center justify-content-center">
+        <span class="mx-2 my-1"><i class="fa fa-bullhorn" style="margin-right: 6px;"></i>${ribbonText}</span>
+        ${d.btnText ? `<span class="mx-2 my-1" style="background-color: #ffffff; color: ${bg}; padding: 5px 16px; border-radius: 20px; font-weight: 700; font-size: 13px; display: inline-block;">${escapeHTML(d.btnText)}</span>` : ''}
     </div>
 </section>`;
         }
@@ -323,15 +325,15 @@ function renderWidgetHtml(widget) {
             }).join('');
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
-    <div class="container py-1">
-        ${d.title ? `<div class="row justify-content-center text-center mb-3">
+            return `<section style="background-color: ${bg}; padding: 38px 28px 24px 28px; ${borderCss}">
+    <div class="container py-0">
+        ${d.title ? `<div class="row justify-content-center text-center mb-4">
             <div class="col-12 col-lg-8">
-                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
-                ${d.subtitle ? `<p style="font-size: 16px; color: ${subtitleCol} !important; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
+                <h2 style="font-size: 30px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
+                ${d.subtitle ? `<p style="font-size: 15px; color: ${subtitleCol} !important; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
-        <div class="row">${cardsHTML}</div>
+        <div class="row g-3 justify-content-center">${cardsHTML}</div>
     </div>
 </section>`;
         }
@@ -363,6 +365,10 @@ function renderWidgetHtml(widget) {
                 const labelCol = st.labelColor || defaultLabelCol;
                 const itemIconCol = st.iconColor || globalIconCol;
 
+                // Safely handle stars without UTF-8 corruption
+                let rawNum = escapeHTML(st.number || '');
+                let formattedNum = rawNum.replace(/★|â\s*¤|â\s*□\s*□|&#9733;|&starf;/g, '<i class="fa fa-star" style="color: #f59e0b; font-size: 22px; vertical-align: middle; margin-left: 3px;"></i>');
+
                 return `
             <div class="${colClass}">
                 <div class="card h-100 shadow-sm" style="background-color: ${cardBg}; border: 1px solid ${cardBorder}; border-radius: 12px;">
@@ -371,7 +377,7 @@ function renderWidgetHtml(widget) {
                         <div class="mb-3 text-center" style="width: 52px; height: 52px; line-height: 52px; text-align: center; border-radius: 12px; background-color: ${iconBg}; color: ${itemIconCol} !important; font-size: 22px; display: inline-block; vertical-align: middle;">
                             ${iconHtml}
                         </div>` : ''}
-                        <div style="font-size: 32px; font-weight: 700; color: ${numCol} !important; margin-bottom: 4px; line-height: 1.2; text-align: center;">${escapeHTML(st.number || '')}</div>
+                        <div style="font-size: 32px; font-weight: 700; color: ${numCol} !important; margin-bottom: 4px; line-height: 1.2; text-align: center;">${formattedNum}</div>
                         <div style="font-size: 15px; font-weight: 600; color: ${labelCol} !important; line-height: 1.4; text-align: center;">${escapeHTML(st.label || '')}</div>
                     </div>
                 </div>
@@ -379,15 +385,15 @@ function renderWidgetHtml(widget) {
             }).join('');
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
-    <div class="container py-1">
-        ${d.title ? `<div class="row justify-content-center text-center mb-3">
+            return `<section style="background-color: ${bg}; padding: 38px 28px 24px 28px; ${borderCss}">
+    <div class="container py-0">
+        ${d.title ? `<div class="row justify-content-center text-center mb-4">
             <div class="col-12 col-lg-8">
-                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
-                ${d.subtitle ? `<p style="font-size: 16px; color: ${subtitleCol} !important; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
+                <h2 style="font-size: 30px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
+                ${d.subtitle ? `<p style="font-size: 15px; color: ${subtitleCol} !important; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
-        <div class="row justify-content-center">${colsHTML}</div>
+        <div class="row g-3 justify-content-center">${colsHTML}</div>
     </div>
 </section>`;
         }
@@ -490,9 +496,9 @@ function renderWidgetHtml(widget) {
             </div>`;
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
-    <div class="container py-1">
-        <div class="row align-items-center">
+            return `<section style="background-color: ${bg}; padding: 38px 28px 34px 28px; ${borderCss}">
+    <div class="container py-0">
+        <div class="row align-items-center g-4">
             ${isImageLeft ? `${imageColHTML}\n            ${contentColHTML}` : `${contentColHTML}\n            ${imageColHTML}`}
         </div>
     </div>
@@ -601,10 +607,10 @@ function renderWidgetHtml(widget) {
             }
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
-    <div class="container py-1">
+            return `<section style="background-color: ${bg}; padding: 38px 28px 28px 28px; ${borderCss}">
+    <div class="container py-0">
         <!-- TOP: Count, Category, Title, Subtitle -->
-        <div class="row ${isCenter ? 'justify-content-center text-center' : ''} mb-3">
+        <div class="row ${isCenter ? 'justify-content-center text-center' : ''} mb-4">
             <div class="col-12 col-lg-10">
                 ${(d.badgeNumber || d.badgeText) ? `
                 <div class="mb-3 ${isCenter ? 'text-center' : ''}" style="text-align: ${isCenter ? 'center' : 'left'}; line-height: 1.2;">
@@ -612,12 +618,12 @@ function renderWidgetHtml(widget) {
                     ${d.badgeText ? `<span style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 36px; vertical-align: middle; display: inline-block;">${escapeHTML(d.badgeText)}</span>` : ''}
                 </div>` : ''}
                 <h2 style="font-size: 30px; font-weight: 700; color: ${titleCol} !important; margin: 0 0 10px 0; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
-                ${d.desc ? `<p style="font-size: 16px; font-weight: 400; color: ${descCol} !important; line-height: 1.6; margin: 0 ${isCenter ? 'auto' : ''}; max-width: 800px;">${escapeHTML(d.desc)}</p>` : ''}
+                ${d.desc ? `<p style="font-size: 15.5px; font-weight: 400; color: ${descCol} !important; line-height: 1.6; margin: 0 ${isCenter ? 'auto' : ''}; max-width: 800px;">${escapeHTML(d.desc)}</p>` : ''}
             </div>
         </div>
 
         <!-- MIDDLE: Full-Width Desktop Mockup Frame -->
-        <div class="row justify-content-center mb-3">
+        <div class="row justify-content-center mb-4">
             <div class="col-12">
                 ${desktopMockupHTML}
             </div>
@@ -625,7 +631,7 @@ function renderWidgetHtml(widget) {
 
         <!-- BOTTOM: Feature Points Cards -->
         ${points.length ? `
-        <div class="row justify-content-center">
+        <div class="row justify-content-center g-3">
             ${pointsHTML}
         </div>` : ''}
     </div>
@@ -642,13 +648,13 @@ function renderWidgetHtml(widget) {
                 </li>`).join('');
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
-    <div class="container py-1">
-        <div class="row align-items-center">
+            return `<section style="background-color: ${bg}; padding: 38px 28px 34px 28px; ${borderCss}">
+    <div class="container py-0">
+        <div class="row align-items-center g-4">
             <div class="col-12 col-lg-6 mb-3 mb-lg-0">
                 ${d.badge ? `<span style="background-color: #f5efff; color: ${accent}; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase;">${escapeHTML(d.badge)}</span>` : ''}
-                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-top: 12px; margin-bottom: 12px; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
-                <p style="font-size: 16px; color: #64748b; line-height: 1.6; margin-bottom: 18px;">${escapeHTML(d.desc || '')}</p>
+                <h2 style="font-size: 30px; font-weight: 700; color: #1e293b; margin-top: 12px; margin-bottom: 12px; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
+                <p style="font-size: 15.5px; color: #64748b; line-height: 1.6; margin-bottom: 20px;">${escapeHTML(d.desc || '')}</p>
                 <ul class="list-unstyled p-0 m-0">${bullets}</ul>
             </div>
             <div class="col-12 col-lg-6">
@@ -676,9 +682,9 @@ function renderWidgetHtml(widget) {
                 </li>`).join('');
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
-    <div class="container py-1">
-        <div class="row align-items-center">
+            return `<section style="background-color: ${bg}; padding: 38px 28px 34px 28px; ${borderCss}">
+    <div class="container py-0">
+        <div class="row align-items-center g-4">
             <div class="col-12 col-lg-6 mb-4 mb-lg-0 order-2 order-lg-1">
                 <div class="card shadow-sm p-2 text-center" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px;">
                     ${d.imageUrl ? `<img src="${d.imageUrl}" alt="${escapeHTML(d.imageCaption || 'Screenshot')}" class="img-fluid" style="border-radius: 8px; display: block;"/>` : `
@@ -691,8 +697,8 @@ function renderWidgetHtml(widget) {
             </div>
             <div class="col-12 col-lg-6 order-1 order-lg-2">
                 ${d.badge ? `<span style="background-color: #e6f6f6; color: ${accent}; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase;">${escapeHTML(d.badge)}</span>` : ''}
-                <h2 style="font-size: 32px; font-weight: 700; color: #1e293b; margin-top: 14px; margin-bottom: 16px; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
-                <p style="font-size: 16px; color: #64748b; line-height: 1.6; margin-bottom: 24px;">${escapeHTML(d.desc || '')}</p>
+                <h2 style="font-size: 30px; font-weight: 700; color: #1e293b; margin-top: 14px; margin-bottom: 16px; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
+                <p style="font-size: 15.5px; color: #64748b; line-height: 1.6; margin-bottom: 24px;">${escapeHTML(d.desc || '')}</p>
                 <ul class="list-unstyled p-0 m-0">${bullets}</ul>
             </div>
         </div>
@@ -739,15 +745,15 @@ function renderWidgetHtml(widget) {
             }).join('');
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
-    <div class="container py-1">
-        ${d.title ? `<div class="row justify-content-center text-center mb-3">
+            return `<section style="background-color: ${bg}; padding: 38px 28px 24px 28px; ${borderCss}">
+    <div class="container py-0">
+        ${d.title ? `<div class="row justify-content-center text-center mb-4">
             <div class="col-12 col-lg-8">
-                <h2 style="font-size: 32px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
-                ${d.subtitle ? `<p style="font-size: 16px; color: ${subtitleCol} !important; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
+                <h2 style="font-size: 30px; font-weight: 700; color: ${titleCol} !important; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
+                ${d.subtitle ? `<p style="font-size: 15px; color: ${subtitleCol} !important; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
-        <div class="row justify-content-center">${stepsHTML}</div>
+        <div class="row g-3 justify-content-center">${stepsHTML}</div>
     </div>
 </section>`;
         }
@@ -796,8 +802,8 @@ function renderWidgetHtml(widget) {
             }).join('');
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
-    <div class="container py-1" style="max-width: 980px;">
+            return `<section style="background-color: ${bg}; padding: 38px 28px 34px 28px; ${borderCss}">
+    <div class="container py-0" style="max-width: 1020px;">
         ${d.title ? `<div class="row justify-content-center text-center mb-4">
             <div class="col-12 col-lg-10">
                 <span style="display: inline-block; background-color: #f5efff; color: ${accent}; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px;">Feature Comparison</span>
@@ -867,7 +873,7 @@ function renderWidgetHtml(widget) {
             }).join('');
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
+            return `<section style="background-color: ${bg}; padding: 38px 28px 34px 28px; ${borderCss}">
     <style>
         details.faq-accordion-item summary {
             cursor: pointer;
@@ -906,11 +912,11 @@ function renderWidgetHtml(widget) {
             background-color: rgba(0, 0, 0, 0.09) !important;
         }
     </style>
-    <div class="container py-1" style="max-width: 920px;">
-        ${d.title ? `<div class="row justify-content-center text-center mb-3">
+    <div class="container py-0" style="max-width: 960px;">
+        ${d.title ? `<div class="row justify-content-center text-center mb-4">
             <div class="col-12">
-                <h2 style="font-size: 30px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">${escapeHTML(d.title)}</h2>
-                ${d.subtitle ? `<p style="font-size: 15px; color: #64748b; margin: 0;">${escapeHTML(d.subtitle)}</p>` : ''}
+                <h2 style="font-size: 30px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
+                ${d.subtitle ? `<p style="font-size: 15px; color: #64748b; margin: 0 auto; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
         <div class="faq-accordion-list">
@@ -962,12 +968,12 @@ function renderWidgetHtml(widget) {
             }).join('');
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4 my-2" style="background-color: ${bg}; color: ${textCol}; border-radius: 16px; ${borderCss}">
-    <div class="container text-center py-2" style="max-width: 960px;">
-        ${d.badge ? `<span style="background-color: #ffffff; color: ${bg}; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">${escapeHTML(d.badge)}</span>` : ''}
+            return `<section style="background-color: ${bg}; color: ${textCol}; padding: 40px 28px 28px 28px; border-radius: 16px; ${borderCss}">
+    <div class="container text-center py-0" style="max-width: 1000px;">
+        ${d.badge ? `<span style="background-color: #ffffff; color: ${bg}; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">${escapeHTML(d.badge)}</span>` : ''}
         <h2 style="font-size: 30px; font-weight: 700; margin-bottom: 10px; color: ${textCol} !important;">${escapeHTML(d.title || '')}</h2>
-        <p style="font-size: 15px; opacity: 0.95; max-width: 680px; margin: 0 auto 20px auto; line-height: 1.6; color: ${textCol} !important;">${escapeHTML(d.subtitle || '')}</p>
-        <div class="row justify-content-center">
+        <p style="font-size: 15px; opacity: 0.95; max-width: 680px; margin: 0 auto 24px auto; line-height: 1.6; color: ${textCol} !important;">${escapeHTML(d.subtitle || '')}</p>
+        <div class="row g-3 justify-content-center">
             ${channelsHTML}
         </div>
     </div>
@@ -1013,7 +1019,7 @@ function renderWidgetHtml(widget) {
                                 <div>
                                     <div class="d-flex align-items-center justify-content-between mb-2">
                                         <span style="font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; background-color: #f5efff; color: ${brandCol}; border: 1px solid #e9d5ff; text-transform: uppercase; letter-spacing: 0.5px;">
-                                            ${escapeHTML(badgeText)}
+                                             ${escapeHTML(badgeText)}
                                         </span>
                                         <span style="font-size: 11px; color: #059669; font-weight: 700;">
                                             <i class="fa fa-check-circle" style="color: #10b981; margin-right: 3px;"></i>${escapeHTML(versionText)}
@@ -1041,15 +1047,15 @@ function renderWidgetHtml(widget) {
             }).join('\n');
 
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
-            return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
-    <div class="container py-1" style="max-width: 1140px;">
+            return `<section style="background-color: ${bg}; padding: 38px 28px 24px 28px; ${borderCss}">
+    <div class="container py-0" style="max-width: 1160px;">
         ${d.title ? `<div class="row justify-content-center text-center mb-4">
             <div class="col-12 col-lg-9">
                 <h2 style="font-size: 30px; font-weight: 800; color: ${titleCol}; margin-bottom: 8px;">${escapeHTML(d.title)}</h2>
                 ${d.subtitle ? `<p style="font-size: 15px; color: #64748b; margin: 0 auto; max-width: 680px; line-height: 1.6;">${escapeHTML(d.subtitle)}</p>` : ''}
             </div>
         </div>` : ''}
-        <div class="row justify-content-center">
+        <div class="row g-3 justify-content-center">
             ${appsHTML}
         </div>
     </div>
@@ -1098,8 +1104,8 @@ function renderWidgetHtml(widget) {
             const borderCss = getSectionBorderStyle(d, 'all', '#334155');
 
             if (layout === 'split') {
-                return `<footer class="py-4" style="background-color: ${bg}; color: ${textCol}; font-size: 13px; ${borderCss}">
-    <div class="container" style="max-width: 1140px;">
+                return `<footer style="background-color: ${bg}; color: ${textCol}; font-size: 13px; padding: 38px 28px 34px 28px; ${borderCss}">
+    <div class="container py-0" style="max-width: 1140px;">
         <div class="row align-items-center">
             <div class="col-12 col-md-6 text-center text-md-start mb-3 mb-md-0">
                 ${logoHTML ? `<div class="mb-2">${logoHTML}</div>` : ''}
@@ -1118,8 +1124,8 @@ function renderWidgetHtml(widget) {
     </div>
 </footer>`;
             } else {
-                return `<footer class="py-4 text-center" style="background-color: ${bg}; color: ${textCol}; font-size: 13px; ${borderCss}">
-    <div class="container" style="max-width: 900px;">
+                return `<footer class="text-center" style="background-color: ${bg}; color: ${textCol}; font-size: 13px; padding: 38px 28px 34px 28px; ${borderCss}">
+    <div class="container py-0" style="max-width: 900px;">
         ${logoHTML ? `<div class="mb-2">${logoHTML}</div>` : ''}
         <div style="font-size: 15px; margin-bottom: 6px;">
             ${companyLink} &copy; ${escapeHTML(d.year || '2026')}${copyrightText}

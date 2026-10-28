@@ -222,7 +222,7 @@ export const WIDGET_CATALOG = [
                 desc: 'Top bar notification or discount banner',
                 icon: 'fa-bullhorn',
                 defaultData: {
-                    text: '🎉 NEW: Visual drag-and-drop builder with instant multi-device preview & 1-click clean HTML export!',
+                    text: 'NEW: Visual drag-and-drop builder with instant multi-device preview & 1-click clean HTML export!',
                     btnText: 'Explore Features',
                     btnUrl: '#features',
                     bgColor: '#714B67',
