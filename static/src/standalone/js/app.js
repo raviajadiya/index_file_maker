@@ -230,6 +230,13 @@ if (document.readyState === 'loading') {
                 data: JSON.parse(JSON.stringify(widgetDef.defaultData))
             };
 
+            // Set section box & border defaults so every widget appears in a stylish card box
+            if (newWidget.data.sectionBorder === undefined) newWidget.data.sectionBorder = 'all';
+            if (newWidget.data.sectionBorderColor === undefined) newWidget.data.sectionBorderColor = (widgetDef.type === 'footer_brand' ? '#334155' : '#e2e8f0');
+            if (newWidget.data.sectionBorderWidth === undefined) newWidget.data.sectionBorderWidth = '1px';
+            if (newWidget.data.sectionBorderStyle === undefined) newWidget.data.sectionBorderStyle = 'solid';
+            if (newWidget.data.sectionBorderRadius === undefined) newWidget.data.sectionBorderRadius = '14px';
+
             // Seamlessly adapt to current active theme/brand color if customized by user
             const currentBrand = (window.pageSettings && window.pageSettings.brandColor) || '#714B67';
             if (currentBrand && currentBrand !== '#714B67') {
@@ -3633,35 +3640,71 @@ if (document.readyState === 'loading') {
                 form.appendChild(footerCard);
             }
 
-            // Section Border & Divider Controls for ALL widgets (Odoo App Store Safe CSS)
+            // Section Box, Border & Corner Radius Controls for ALL widgets (Odoo App Store Safe CSS)
             const borderCard = document.createElement('div');
-            borderCard.style.cssText = 'background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-top: 18px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);';
+            borderCard.style.cssText = 'background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px; padding: 14px; margin-top: 18px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);';
 
-            const currentBorder = d.sectionBorder !== undefined ? d.sectionBorder : (widget.type === 'support_banner' ? 'none' : (widget.type === 'footer_brand' ? 'top' : 'bottom'));
-            const currentBorderColor = d.sectionBorderColor || (widget.type === 'footer_brand' ? '#334155' : '#e2e8f0');
-            const currentBorderWidth = d.sectionBorderWidth || '1px';
-            const currentBorderStyle = d.sectionBorderStyle || 'solid';
+            if (d.sectionBorder === undefined) d.sectionBorder = 'all';
+            if (d.sectionBorderColor === undefined) d.sectionBorderColor = (widget.type === 'footer_brand' ? '#334155' : '#e2e8f0');
+            if (d.sectionBorderWidth === undefined) d.sectionBorderWidth = '1px';
+            if (d.sectionBorderStyle === undefined) d.sectionBorderStyle = 'solid';
+            if (d.sectionBorderRadius === undefined) d.sectionBorderRadius = '14px';
+
+            const currentBorder = d.sectionBorder;
+            const isBorderVisible = currentBorder !== 'none' && currentBorder !== 'hide';
+            const currentBorderColor = d.sectionBorderColor;
+            const currentBorderWidth = d.sectionBorderWidth;
+            const currentBorderStyle = d.sectionBorderStyle;
+            const currentBorderRadius = d.sectionBorderRadius;
+            const numRadius = parseInt(currentBorderRadius) || 14;
 
             borderCard.innerHTML = `
                 <div style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
                     <span style="display: flex; align-items: center; gap: 7px;">
-                        <i class="fa fa-square-o" style="color: var(--primary);"></i> Section Border &amp; Divider
+                        <i class="fa fa-square-o" style="color: var(--primary);"></i> Section Box &amp; Border
                     </span>
-                    <span style="font-size: 10px; font-weight: 600; background: #e0f2fe; color: #0369a1; padding: 2px 7px; border-radius: 4px;">Odoo App Store Safe</span>
+                    <span style="font-size: 10px; font-weight: 600; background: #e0f2fe; color: #0369a1; padding: 2px 7px; border-radius: 4px;">Odoo Store Safe</span>
                 </div>
 
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Border Position</label>
-                    <select class="form-input" id="sec-border-type-select" style="font-size: 12px; padding: 7px 10px;">
-                        <option value="bottom" ${currentBorder === 'bottom' ? 'selected' : ''}>Bottom Divider (Standard)</option>
-                        <option value="top_bottom" ${currentBorder === 'top_bottom' ? 'selected' : ''}>Top &amp; Bottom Borders</option>
-                        <option value="all" ${currentBorder === 'all' ? 'selected' : ''}>Full Box Border (All 4 Sides)</option>
-                        <option value="top" ${currentBorder === 'top' ? 'selected' : ''}>Top Border Only</option>
-                        <option value="none" ${currentBorder === 'none' ? 'selected' : ''}>No Border (None)</option>
-                    </select>
+                <div style="margin-bottom: 12px;">
+                    <label class="form-label" style="font-size: 11px; margin-bottom: 5px;">Border Visibility</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                        <button type="button" id="sec-btn-show-border" class="btn" style="font-size: 11px; padding: 6px 10px; font-weight: 600; cursor: pointer; transition: all 0.2s; ${isBorderVisible ? 'background: #0284c7; color: #ffffff; border: 1px solid #0284c7; box-shadow: 0 1px 3px rgba(2,132,199,0.3);' : 'background: #f8fafc; color: #64748b; border: 1px solid #cbd5e1;'}">
+                            <i class="fa fa-eye" style="margin-right: 4px;"></i> Show Border
+                        </button>
+                        <button type="button" id="sec-btn-hide-border" class="btn" style="font-size: 11px; padding: 6px 10px; font-weight: 600; cursor: pointer; transition: all 0.2s; ${!isBorderVisible ? 'background: #64748b; color: #ffffff; border: 1px solid #64748b; box-shadow: 0 1px 3px rgba(100,116,139,0.3);' : 'background: #f8fafc; color: #64748b; border: 1px solid #cbd5e1;'}">
+                            <i class="fa fa-eye-slash" style="margin-right: 4px;"></i> Hide Border
+                        </button>
+                    </div>
                 </div>
 
-                <div id="sec-border-options-box" style="display: ${currentBorder === 'none' ? 'none' : 'block'};">
+                <div id="sec-border-custom-controls" style="display: ${isBorderVisible ? 'block' : 'none'};">
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Border Style / Position</label>
+                        <select class="form-input" id="sec-border-type-select" style="font-size: 12px; padding: 7px 10px;">
+                            <option value="all" ${currentBorder === 'all' || currentBorder === 'box' ? 'selected' : ''}>Full Box (All 4 Sides - Section Box)</option>
+                            <option value="bottom" ${currentBorder === 'bottom' ? 'selected' : ''}>Bottom Divider Only</option>
+                            <option value="top_bottom" ${currentBorder === 'top_bottom' ? 'selected' : ''}>Top &amp; Bottom Borders</option>
+                            <option value="top" ${currentBorder === 'top' ? 'selected' : ''}>Top Border Only</option>
+                            <option value="none" ${currentBorder === 'none' ? 'selected' : ''}>None (No Border)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <label class="form-label" style="font-size: 11px; margin-bottom: 0; font-weight: 600;">Corner Radius (Rounded Box)</label>
+                            <span id="sec-radius-display" style="font-size: 11px; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 2px 8px; border-radius: 4px;">${currentBorderRadius}</span>
+                        </div>
+                        <input type="range" id="sec-radius-slider" min="0" max="40" step="2" value="${numRadius}" style="width: 100%; cursor: pointer; accent-color: #0284c7;">
+                        <div style="display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-outline sec-radius-chip" data-val="0px" style="font-size: 10px; padding: 2px 7px;">0px Sharp</button>
+                            <button type="button" class="btn btn-outline sec-radius-chip" data-val="8px" style="font-size: 10px; padding: 2px 7px;">8px Sm</button>
+                            <button type="button" class="btn btn-outline sec-radius-chip" data-val="14px" style="font-size: 10px; padding: 2px 7px;">14px Card</button>
+                            <button type="button" class="btn btn-outline sec-radius-chip" data-val="20px" style="font-size: 10px; padding: 2px 7px;">20px Lg</button>
+                            <button type="button" class="btn btn-outline sec-radius-chip" data-val="28px" style="font-size: 10px; padding: 2px 7px;">28px Pill</button>
+                        </div>
+                    </div>
+
                     <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
                         <div>
                             <label class="form-label" style="font-size: 11px; margin-bottom: 4px;">Border Width</label>
@@ -3683,20 +3726,92 @@ if (document.readyState === 'loading') {
                     </div>
 
                     <div id="sec-border-color-wrapper"></div>
+                    <div style="display: flex; align-items: center; gap: 6px; margin-top: 6px; flex-wrap: wrap;">
+                        <span style="font-size: 10px; color: var(--text-muted); font-weight: 600;">Colors:</span>
+                        <button type="button" class="sec-color-swatch" data-color="#e2e8f0" style="width: 20px; height: 20px; border-radius: 4px; background: #e2e8f0; border: 1px solid #cbd5e1; cursor: pointer;" title="Light Gray"></button>
+                        <button type="button" class="sec-color-swatch" data-color="#cbd5e1" style="width: 20px; height: 20px; border-radius: 4px; background: #cbd5e1; border: 1px solid #94a3b8; cursor: pointer;" title="Medium Gray"></button>
+                        <button type="button" class="sec-color-swatch" data-color="#94a3b8" style="width: 20px; height: 20px; border-radius: 4px; background: #94a3b8; border: 1px solid #64748b; cursor: pointer;" title="Slate Gray"></button>
+                        <button type="button" class="sec-color-swatch" data-color="#714B67" style="width: 20px; height: 20px; border-radius: 4px; background: #714B67; border: 1px solid #55344d; cursor: pointer;" title="Odoo Purple"></button>
+                        <button type="button" class="sec-color-swatch" data-color="#00A09D" style="width: 20px; height: 20px; border-radius: 4px; background: #00A09D; border: 1px solid #00807d; cursor: pointer;" title="Teal Accent"></button>
+                        <button type="button" class="sec-color-swatch" data-color="#334155" style="width: 20px; height: 20px; border-radius: 4px; background: #334155; border: 1px solid #1e293b; cursor: pointer;" title="Dark Slate"></button>
+                        <button type="button" class="sec-color-swatch" data-color="#000000" style="width: 20px; height: 20px; border-radius: 4px; background: #000000; border: 1px solid #333333; cursor: pointer;" title="Black"></button>
+                    </div>
                 </div>
             `;
 
+            const btnShowBorder = borderCard.querySelector('#sec-btn-show-border');
+            const btnHideBorder = borderCard.querySelector('#sec-btn-hide-border');
+            const customControls = borderCard.querySelector('#sec-border-custom-controls');
             const typeSelect = borderCard.querySelector('#sec-border-type-select');
-            const optionsBox = borderCard.querySelector('#sec-border-options-box');
+            const radiusSlider = borderCard.querySelector('#sec-radius-slider');
+            const radiusDisplay = borderCard.querySelector('#sec-radius-display');
             const widthSelect = borderCard.querySelector('#sec-border-width-select');
             const styleSelect = borderCard.querySelector('#sec-border-style-select');
             const colorWrapper = borderCard.querySelector('#sec-border-color-wrapper');
 
+            const updateVisibilityUI = (visible) => {
+                customControls.style.display = visible ? 'block' : 'none';
+                if (visible) {
+                    btnShowBorder.style.background = '#0284c7';
+                    btnShowBorder.style.color = '#ffffff';
+                    btnShowBorder.style.border = '1px solid #0284c7';
+                    btnShowBorder.style.boxShadow = '0 1px 3px rgba(2,132,199,0.3)';
+                    btnHideBorder.style.background = '#f8fafc';
+                    btnHideBorder.style.color = '#64748b';
+                    btnHideBorder.style.border = '1px solid #cbd5e1';
+                    btnHideBorder.style.boxShadow = 'none';
+                } else {
+                    btnHideBorder.style.background = '#64748b';
+                    btnHideBorder.style.color = '#ffffff';
+                    btnHideBorder.style.border = '1px solid #64748b';
+                    btnHideBorder.style.boxShadow = '0 1px 3px rgba(100,116,139,0.3)';
+                    btnShowBorder.style.background = '#f8fafc';
+                    btnShowBorder.style.color = '#64748b';
+                    btnShowBorder.style.border = '1px solid #cbd5e1';
+                    btnShowBorder.style.boxShadow = 'none';
+                }
+            };
+
+            btnShowBorder.addEventListener('click', () => {
+                d.sectionBorder = 'all';
+                typeSelect.value = 'all';
+                updateVisibilityUI(true);
+                updateCanvasLive();
+            });
+
+            btnHideBorder.addEventListener('click', () => {
+                d.sectionBorder = 'none';
+                typeSelect.value = 'none';
+                updateVisibilityUI(false);
+                updateCanvasLive();
+            });
+
             typeSelect.addEventListener('change', (e) => {
                 d.sectionBorder = e.target.value;
-                optionsBox.style.display = d.sectionBorder === 'none' ? 'none' : 'block';
-                if (!d.sectionBorderColor) d.sectionBorderColor = currentBorderColor;
+                const visible = d.sectionBorder !== 'none';
+                updateVisibilityUI(visible);
                 updateCanvasLive();
+            });
+
+            radiusSlider.addEventListener('input', (e) => {
+                const val = e.target.value + 'px';
+                d.sectionBorderRadius = val;
+                radiusDisplay.textContent = val;
+                updateCanvasLive();
+            });
+
+            borderCard.querySelectorAll('.sec-radius-chip').forEach(chip => {
+                chip.addEventListener('click', () => {
+                    const val = chip.dataset.val;
+                    d.sectionBorderRadius = val;
+                    radiusSlider.value = parseInt(val) || 0;
+                    radiusDisplay.textContent = val;
+                    borderCard.querySelectorAll('.sec-radius-chip').forEach(c => {
+                        c.style.background = c === chip ? '#0284c7' : '';
+                        c.style.color = c === chip ? '#ffffff' : '';
+                    });
+                    updateCanvasLive();
+                });
             });
 
             widthSelect.addEventListener('change', (e) => {
@@ -3709,10 +3824,23 @@ if (document.readyState === 'loading') {
                 updateCanvasLive();
             });
 
-            colorWrapper.appendChild(createColorField('Border Color', currentBorderColor, (val) => {
+            const colorField = createColorField('Border Color', currentBorderColor, (val) => {
                 d.sectionBorderColor = val;
                 updateCanvasLive();
-            }));
+            });
+            colorWrapper.appendChild(colorField);
+
+            borderCard.querySelectorAll('.sec-color-swatch').forEach(swatch => {
+                swatch.addEventListener('click', () => {
+                    const color = swatch.dataset.color;
+                    d.sectionBorderColor = color;
+                    const textInp = colorField.querySelector('input[type="text"]');
+                    const colorInp = colorField.querySelector('input[type="color"]');
+                    if (textInp) textInp.value = color;
+                    if (colorInp) colorInp.value = color;
+                    updateCanvasLive();
+                });
+            });
 
             form.appendChild(borderCard);
 
@@ -3901,6 +4029,14 @@ if (document.readyState === 'loading') {
                 name: found.name,
                 data: JSON.parse(JSON.stringify(found.defaultData))
             };
+
+            // Set section box & border defaults for starter templates
+            if (inst.data.sectionBorder === undefined) inst.data.sectionBorder = 'all';
+            if (inst.data.sectionBorderColor === undefined) inst.data.sectionBorderColor = (type === 'footer_brand' ? '#334155' : '#e2e8f0');
+            if (inst.data.sectionBorderWidth === undefined) inst.data.sectionBorderWidth = '1px';
+            if (inst.data.sectionBorderStyle === undefined) inst.data.sectionBorderStyle = 'solid';
+            if (inst.data.sectionBorderRadius === undefined) inst.data.sectionBorderRadius = '14px';
+
             const currentBrand = (window.pageSettings && window.pageSettings.brandColor) || '#714B67';
             if (currentBrand && currentBrand !== '#714B67') {
                 if (inst.data.bgColor === '#714B67') inst.data.bgColor = currentBrand;

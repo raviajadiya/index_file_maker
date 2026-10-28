@@ -186,25 +186,31 @@ function renderTableCheck(val) {
 }
 
 // SECTION BORDER GENERATOR (Standard Odoo-Safe CSS)
-function getSectionBorderStyle(d, defaultType = 'bottom', defaultColor = '#e2e8f0') {
+function getSectionBorderStyle(d, defaultType = 'all', defaultColor = '#e2e8f0') {
     const borderType = d.sectionBorder !== undefined ? d.sectionBorder : defaultType;
-    if (borderType === 'none' || borderType === false) return '';
     const color = d.sectionBorderColor || defaultColor;
     const width = d.sectionBorderWidth ? (String(d.sectionBorderWidth).includes('px') ? d.sectionBorderWidth : d.sectionBorderWidth + 'px') : '1px';
     const style = d.sectionBorderStyle || 'solid';
     const borderVal = `${width} ${style} ${color}`;
+    const radiusVal = d.sectionBorderRadius !== undefined ? (String(d.sectionBorderRadius).includes('px') ? d.sectionBorderRadius : d.sectionBorderRadius + 'px') : '14px';
 
-    if (borderType === 'bottom') {
-        return `border-bottom: ${borderVal};`;
-    } else if (borderType === 'top') {
-        return `border-top: ${borderVal};`;
-    } else if (borderType === 'top_bottom') {
-        return `border-top: ${borderVal}; border-bottom: ${borderVal};`;
-    } else if (borderType === 'all') {
-        const radius = d.sectionBorderRadius ? ` border-radius: ${String(d.sectionBorderRadius).includes('px') ? d.sectionBorderRadius : d.sectionBorderRadius + 'px'};` : '';
-        return `border: ${borderVal};${radius}`;
+    if (borderType === 'none' || borderType === false || borderType === 'hide') {
+        if (d.sectionBorderRadius && d.sectionBorderRadius !== '0px' && d.sectionBorderRadius !== '0') {
+            return `border: none; border-radius: ${radiusVal}; margin: 18px 12px; overflow: hidden;`;
+        }
+        return `border: none; margin: 14px 0;`;
     }
-    return `border-bottom: ${borderVal};`;
+
+    if (borderType === 'all' || borderType === 'box') {
+        return `border: ${borderVal}; border-radius: ${radiusVal}; margin: 18px 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);`;
+    } else if (borderType === 'bottom') {
+        return `border-bottom: ${borderVal}; margin: 14px 0;`;
+    } else if (borderType === 'top') {
+        return `border-top: ${borderVal}; margin: 14px 0;`;
+    } else if (borderType === 'top_bottom') {
+        return `border-top: ${borderVal}; border-bottom: ${borderVal}; margin: 14px 0;`;
+    }
+    return `border: ${borderVal}; border-radius: ${radiusVal}; margin: 18px 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);`;
 }
 
 // HTML GENERATOR FOR LIVE & DOWNLOAD
@@ -230,7 +236,7 @@ function renderWidgetHtml(widget) {
                 `<span class="mx-1 my-1" style="background-color: ${badgeBg}; color: ${badgeColor}; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-block; border: 1px solid ${badgeBorder};">${escapeHTML(b)}</span>`
             ).join(' ');
 
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4 text-center" style="background-color: ${bg}; color: ${textCol}; ${borderCss}">
     <div class="container py-2">
         <div class="row justify-content-center">
@@ -256,7 +262,7 @@ function renderWidgetHtml(widget) {
         case 'minimal_header': {
             const bg = d.bgColor || '#ffffff';
             const accent = d.accentColor || globalBrand || '#714B67';
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4 text-center" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         <div class="row justify-content-center">
@@ -273,7 +279,7 @@ function renderWidgetHtml(widget) {
         case 'discount_ribbon': {
             const bg = d.bgColor || globalBrand || '#714B67';
             const textCol = d.textColor || '#ffffff';
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-2 text-center" style="background-color: ${bg}; color: ${textCol}; font-weight: 600; font-size: 15px; ${borderCss}">
     <div class="container d-flex flex-wrap align-items-center justify-content-center">
         <span class="mx-2 my-1">${escapeHTML(d.text || '')}</span>
@@ -316,7 +322,7 @@ function renderWidgetHtml(widget) {
             </div>`;
             }).join('');
 
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         ${d.title ? `<div class="row justify-content-center text-center mb-3">
@@ -372,7 +378,7 @@ function renderWidgetHtml(widget) {
             </div>`;
             }).join('');
 
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         ${d.title ? `<div class="row justify-content-center text-center mb-3">
@@ -483,7 +489,7 @@ function renderWidgetHtml(widget) {
                 </div>
             </div>`;
 
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         <div class="row align-items-center">
@@ -594,7 +600,7 @@ function renderWidgetHtml(widget) {
                 </div>`;
             }
 
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         <!-- TOP: Count, Category, Title, Subtitle -->
@@ -635,7 +641,7 @@ function renderWidgetHtml(widget) {
                     <span>${escapeHTML(b)}</span>
                 </li>`).join('');
 
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         <div class="row align-items-center">
@@ -669,7 +675,7 @@ function renderWidgetHtml(widget) {
                     <span>${escapeHTML(b)}</span>
                 </li>`).join('');
 
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         <div class="row align-items-center">
@@ -732,7 +738,7 @@ function renderWidgetHtml(widget) {
             </div>`;
             }).join('');
 
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1">
         ${d.title ? `<div class="row justify-content-center text-center mb-3">
@@ -789,7 +795,7 @@ function renderWidgetHtml(widget) {
             </tr>`;
             }).join('');
 
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1" style="max-width: 980px;">
         ${d.title ? `<div class="row justify-content-center text-center mb-4">
@@ -860,7 +866,7 @@ function renderWidgetHtml(widget) {
         </details>`;
             }).join('');
 
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <style>
         details.faq-accordion-item summary {
@@ -955,7 +961,7 @@ function renderWidgetHtml(widget) {
             </div>`;
             }).join('');
 
-            const borderCss = getSectionBorderStyle(d, 'none', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4 my-2" style="background-color: ${bg}; color: ${textCol}; border-radius: 16px; ${borderCss}">
     <div class="container text-center py-2" style="max-width: 960px;">
         ${d.badge ? `<span style="background-color: #ffffff; color: ${bg}; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);">${escapeHTML(d.badge)}</span>` : ''}
@@ -1034,7 +1040,7 @@ function renderWidgetHtml(widget) {
                 </div>`;
             }).join('\n');
 
-            const borderCss = getSectionBorderStyle(d, 'bottom', '#e2e8f0');
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section class="py-4" style="background-color: ${bg}; ${borderCss}">
     <div class="container py-1" style="max-width: 1140px;">
         ${d.title ? `<div class="row justify-content-center text-center mb-4">
@@ -1089,7 +1095,7 @@ function renderWidgetHtml(widget) {
                 ? `<span style="font-size: 12px; opacity: 0.8; margin-left: 4px;">• ${escapeHTML(d.copyrightNotice)}</span>` 
                 : '';
 
-            const borderCss = getSectionBorderStyle(d, 'top', '#334155');
+            const borderCss = getSectionBorderStyle(d, 'all', '#334155');
 
             if (layout === 'split') {
                 return `<footer class="py-4" style="background-color: ${bg}; color: ${textCol}; font-size: 13px; ${borderCss}">
