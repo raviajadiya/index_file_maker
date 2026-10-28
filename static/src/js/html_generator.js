@@ -225,13 +225,13 @@ function getSectionBorderStyle(d, defaultType = 'all', defaultColor = '#e2e8f0')
 
     if (borderType === 'none' || borderType === false || borderType === 'hide') {
         if (d.sectionBorderRadius && d.sectionBorderRadius !== '0px' && d.sectionBorderRadius !== '0') {
-            return `border: none; border-radius: ${radiusVal}; margin: 20px 0; overflow: hidden;`;
+            return `border: none; border-radius: ${radiusVal}; -webkit-border-radius: ${radiusVal}; margin: 20px 0; overflow: hidden;`;
         }
         return `border: none; margin: 20px 0;`;
     }
 
     if (borderType === 'all' || borderType === 'box') {
-        return `border: ${borderVal}; border-radius: ${radiusVal}; margin: 20px 0; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);`;
+        return `border: ${borderVal}; border-radius: ${radiusVal}; -webkit-border-radius: ${radiusVal}; margin: 20px 0; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);`;
     } else if (borderType === 'bottom') {
         return `border-bottom: ${borderVal}; margin: 20px 0;`;
     } else if (borderType === 'top') {
@@ -239,7 +239,7 @@ function getSectionBorderStyle(d, defaultType = 'all', defaultColor = '#e2e8f0')
     } else if (borderType === 'top_bottom') {
         return `border-top: ${borderVal}; border-bottom: ${borderVal}; margin: 20px 0;`;
     }
-    return `border: ${borderVal}; border-radius: ${radiusVal}; margin: 20px 0; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);`;
+    return `border: ${borderVal}; border-radius: ${radiusVal}; -webkit-border-radius: ${radiusVal}; margin: 20px 0; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);`;
 }
 
 function renderWidgetAppStore(widget, globalBrand, globalAccent) {
@@ -593,22 +593,22 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             if (frameStyle === 'laptop') {
                 desktopMockupHTML = `
                 <div style="max-width: 980px; margin: 0 auto; width: 100%;">
-                    <div style="background-color: ${frameCol}; border-radius: 16px 16px 0 0; padding: 14px 14px 0 14px; box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.3);">
+                    <div style="background-color: ${frameCol}; border-radius: 16px 16px 0 0; -webkit-border-radius: 16px 16px 0 0; padding: 14px 14px 0 14px; box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.3);">
                         <div style="width: 8px; height: 8px; background-color: #475569; border-radius: 50%; margin: 0 auto 10px auto;"></div>
-                        <div style="background-color: #ffffff; border-radius: 6px 6px 0 0; overflow: hidden; border: 1px solid #334155;">
+                        <div style="background-color: #ffffff; border-radius: 6px 6px 0 0; -webkit-border-radius: 6px 6px 0 0; overflow: hidden; border: 1px solid #334155;">
                             ${renderDesktopScreen(d.imageUrl)}
                         </div>
                     </div>
-                    <div style="position: relative; background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%); height: 18px; border-radius: 0 0 18px 18px; box-shadow: 0 12px 30px rgba(0,0,0,0.22);">
-                        <div style="width: 90px; height: 6px; background-color: #cbd5e1; border-radius: 0 0 6px 6px; margin: 0 auto;"></div>
+                    <div style="position: relative; background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%); height: 18px; border-radius: 0 0 18px 18px; -webkit-border-radius: 0 0 18px 18px; box-shadow: 0 12px 30px rgba(0,0,0,0.22);">
+                        <div style="width: 90px; height: 6px; background-color: #cbd5e1; border-radius: 0 0 6px 6px; -webkit-border-radius: 0 0 6px 6px; margin: 0 auto;"></div>
                     </div>
                     <div style="background: rgba(0,0,0,0.15); height: 8px; width: 85%; margin: 0 auto; border-radius: 50%; filter: blur(4px);"></div>
                     ${d.imageCaption ? `<div style="font-size: 12px; color: #64748b; margin-top: 12px; font-weight: 500; text-align: center;">${escapeHTML(d.imageCaption)}</div>` : ''}
                 </div>`;
             } else {
                 desktopMockupHTML = `
-                <div style="max-width: 1060px; margin: 0 auto; width: 100%; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.22); border: 1px solid #cbd5e1; background-color: #ffffff;">
-                    <div class="d-flex align-items-center justify-content-between px-3 py-2" style="background-color: #f1f5f9; border-bottom: 1px solid #e2e8f0;">
+                <div style="max-width: 1060px; margin: 0 auto; width: 100%; border-radius: 14px; -webkit-border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.22); border: 1px solid #cbd5e1; background-color: #ffffff;">
+                    <div class="d-flex align-items-center justify-content-between px-3 py-2" style="background-color: #f1f5f9; border-bottom: 1px solid #e2e8f0; border-radius: 13px 13px 0 0; -webkit-border-radius: 13px 13px 0 0;">
                         <div class="d-flex align-items-center">
                             <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #ef4444; display: inline-block; margin-right: 7px;"></span>
                             <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #f59e0b; display: inline-block; margin-right: 7px;"></span>
@@ -619,10 +619,10 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                         </div>
                         <div style="width: 44px;"></div>
                     </div>
-                    <div style="background-color: #fafafa; overflow: hidden;">
+                    <div style="background-color: #fafafa; overflow: hidden; ${d.imageCaption ? '' : 'border-radius: 0 0 13px 13px; -webkit-border-radius: 0 0 13px 13px;'}">
                         ${renderDesktopScreen(d.imageUrl)}
                     </div>
-                    ${d.imageCaption ? `<div style="font-size: 12px; color: #64748b; padding: 10px 14px; font-weight: 500; text-align: center; background-color: #f8fafc; border-top: 1px solid #e2e8f0;">${escapeHTML(d.imageCaption)}</div>` : ''}
+                    ${d.imageCaption ? `<div style="font-size: 12px; color: #64748b; padding: 10px 14px; font-weight: 500; text-align: center; background-color: #f8fafc; border-top: 1px solid #e2e8f0; border-radius: 0 0 13px 13px; -webkit-border-radius: 0 0 13px 13px;">${escapeHTML(d.imageCaption)}</div>` : ''}
                 </div>`;
             }
 
@@ -878,15 +878,11 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
                 const isOpen = f.isOpen === true || (f.isOpen === undefined && idx === 0);
                 const openAttr = isOpen ? ' open' : '';
                 return `
-        <details class="faq-accordion-item"${openAttr} style="background-color: #ffffff; border: 1px solid ${borderColor}; border-radius: 10px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
-            <summary class="d-flex align-items-center justify-content-between p-3" style="background-color: ${headerBg}; color: ${questionColor}; cursor: pointer; user-select: none; outline: none; list-style: none;">
-                <span style="display: inline-block; padding-right: 12px; color: ${questionColor}; font-weight: 700; font-size: 15px; line-height: 1.4;">${escapeHTML(f.q)}</span>
-                <span class="faq-accordion-arrow" style="display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background-color: rgba(0,0,0,0.05); color: ${questionColor}; font-size: 13px; margin-left: auto; flex-shrink: 0; transition: background-color 0.2s ease;">
-                    <i class="fa fa-chevron-down faq-arrow-down" style="display: ${isOpen ? 'none' : 'inline-block'}; line-height: 1;"></i>
-                    <i class="fa fa-chevron-up faq-arrow-up" style="display: ${isOpen ? 'inline-block' : 'none'}; line-height: 1;"></i>
-                </span>
+        <details class="faq-accordion-item"${openAttr} style="background-color: #ffffff; border: 1px solid ${borderColor}; border-radius: 12px; -webkit-border-radius: 12px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+            <summary class="d-flex align-items-center p-3" style="background-color: ${headerBg}; color: ${questionColor}; cursor: pointer; user-select: none; outline: none; list-style: none; -webkit-appearance: none; border-radius: ${isOpen ? '11px 11px 0 0' : '11px'}; -webkit-border-radius: ${isOpen ? '11px 11px 0 0' : '11px'};">
+                <span style="display: inline-block; color: ${questionColor}; font-weight: 700; font-size: 15px; line-height: 1.45; width: 100%;">${escapeHTML(f.q)}</span>
             </summary>
-            <div style="padding: 16px 20px; background-color: #ffffff; color: #334155; font-size: 14.5px; line-height: 1.65; border-top: 1px solid ${borderColor};">
+            <div style="padding: 16px 20px; background-color: #ffffff; color: #334155; font-size: 14.5px; line-height: 1.65; border-top: 1px solid ${borderColor}; border-radius: 0 0 11px 11px; -webkit-border-radius: 0 0 11px 11px;">
                 ${escapeHTML(f.a)}
             </div>
         </details>`;
@@ -895,41 +891,32 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
             const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
             return `<section style="background-color: ${bg}; padding: 38px 28px 34px 28px; ${borderCss}">
     <style>
+        details.faq-accordion-item {
+            border-radius: 12px !important;
+            -webkit-border-radius: 12px !important;
+        }
         details.faq-accordion-item summary {
             cursor: pointer;
             list-style: none !important;
             outline: none !important;
+            -webkit-appearance: none !important;
         }
         details.faq-accordion-item summary::-webkit-details-marker,
         details.faq-accordion-item summary::marker {
             display: none !important;
         }
-        details.faq-accordion-item .faq-arrow-up {
-            display: none !important;
-        }
-        details.faq-accordion-item .faq-arrow-down {
-            display: inline-block !important;
-        }
-        details.faq-accordion-item[open] .faq-arrow-down {
-            display: none !important;
-        }
-        details.faq-accordion-item[open] .faq-arrow-up {
-            display: inline-block !important;
-        }
-        details.faq-accordion-item:not([open]) .faq-arrow-down {
-            display: inline-block !important;
-        }
-        details.faq-accordion-item:not([open]) .faq-arrow-up {
-            display: none !important;
-        }
-        details.faq-accordion-item[open] .faq-accordion-arrow {
-            background-color: rgba(0, 0, 0, 0.1) !important;
-        }
         details.faq-accordion-item summary:hover {
             filter: brightness(0.98);
         }
-        details.faq-accordion-item summary:hover .faq-accordion-arrow {
-            background-color: rgba(0, 0, 0, 0.09) !important;
+        details.faq-accordion-item[open] summary {
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            -webkit-border-bottom-left-radius: 0 !important;
+            -webkit-border-bottom-right-radius: 0 !important;
+        }
+        details.faq-accordion-item:not([open]) summary {
+            border-radius: 11px !important;
+            -webkit-border-radius: 11px !important;
         }
     </style>
     <div class="container py-0" style="max-width: 960px;">
