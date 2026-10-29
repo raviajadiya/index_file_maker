@@ -354,31 +354,31 @@ const WIDGET_CATALOG = [
                     apps: [
                         {
                             bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
-                            title: 'Odoo Code Snippets & Builder Pro',
-                            company: 'Your Company',
-                            price: '$ 29.00',
+                            title: 'Clipboard History Manager',
+                            company: 'Nuvexa Technology',
+                            price: '$ 25.00',
                             badge: 'Bestseller',
-                            version: 'Odoo 20',
+                            version: 'Odoo 19',
                             btnText: 'Get App',
                             appUrl: 'https://apps.odoo.com/apps/modules/browse?search=developer+tools'
                         },
                         {
                             bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
-                            title: 'Automated WhatsApp & SMS Gateway',
-                            company: 'Your Company',
-                            price: '$ 39.00',
+                            title: 'Clipboard History Manager',
+                            company: 'Nuvexa Technology',
+                            price: '$ 25.00',
                             badge: 'Featured',
-                            version: 'Odoo 20',
+                            version: 'Odoo 19',
                             btnText: 'Get App',
                             appUrl: 'https://apps.odoo.com/apps/modules/browse?search=whatsapp'
                         },
                         {
                             bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
-                            title: 'Universal Document & PDF Watermark',
-                            company: 'Your Company',
-                            price: '$ 19.00',
+                            title: 'Clipboard History Manager',
+                            company: 'Nuvexa Technology',
+                            price: '$ 25.00',
                             badge: 'Popular',
-                            version: 'Odoo 20',
+                            version: 'Odoo 19',
                             btnText: 'Get App',
                             appUrl: 'https://apps.odoo.com/apps/modules/browse?search=pdf+watermark'
                         }
@@ -438,7 +438,7 @@ const WIDGET_CATALOG = [
                 desc: 'Fully customizable brand, copyright, quick links & developer signature',
                 icon: 'fa-bookmark',
                 defaultData: {
-                    companyName: 'Your Company Name',
+                    companyName: 'Nuvexa Technology',
                     companyUrl: 'https://yourdomain.com',
                     year: '2026',
                     copyrightNotice: 'All Rights Reserved',
@@ -477,472 +477,472 @@ const STARTER_TEMPLATES = {
         brandColor: '#714B67',
         accentColor: '#00A09D',
         widgets: [
-        {
+            {
                 "id": "w_1793205812380_484",
                 "type": "hero_banner",
                 "name": "Hero Banner Pro",
                 "data": {
-                        "title": "Odoo AppStore Index File Maker Pro",
-                        "subtitle": "Visually design, customize, and export high-converting, 100% compliant Odoo App Store description pages with drag-and-drop ease.",
-                        "iconUrl": "",
-                        "showBadges": true,
-                        "badges": [
-                                "Community",
-                                "Enterprise",
-                                "Odoo 20",
-                                "Odoo 19",
-                                "Odoo 18",
-                                "Odoo 17"
-                        ],
-                        "badgeBgColor": "#ffffff",
-                        "badgeTextColor": "#714B67",
-                        "badgeBorderColor": "#e2e8f0",
-                        "primaryBtnText": "Start Building",
-                        "primaryBtnUrl": "#features",
-                        "secondaryBtnText": "Live Demo",
-                        "secondaryBtnUrl": "#demo",
-                        "bgColor": "#714B67",
-                        "textColor": "#ffffff",
-                        "accentColor": "#00A09D",
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Odoo AppStore Index File Maker Pro",
+                    "subtitle": "Visually design, customize, and export high-converting, 100% compliant Odoo App Store description pages with drag-and-drop ease.",
+                    "iconUrl": "",
+                    "showBadges": true,
+                    "badges": [
+                        "Community",
+                        "Enterprise",
+                        "Odoo 20",
+                        "Odoo 19",
+                        "Odoo 18",
+                        "Odoo 17"
+                    ],
+                    "badgeBgColor": "#ffffff",
+                    "badgeTextColor": "#714B67",
+                    "badgeBorderColor": "#e2e8f0",
+                    "primaryBtnText": "Start Building",
+                    "primaryBtnUrl": "#features",
+                    "secondaryBtnText": "Live Demo",
+                    "secondaryBtnUrl": "#demo",
+                    "bgColor": "#714B67",
+                    "textColor": "#ffffff",
+                    "accentColor": "#00A09D",
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1793205813655_189",
                 "type": "minimal_header",
                 "name": "Minimal Header",
                 "data": {
-                        "title": "Odoo AppStore Index File Maker",
-                        "subtitle": "Build responsive, store-compliant module description pages in minutes without writing raw HTML.",
-                        "badge": "ODOO 20 READY",
-                        "bgColor": "#ffffff",
-                        "textColor": "#1e293b",
-                        "accentColor": "#714B67",
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Odoo AppStore Index File Maker",
+                    "subtitle": "Build responsive, store-compliant module description pages in minutes without writing raw HTML.",
+                    "badge": "ODOO 20 READY",
+                    "bgColor": "#ffffff",
+                    "textColor": "#1e293b",
+                    "accentColor": "#714B67",
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1793205814544_639",
                 "type": "discount_ribbon",
                 "name": "Announcement Ribbon",
                 "data": {
-                        "text": "NEW: Visual drag-and-drop builder with instant multi-device preview & 1-click clean HTML export!",
-                        "btnText": "Explore Features",
-                        "btnUrl": "#features",
-                        "bgColor": "#714B67",
-                        "textColor": "#ffffff",
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "text": "NEW: Visual drag-and-drop builder with instant multi-device preview & 1-click clean HTML export!",
+                    "btnText": "Explore Features",
+                    "btnUrl": "#features",
+                    "bgColor": "#714B67",
+                    "textColor": "#ffffff",
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1793205815936_896",
                 "type": "highlights_grid",
                 "name": "Key Highlights 4-Grid",
                 "data": {
-                        "title": "Why Choose Index File Maker?",
-                        "titleColor": "#1e293b",
-                        "subtitle": "Engineered specifically for Odoo developers and partners to create high-converting App Store descriptions",
-                        "subtitleColor": "#64748b",
-                        "bgColor": "#ffffff",
-                        "columns": 4,
-                        "accentColor": "#714B67",
-                        "iconBgColor": "#f5efff",
-                        "cardBgColor": "#ffffff",
-                        "cardBorderColor": "#e2e8f0",
-                        "items": [
-                                {
-                                        "title": "100% Store Compliant",
-                                        "desc": "Outputs clean Bootstrap 5 and inline styles strictly compliant with Odoo sanitization guidelines.",
-                                        "icon": "<i class=\"fa fa-check-circle\"></i>",
-                                        "iconUrl": "",
-                                        "titleColor": "#1e293b",
-                                        "descColor": "#64748b"
-                                },
-                                {
-                                        "title": "Drag & Drop Canvas",
-                                        "desc": "Easily assemble heroes, feature showcases, VS comparison tables, FAQs, and footers.",
-                                        "icon": "<i class=\"fa fa-th-large\"></i>",
-                                        "iconUrl": "",
-                                        "titleColor": "#1e293b",
-                                        "descColor": "#64748b"
-                                },
-                                {
-                                        "title": "Real-Time Device Preview",
-                                        "desc": "Instantly toggle between Desktop, Tablet, and Mobile views to ensure pixel-perfect rendering.",
-                                        "icon": "<i class=\"fa fa-desktop\"></i>",
-                                        "iconUrl": "",
-                                        "titleColor": "#1e293b",
-                                        "descColor": "#64748b"
-                                },
-                                {
-                                        "title": "1-Click HTML Export",
-                                        "desc": "Export production-ready index.html in one click and place it straight into static/description.",
-                                        "icon": "<i class=\"fa fa-download\"></i>",
-                                        "iconUrl": "",
-                                        "titleColor": "#1e293b",
-                                        "descColor": "#64748b"
-                                }
-                        ],
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Why Choose Index File Maker?",
+                    "titleColor": "#1e293b",
+                    "subtitle": "Engineered specifically for Odoo developers and partners to create high-converting App Store descriptions",
+                    "subtitleColor": "#64748b",
+                    "bgColor": "#ffffff",
+                    "columns": 4,
+                    "accentColor": "#714B67",
+                    "iconBgColor": "#f5efff",
+                    "cardBgColor": "#ffffff",
+                    "cardBorderColor": "#e2e8f0",
+                    "items": [
+                        {
+                            "title": "100% Store Compliant",
+                            "desc": "Outputs clean Bootstrap 5 and inline styles strictly compliant with Odoo sanitization guidelines.",
+                            "icon": "<i class=\"fa fa-check-circle\"></i>",
+                            "iconUrl": "",
+                            "titleColor": "#1e293b",
+                            "descColor": "#64748b"
+                        },
+                        {
+                            "title": "Drag & Drop Canvas",
+                            "desc": "Easily assemble heroes, feature showcases, VS comparison tables, FAQs, and footers.",
+                            "icon": "<i class=\"fa fa-th-large\"></i>",
+                            "iconUrl": "",
+                            "titleColor": "#1e293b",
+                            "descColor": "#64748b"
+                        },
+                        {
+                            "title": "Real-Time Device Preview",
+                            "desc": "Instantly toggle between Desktop, Tablet, and Mobile views to ensure pixel-perfect rendering.",
+                            "icon": "<i class=\"fa fa-desktop\"></i>",
+                            "iconUrl": "",
+                            "titleColor": "#1e293b",
+                            "descColor": "#64748b"
+                        },
+                        {
+                            "title": "1-Click HTML Export",
+                            "desc": "Export production-ready index.html in one click and place it straight into static/description.",
+                            "icon": "<i class=\"fa fa-download\"></i>",
+                            "iconUrl": "",
+                            "titleColor": "#1e293b",
+                            "descColor": "#64748b"
+                        }
+                    ],
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1793205817048_406",
                 "type": "stats_counter",
                 "name": "Stats Banner",
                 "data": {
-                        "title": "Proven Performance for Odoo Publishers",
-                        "titleColor": "#1e293b",
-                        "subtitle": "Trusted by top Odoo partners, publishers, and developers worldwide to boost module conversions",
-                        "subtitleColor": "#64748b",
-                        "bgColor": "#f8fafc",
-                        "columns": 3,
-                        "cardBgColor": "#ffffff",
-                        "cardBorderColor": "#e2e8f0",
-                        "accentColor": "#714B67",
-                        "iconBgColor": "#f5efff",
-                        "numberColor": "#714B67",
-                        "labelColor": "#64748b",
-                        "stats": [
-                                {
-                                        "number": "10x Faster",
-                                        "label": "Index Page Creation Speed",
-                                        "icon": "<i class=\"fa fa-bolt\"></i>",
-                                        "iconUrl": "",
-                                        "numberColor": "#714B67",
-                                        "labelColor": "#64748b"
-                                },
-                                {
-                                        "number": "100%",
-                                        "label": "Odoo App Store Compliant",
-                                        "icon": "<i class=\"fa fa-shield\"></i>",
-                                        "iconUrl": "",
-                                        "numberColor": "#714B67",
-                                        "labelColor": "#64748b"
-                                },
-                                {
-                                        "number": "5.0 \u2605",
-                                        "label": "Developer Rating (200+ Reviews)",
-                                        "icon": "<i class=\"fa fa-star\"></i>",
-                                        "iconUrl": "",
-                                        "numberColor": "#714B67",
-                                        "labelColor": "#64748b"
-                                }
-                        ],
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Proven Performance for Odoo Publishers",
+                    "titleColor": "#1e293b",
+                    "subtitle": "Trusted by top Odoo partners, publishers, and developers worldwide to boost module conversions",
+                    "subtitleColor": "#64748b",
+                    "bgColor": "#f8fafc",
+                    "columns": 3,
+                    "cardBgColor": "#ffffff",
+                    "cardBorderColor": "#e2e8f0",
+                    "accentColor": "#714B67",
+                    "iconBgColor": "#f5efff",
+                    "numberColor": "#714B67",
+                    "labelColor": "#64748b",
+                    "stats": [
+                        {
+                            "number": "10x Faster",
+                            "label": "Index Page Creation Speed",
+                            "icon": "<i class=\"fa fa-bolt\"></i>",
+                            "iconUrl": "",
+                            "numberColor": "#714B67",
+                            "labelColor": "#64748b"
+                        },
+                        {
+                            "number": "100%",
+                            "label": "Odoo App Store Compliant",
+                            "icon": "<i class=\"fa fa-shield\"></i>",
+                            "iconUrl": "",
+                            "numberColor": "#714B67",
+                            "labelColor": "#64748b"
+                        },
+                        {
+                            "number": "5.0 \u2605",
+                            "label": "Developer Rating (200+ Reviews)",
+                            "icon": "<i class=\"fa fa-star\"></i>",
+                            "iconUrl": "",
+                            "numberColor": "#714B67",
+                            "labelColor": "#64748b"
+                        }
+                    ],
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1793205818954_334",
                 "type": "desktop_showcase",
                 "name": "Desktop Showcase",
                 "data": {
-                        "badgeNumber": "02",
-                        "badgeText": "Visual Builder Studio",
-                        "title": "Interactive Drag & Drop Studio Canvas",
-                        "desc": "Drag widgets onto the canvas, reorder sections with smooth drag handles, customize typography, and inspect properties in real time.",
-                        "headerAlign": "center",
-                        "pointsLayout": "grid",
-                        "frameStyle": "browser",
-                        "browserUrl": "https://apps.odoo.com/apps/modules/browse?search=index_file_maker",
-                        "imageUrl": "",
-                        "imageCaption": "",
-                        "points": [
-                                "Rich widget catalog: Heroes, Highlights, Comparison Tables, FAQs & Support",
-                                "Dynamic brand color palette switcher & live hexadecimal color inspector",
-                                "Instant source code inspector and 1-click clean index.html download"
-                        ],
-                        "bgColor": "#ffffff",
-                        "accentColor": "#714B67",
-                        "badgeBgColor": "#714B67",
-                        "badgeTextColor": "#ffffff",
-                        "badgeBorderColor": "#714B67",
-                        "badgePreset": "purple",
-                        "titleColor": "#1e293b",
-                        "descColor": "#64748b",
-                        "pointBgColor": "#fdf8fc",
-                        "pointBorderColor": "#f0e6ed",
-                        "pointTextColor": "#1e293b",
-                        "frameColor": "#1e293b",
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "badgeNumber": "02",
+                    "badgeText": "Visual Builder Studio",
+                    "title": "Interactive Drag & Drop Studio Canvas",
+                    "desc": "Drag widgets onto the canvas, reorder sections with smooth drag handles, customize typography, and inspect properties in real time.",
+                    "headerAlign": "center",
+                    "pointsLayout": "grid",
+                    "frameStyle": "browser",
+                    "browserUrl": "https://apps.odoo.com/apps/modules/browse?search=index_file_maker",
+                    "imageUrl": "",
+                    "imageCaption": "",
+                    "points": [
+                        "Rich widget catalog: Heroes, Highlights, Comparison Tables, FAQs & Support",
+                        "Dynamic brand color palette switcher & live hexadecimal color inspector",
+                        "Instant source code inspector and 1-click clean index.html download"
+                    ],
+                    "bgColor": "#ffffff",
+                    "accentColor": "#714B67",
+                    "badgeBgColor": "#714B67",
+                    "badgeTextColor": "#ffffff",
+                    "badgeBorderColor": "#714B67",
+                    "badgePreset": "purple",
+                    "titleColor": "#1e293b",
+                    "descColor": "#64748b",
+                    "pointBgColor": "#fdf8fc",
+                    "pointBorderColor": "#f0e6ed",
+                    "pointTextColor": "#1e293b",
+                    "frameColor": "#1e293b",
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1793205820619_242",
                 "type": "vs_table",
                 "name": "Feature Comparison (VS Table)",
                 "data": {
-                        "title": "Why Choose Index File Maker?",
-                        "subtitle": "See how our visual drag-and-drop builder saves development hours compared to manual HTML coding",
-                        "bgColor": "#ffffff",
-                        "cardBgColor": "#ffffff",
-                        "tableBorderColor": "#cbd5e1",
-                        "cardBorderColor": "#cbd5e1",
-                        "dividerColor": "#cbd5e1",
-                        "headerBgColor": "#f1f5f9",
-                        "headerTextColor": "#1e293b",
-                        "titleColor": "#1e293b",
-                        "subtitleColor": "#64748b",
-                        "accentColor": "#714B67",
-                        "col1Title": "Key Capabilities & Features",
-                        "col2Title": "Index File Maker",
-                        "col2Badge": "Recommended",
-                        "col2HeaderBg": "#714B67",
-                        "col2HeaderTextColor": "#ffffff",
-                        "col2HighlightBg": "#faf5ff",
-                        "col3Title": "Manual HTML Coding",
-                        "rows": [
-                                {
-                                        "feature": "Visual Drag & Drop Canvas",
-                                        "detail": "Build sections interactively with live visual feedback",
-                                        "ourApp": true,
-                                        "competitor": false
-                                },
-                                {
-                                        "feature": "Odoo App Store Guideline Compliance",
-                                        "detail": "Strict adherence to Bootstrap 5, sanitization rules, and hex colors",
-                                        "ourApp": true,
-                                        "competitor": "Error-Prone"
-                                },
-                                {
-                                        "feature": "Pre-Designed Widget Catalog",
-                                        "detail": "Ready-to-use banners, grids, mockups, comparison tables & FAQs",
-                                        "ourApp": true,
-                                        "competitor": false
-                                },
-                                {
-                                        "feature": "Multi-Device Responsive Preview",
-                                        "detail": "Instant toggle between Desktop, Tablet, and Mobile viewports",
-                                        "ourApp": true,
-                                        "competitor": "Manual Testing"
-                                },
-                                {
-                                        "feature": "1-Click Clean Code Export",
-                                        "detail": "Download production-ready index.html with zero disallowed scripts",
-                                        "ourApp": true,
-                                        "competitor": "Slow & Tedious"
-                                },
-                                {
-                                        "feature": "Dedicated Support & Updates",
-                                        "detail": "Regular updates for upcoming Odoo versions with free assistance",
-                                        "ourApp": "Included",
-                                        "competitor": "None"
-                                }
-                        ],
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Why Choose Index File Maker?",
+                    "subtitle": "See how our visual drag-and-drop builder saves development hours compared to manual HTML coding",
+                    "bgColor": "#ffffff",
+                    "cardBgColor": "#ffffff",
+                    "tableBorderColor": "#cbd5e1",
+                    "cardBorderColor": "#cbd5e1",
+                    "dividerColor": "#cbd5e1",
+                    "headerBgColor": "#f1f5f9",
+                    "headerTextColor": "#1e293b",
+                    "titleColor": "#1e293b",
+                    "subtitleColor": "#64748b",
+                    "accentColor": "#714B67",
+                    "col1Title": "Key Capabilities & Features",
+                    "col2Title": "Index File Maker",
+                    "col2Badge": "Recommended",
+                    "col2HeaderBg": "#714B67",
+                    "col2HeaderTextColor": "#ffffff",
+                    "col2HighlightBg": "#faf5ff",
+                    "col3Title": "Manual HTML Coding",
+                    "rows": [
+                        {
+                            "feature": "Visual Drag & Drop Canvas",
+                            "detail": "Build sections interactively with live visual feedback",
+                            "ourApp": true,
+                            "competitor": false
+                        },
+                        {
+                            "feature": "Odoo App Store Guideline Compliance",
+                            "detail": "Strict adherence to Bootstrap 5, sanitization rules, and hex colors",
+                            "ourApp": true,
+                            "competitor": "Error-Prone"
+                        },
+                        {
+                            "feature": "Pre-Designed Widget Catalog",
+                            "detail": "Ready-to-use banners, grids, mockups, comparison tables & FAQs",
+                            "ourApp": true,
+                            "competitor": false
+                        },
+                        {
+                            "feature": "Multi-Device Responsive Preview",
+                            "detail": "Instant toggle between Desktop, Tablet, and Mobile viewports",
+                            "ourApp": true,
+                            "competitor": "Manual Testing"
+                        },
+                        {
+                            "feature": "1-Click Clean Code Export",
+                            "detail": "Download production-ready index.html with zero disallowed scripts",
+                            "ourApp": true,
+                            "competitor": "Slow & Tedious"
+                        },
+                        {
+                            "feature": "Dedicated Support & Updates",
+                            "detail": "Regular updates for upcoming Odoo versions with free assistance",
+                            "ourApp": "Included",
+                            "competitor": "None"
+                        }
+                    ],
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1793205822264_316",
                 "type": "faq_section",
                 "name": "FAQ Accordion Cards",
                 "data": {
-                        "title": "Frequently Asked Questions",
-                        "subtitle": "Everything you need to know about Odoo App Store index generation and compatibility",
-                        "bgColor": "#ffffff",
-                        "headerBg": "#fdf8fc",
-                        "questionColor": "#714B67",
-                        "borderColor": "#e2e8f0",
-                        "faqs": [
-                                {
-                                        "q": "Is the generated HTML 100% compliant with Odoo App Store rules?",
-                                        "a": "Yes! All exported code uses standard Bootstrap grid classes and inline styles with zero external scripts or forbidden tags, ensuring 100% compliance with Odoo App Store sanitization guidelines.",
-                                        "isOpen": true
-                                },
-                                {
-                                        "q": "Where should I place the generated index.html in my module?",
-                                        "a": "Save the downloaded file as index.html inside your Odoo module under the static/description/ folder (e.g. your_module/static/description/index.html).",
-                                        "isOpen": false
-                                },
-                                {
-                                        "q": "Can I customize the color palette and typography?",
-                                        "a": "Yes! You can choose from pre-set curated palettes (Odoo Purple, Ocean Blue, Emerald, etc.) or set custom primary and accent hex colors for each individual widget.",
-                                        "isOpen": false
-                                },
-                                {
-                                        "q": "Does this module work on both Community and Enterprise?",
-                                        "a": "Yes, Index File Maker runs smoothly on both Odoo Community and Enterprise editions across Odoo 17, 18, 19, and 20.",
-                                        "isOpen": false
-                                }
-                        ],
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Frequently Asked Questions",
+                    "subtitle": "Everything you need to know about Odoo App Store index generation and compatibility",
+                    "bgColor": "#ffffff",
+                    "headerBg": "#fdf8fc",
+                    "questionColor": "#714B67",
+                    "borderColor": "#e2e8f0",
+                    "faqs": [
+                        {
+                            "q": "Is the generated HTML 100% compliant with Odoo App Store rules?",
+                            "a": "Yes! All exported code uses standard Bootstrap grid classes and inline styles with zero external scripts or forbidden tags, ensuring 100% compliance with Odoo App Store sanitization guidelines.",
+                            "isOpen": true
+                        },
+                        {
+                            "q": "Where should I place the generated index.html in my module?",
+                            "a": "Save the downloaded file as index.html inside your Odoo module under the static/description/ folder (e.g. your_module/static/description/index.html).",
+                            "isOpen": false
+                        },
+                        {
+                            "q": "Can I customize the color palette and typography?",
+                            "a": "Yes! You can choose from pre-set curated palettes (Odoo Purple, Ocean Blue, Emerald, etc.) or set custom primary and accent hex colors for each individual widget.",
+                            "isOpen": false
+                        },
+                        {
+                            "q": "Does this module work on both Community and Enterprise?",
+                            "a": "Yes, Index File Maker runs smoothly on both Odoo Community and Enterprise editions across Odoo 17, 18, 19, and 20.",
+                            "isOpen": false
+                        }
+                    ],
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1792772865873_190",
                 "type": "other_apps",
                 "name": "Other Apps Showcase",
                 "data": {
-                        "title": "Other Recommended Odoo Developer Tools",
-                        "subtitle": "Supercharge your Odoo development and business workflow with our premium extensions",
-                        "bgColor": "#ffffff",
-                        "titleColor": "#1e293b",
-                        "columns": "3",
-                        "cardBgColor": "#ffffff",
-                        "cardBorderColor": "#000000",
-                        "priceColor": "#000000",
-                        "btnBgColor": "#000000",
-                        "btnTextColor": "#ffffff",
-                        "apps": [
-                                {
-                                        "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
-                                        "title": "Clipboard History Manager",
-                                        "company": "Nuvexa Technology",
-                                        "price": "$ 25.00",
-                                        "badge": "Bestseller",
-                                        "version": "Odoo 19",
-                                        "btnText": "Get App",
-                                        "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
-                                },
-                                {
-                                        "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
-                                        "title": "Clipboard History Manager",
-                                        "company": "Nuvexa Technology",
-                                        "price": "$ 29.00",
-                                        "badge": "Featured",
-                                        "version": "Odoo 19",
-                                        "btnText": "Get App",
-                                        "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
-                                },
-                                {
-                                        "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
-                                        "title": "Clipboard History Manager",
-                                        "company": "Nuvexa Technology",
-                                        "price": "$ 29.00",
-                                        "badge": "Featured",
-                                        "version": "Odoo 20",
-                                        "btnText": "Get App",
-                                        "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
-                                }
-                        ],
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorder": "all",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Other Recommended Odoo Developer Tools",
+                    "subtitle": "Supercharge your Odoo development and business workflow with our premium extensions",
+                    "bgColor": "#ffffff",
+                    "titleColor": "#1e293b",
+                    "columns": "3",
+                    "cardBgColor": "#ffffff",
+                    "cardBorderColor": "#000000",
+                    "priceColor": "#000000",
+                    "btnBgColor": "#000000",
+                    "btnTextColor": "#ffffff",
+                    "apps": [
+                        {
+                            "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
+                            "title": "Clipboard History Manager",
+                            "company": "Nuvexa Technology",
+                            "price": "$ 25.00",
+                            "badge": "Bestseller",
+                            "version": "Odoo 19",
+                            "btnText": "Get App",
+                            "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
+                        },
+                        {
+                            "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
+                            "title": "Clipboard History Manager",
+                            "company": "Nuvexa Technology",
+                            "price": "$ 25.00",
+                            "badge": "Featured",
+                            "version": "Odoo 19",
+                            "btnText": "Get App",
+                            "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
+                        },
+                        {
+                            "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
+                            "title": "Clipboard History Manager",
+                            "company": "Nuvexa Technology",
+                            "price": "$ 25.00",
+                            "badge": "Featured",
+                            "version": "Odoo 20",
+                            "btnText": "Get App",
+                            "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
+                        }
+                    ],
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorder": "all",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1792982428316_442",
                 "type": "support_banner",
                 "name": "Support & Contact Card",
                 "data": {
-                        "title": "Dedicated Support & Custom Widget Development",
-                        "subtitle": "Have a question or need custom widgets for your Odoo module descriptions? Our team is here to help.",
-                        "badge": "Dedicated Support Included",
-                        "bgColor": "#714B67",
-                        "textColor": "#ffffff",
-                        "cardBgColor": "#ffffff",
-                        "cardBorderColor": "#e2e8f0",
-                        "iconColor": "#000000",
-                        "channels": [
-                                {
-                                        "icon": "<i class=\"fa fa-envelope\"></i>",
-                                        "label": "Email Support",
-                                        "value": "supportnuvexaonline@gmail.com",
-                                        "url": "mailto:supportnuvexaonline@gmail.com"
-                                },
-                                {
-                                        "icon": "<i class=\"fa fa-life-ring\"></i>",
-                                        "label": "Website",
-                                        "value": "https://nuvexatechnology.netlify.app",
-                                        "url": "https://nuvexatechnology.netlify.app"
-                                },
-                                {
-                                        "icon": "<i class=\"fa fa-bullhorn\"></i>",
-                                        "label": "Contact ",
-                                        "value": "Contact us",
-                                        "url": "mailto:supportnuvexaonline@gmail.com"
-                                }
-                        ],
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Dedicated Support & Custom Widget Development",
+                    "subtitle": "Have a question or need custom widgets for your Odoo module descriptions? Our team is here to help.",
+                    "badge": "Dedicated Support Included",
+                    "bgColor": "#714B67",
+                    "textColor": "#ffffff",
+                    "cardBgColor": "#ffffff",
+                    "cardBorderColor": "#e2e8f0",
+                    "iconColor": "#000000",
+                    "channels": [
+                        {
+                            "icon": "<i class=\"fa fa-envelope\"></i>",
+                            "label": "Email Support",
+                            "value": "supportnuvexaonline@gmail.com",
+                            "url": "mailto:supportnuvexaonline@gmail.com"
+                        },
+                        {
+                            "icon": "<i class=\"fa fa-life-ring\"></i>",
+                            "label": "Website",
+                            "value": "https://nuvexatechnology.netlify.app",
+                            "url": "https://nuvexatechnology.netlify.app"
+                        },
+                        {
+                            "icon": "<i class=\"fa fa-bullhorn\"></i>",
+                            "label": "Contact ",
+                            "value": "Contact us",
+                            "url": "mailto:supportnuvexaonline@gmail.com"
+                        }
+                    ],
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1793205825269_636",
                 "type": "footer_brand",
                 "name": "Brand & Copyright Footer",
                 "data": {
-                        "companyName": "Nuvexa Technology",
-                        "companyUrl": "https://yourdomain.com",
-                        "year": "2026",
-                        "copyrightNotice": "All Rights Reserved",
-                        "tagline": "Crafted with <i class=\"fa fa-heart\" style=\"color: #ef4444;\"></i> for the Odoo Global Community",
-                        "logoUrl": "",
-                        "contactInfo": "supportnuvexaonline@gmail.com",
-                        "layout": "split",
-                        "showLinks": true,
-                        "links": [
-                                {
-                                        "label": "Documentation",
-                                        "url": "https://yourdomain.com/docs",
-                                        "icon": "fa-book"
-                                },
-                                {
-                                        "label": "Helpdesk Portal",
-                                        "url": "https://yourdomain.com/helpdesk",
-                                        "icon": "fa-life-ring"
-                                },
-                                {
-                                        "label": "More Odoo Apps",
-                                        "url": "https://apps.odoo.com",
-                                        "icon": "fa-th-large"
-                                },
-                                {
-                                        "label": "Official Website",
-                                        "url": "https://yourdomain.com",
-                                        "icon": "fa-globe"
-                                }
-                        ],
-                        "bgColor": "#1e293b",
-                        "textColor": "#94a3b8",
-                        "companyColor": "#ffffff",
-                        "linkColor": "#38bdf8",
-                        "accentColor": "#ef4444",
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#334155",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "companyName": "Nuvexa Technology",
+                    "companyUrl": "https://yourdomain.com",
+                    "year": "2026",
+                    "copyrightNotice": "All Rights Reserved",
+                    "tagline": "Crafted with <i class=\"fa fa-heart\" style=\"color: #ef4444;\"></i> for the Odoo Global Community",
+                    "logoUrl": "",
+                    "contactInfo": "supportnuvexaonline@gmail.com",
+                    "layout": "split",
+                    "showLinks": true,
+                    "links": [
+                        {
+                            "label": "Documentation",
+                            "url": "https://yourdomain.com/docs",
+                            "icon": "fa-book"
+                        },
+                        {
+                            "label": "Helpdesk Portal",
+                            "url": "https://yourdomain.com/helpdesk",
+                            "icon": "fa-life-ring"
+                        },
+                        {
+                            "label": "More Odoo Apps",
+                            "url": "https://apps.odoo.com",
+                            "icon": "fa-th-large"
+                        },
+                        {
+                            "label": "Official Website",
+                            "url": "https://yourdomain.com",
+                            "icon": "fa-globe"
+                        }
+                    ],
+                    "bgColor": "#1e293b",
+                    "textColor": "#94a3b8",
+                    "companyColor": "#ffffff",
+                    "linkColor": "#38bdf8",
+                    "accentColor": "#ef4444",
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#334155",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        }
-]
+            }
+        ]
     },
     'black_theme': {
         id: 'black_theme',
@@ -956,502 +956,502 @@ const STARTER_TEMPLATES = {
         brandColor: '#000000',
         accentColor: '#c68310',
         widgets: [
-        {
+            {
                 "id": "w_1792772453044_940",
                 "type": "hero_banner",
                 "name": "Hero Banner Pro",
                 "data": {
-                        "title": "Odoo AppStore Index File Maker Pro",
-                        "subtitle": "Visually design, customize, and export high-converting, 100% compliant Odoo App Store description pages with drag-and-drop ease.",
-                        "iconUrl": "",
-                        "showBadges": true,
-                        "badges": [
-                                "Community",
-                                "Enterprise",
-                                "Odoo 20",
-                                "Odoo 19",
-                                "Odoo 18",
-                                "Odoo 17"
-                        ],
-                        "badgeBgColor": "#ffffff",
-                        "badgeTextColor": "#714B67",
-                        "badgeBorderColor": "#e2e8f0",
-                        "primaryBtnText": "Start Building",
-                        "primaryBtnUrl": "#features",
-                        "secondaryBtnText": "Live Demo",
-                        "secondaryBtnUrl": "#demo",
-                        "bgColor": "#000000",
-                        "textColor": "#ffffff",
-                        "accentColor": "#c68310",
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#006eff",
-                        "sectionBorderWidth": "2px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "10px",
-                        "badgePreset": "white"
+                    "title": "Odoo AppStore Index File Maker Pro",
+                    "subtitle": "Visually design, customize, and export high-converting, 100% compliant Odoo App Store description pages with drag-and-drop ease.",
+                    "iconUrl": "",
+                    "showBadges": true,
+                    "badges": [
+                        "Community",
+                        "Enterprise",
+                        "Odoo 20",
+                        "Odoo 19",
+                        "Odoo 18",
+                        "Odoo 17"
+                    ],
+                    "badgeBgColor": "#ffffff",
+                    "badgeTextColor": "#714B67",
+                    "badgeBorderColor": "#e2e8f0",
+                    "primaryBtnText": "Start Building",
+                    "primaryBtnUrl": "#features",
+                    "secondaryBtnText": "Live Demo",
+                    "secondaryBtnUrl": "#demo",
+                    "bgColor": "#000000",
+                    "textColor": "#ffffff",
+                    "accentColor": "#c68310",
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#006eff",
+                    "sectionBorderWidth": "2px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "10px",
+                    "badgePreset": "white"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1792772477314_948",
                 "type": "minimal_header",
                 "name": "Minimal Header",
                 "data": {
-                        "title": "Odoo AppStore Index File Maker",
-                        "subtitle": "Build responsive, store-compliant module description pages in minutes without writing raw HTML.",
-                        "badge": "ODOO 20 READY",
-                        "bgColor": "#ffffff",
-                        "textColor": "#1e293b",
-                        "accentColor": "#000000",
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#714B67",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "8px"
+                    "title": "Odoo AppStore Index File Maker",
+                    "subtitle": "Build responsive, store-compliant module description pages in minutes without writing raw HTML.",
+                    "badge": "ODOO 20 READY",
+                    "bgColor": "#ffffff",
+                    "textColor": "#1e293b",
+                    "accentColor": "#000000",
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#714B67",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "8px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1792772480192_374",
                 "type": "discount_ribbon",
                 "name": "Announcement Ribbon",
                 "data": {
-                        "text": "\ud83c\udf89 NEW: Visual drag-and-drop builder with instant multi-device preview & 1-click clean HTML export!",
-                        "btnText": "Explore Features",
-                        "btnUrl": "#features",
-                        "bgColor": "#000000",
-                        "textColor": "#ffffff"
+                    "text": "\ud83c\udf89 NEW: Visual drag-and-drop builder with instant multi-device preview & 1-click clean HTML export!",
+                    "btnText": "Explore Features",
+                    "btnUrl": "#features",
+                    "bgColor": "#000000",
+                    "textColor": "#ffffff"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1792772487897_756",
                 "type": "highlights_grid",
                 "name": "Key Highlights 4-Grid",
                 "data": {
-                        "title": "Why Choose Index File Maker?",
-                        "titleColor": "#1e293b",
-                        "subtitle": "Engineered specifically for Odoo developers and partners to create high-converting App Store descriptions",
-                        "subtitleColor": "#64748b",
-                        "bgColor": "#ffffff",
-                        "columns": 4,
-                        "accentColor": "#ffffff",
-                        "iconBgColor": "#000000",
-                        "cardBgColor": "#ffffff",
-                        "cardBorderColor": "#000000",
-                        "items": [
-                                {
-                                        "title": "100% Store Compliant",
-                                        "desc": "Outputs clean Bootstrap 5 and inline styles strictly compliant with Odoo sanitization guidelines.",
-                                        "icon": "<i class=\"fa fa-check-circle\"></i>",
-                                        "iconUrl": "",
-                                        "titleColor": "#1e293b",
-                                        "descColor": "#64748b"
-                                },
-                                {
-                                        "title": "Drag & Drop Canvas",
-                                        "desc": "Easily assemble heroes, feature showcases, VS comparison tables, FAQs, and footers.",
-                                        "icon": "<i class=\"fa fa-th-large\"></i>",
-                                        "iconUrl": "",
-                                        "titleColor": "#1e293b",
-                                        "descColor": "#64748b"
-                                },
-                                {
-                                        "title": "Real-Time Device Preview",
-                                        "desc": "Instantly toggle between Desktop, Tablet, and Mobile views to ensure pixel-perfect rendering.",
-                                        "icon": "<i class=\"fa fa-desktop\"></i>",
-                                        "iconUrl": "",
-                                        "titleColor": "#1e293b",
-                                        "descColor": "#64748b"
-                                },
-                                {
-                                        "title": "1-Click HTML Export",
-                                        "desc": "Export production-ready index.html in one click and place it straight into static/description.",
-                                        "icon": "<i class=\"fa fa-download\"></i>",
-                                        "iconUrl": "",
-                                        "titleColor": "#1e293b",
-                                        "descColor": "#64748b"
-                                }
-                        ],
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Why Choose Index File Maker?",
+                    "titleColor": "#1e293b",
+                    "subtitle": "Engineered specifically for Odoo developers and partners to create high-converting App Store descriptions",
+                    "subtitleColor": "#64748b",
+                    "bgColor": "#ffffff",
+                    "columns": 4,
+                    "accentColor": "#ffffff",
+                    "iconBgColor": "#000000",
+                    "cardBgColor": "#ffffff",
+                    "cardBorderColor": "#000000",
+                    "items": [
+                        {
+                            "title": "100% Store Compliant",
+                            "desc": "Outputs clean Bootstrap 5 and inline styles strictly compliant with Odoo sanitization guidelines.",
+                            "icon": "<i class=\"fa fa-check-circle\"></i>",
+                            "iconUrl": "",
+                            "titleColor": "#1e293b",
+                            "descColor": "#64748b"
+                        },
+                        {
+                            "title": "Drag & Drop Canvas",
+                            "desc": "Easily assemble heroes, feature showcases, VS comparison tables, FAQs, and footers.",
+                            "icon": "<i class=\"fa fa-th-large\"></i>",
+                            "iconUrl": "",
+                            "titleColor": "#1e293b",
+                            "descColor": "#64748b"
+                        },
+                        {
+                            "title": "Real-Time Device Preview",
+                            "desc": "Instantly toggle between Desktop, Tablet, and Mobile views to ensure pixel-perfect rendering.",
+                            "icon": "<i class=\"fa fa-desktop\"></i>",
+                            "iconUrl": "",
+                            "titleColor": "#1e293b",
+                            "descColor": "#64748b"
+                        },
+                        {
+                            "title": "1-Click HTML Export",
+                            "desc": "Export production-ready index.html in one click and place it straight into static/description.",
+                            "icon": "<i class=\"fa fa-download\"></i>",
+                            "iconUrl": "",
+                            "titleColor": "#1e293b",
+                            "descColor": "#64748b"
+                        }
+                    ],
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1792772630483_748",
                 "type": "stats_counter",
                 "name": "Stats Banner",
                 "data": {
-                        "title": "Proven Performance for Odoo Publishers",
-                        "titleColor": "#1e293b",
-                        "subtitle": "Trusted by top Odoo partners, publishers, and developers worldwide to boost module conversions",
-                        "subtitleColor": "#64748b",
-                        "bgColor": "#f8fafc",
-                        "columns": 3,
-                        "cardBgColor": "#ffffff",
-                        "cardBorderColor": "#e2e8f0",
-                        "accentColor": "#ffffff",
-                        "iconBgColor": "#000000",
-                        "numberColor": "#ffffff",
-                        "labelColor": "#64748b",
-                        "stats": [
-                                {
-                                        "number": "10x Faster",
-                                        "label": "Index Page Creation Speed",
-                                        "icon": "<i class=\"fa fa-bolt\"></i>",
-                                        "iconUrl": "",
-                                        "numberColor": "#000000",
-                                        "labelColor": "#64748b"
-                                },
-                                {
-                                        "number": "100%",
-                                        "label": "Odoo App Store Compliant",
-                                        "icon": "<i class=\"fa fa-shield\"></i>",
-                                        "iconUrl": "",
-                                        "numberColor": "#000000",
-                                        "labelColor": "#64748b"
-                                },
-                                {
-                                        "number": "5.0 \u2605",
-                                        "label": "Developer Rating (200+ Reviews)",
-                                        "icon": "<i class=\"fa fa-star\"></i>",
-                                        "iconUrl": "",
-                                        "numberColor": "#000000",
-                                        "labelColor": "#64748b"
-                                }
-                        ]
+                    "title": "Proven Performance for Odoo Publishers",
+                    "titleColor": "#1e293b",
+                    "subtitle": "Trusted by top Odoo partners, publishers, and developers worldwide to boost module conversions",
+                    "subtitleColor": "#64748b",
+                    "bgColor": "#f8fafc",
+                    "columns": 3,
+                    "cardBgColor": "#ffffff",
+                    "cardBorderColor": "#e2e8f0",
+                    "accentColor": "#ffffff",
+                    "iconBgColor": "#000000",
+                    "numberColor": "#ffffff",
+                    "labelColor": "#64748b",
+                    "stats": [
+                        {
+                            "number": "10x Faster",
+                            "label": "Index Page Creation Speed",
+                            "icon": "<i class=\"fa fa-bolt\"></i>",
+                            "iconUrl": "",
+                            "numberColor": "#000000",
+                            "labelColor": "#64748b"
+                        },
+                        {
+                            "number": "100%",
+                            "label": "Odoo App Store Compliant",
+                            "icon": "<i class=\"fa fa-shield\"></i>",
+                            "iconUrl": "",
+                            "numberColor": "#000000",
+                            "labelColor": "#64748b"
+                        },
+                        {
+                            "number": "5.0 \u2605",
+                            "label": "Developer Rating (200+ Reviews)",
+                            "icon": "<i class=\"fa fa-star\"></i>",
+                            "iconUrl": "",
+                            "numberColor": "#000000",
+                            "labelColor": "#64748b"
+                        }
+                    ]
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1793201570240_66",
                 "type": "desktop_showcase",
                 "name": "Desktop Showcase",
                 "data": {
-                        "badgeNumber": "02",
-                        "badgeText": "Visual Builder Studio",
-                        "title": "Interactive Drag & Drop Studio Canvas",
-                        "desc": "Drag widgets onto the canvas, reorder sections with smooth drag handles, customize typography, and inspect properties in real time.",
-                        "headerAlign": "center",
-                        "pointsLayout": "grid",
-                        "frameStyle": "browser",
-                        "browserUrl": "https://apps.odoo.com/apps/modules/browse?search=index_file_maker",
-                        "imageUrl": "",
-                        "imageCaption": "",
-                        "points": [
-                                "Rich widget catalog: Heroes, Highlights, Comparison Tables, FAQs & Support",
-                                "Dynamic brand color palette switcher & live hexadecimal color inspector",
-                                "Instant source code inspector and 1-click clean index.html download"
-                        ],
-                        "bgColor": "#ffffff",
-                        "accentColor": "#1e293b",
-                        "badgeBgColor": "#1e293b",
-                        "badgeTextColor": "#ffffff",
-                        "badgeBorderColor": "#1e293b",
-                        "badgePreset": "dark",
-                        "titleColor": "#1e293b",
-                        "descColor": "#64748b",
-                        "pointBgColor": "#f8fafc",
-                        "pointBorderColor": "#cbd5e1",
-                        "pointTextColor": "#1e293b",
-                        "frameColor": "#1e293b",
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "badgeNumber": "02",
+                    "badgeText": "Visual Builder Studio",
+                    "title": "Interactive Drag & Drop Studio Canvas",
+                    "desc": "Drag widgets onto the canvas, reorder sections with smooth drag handles, customize typography, and inspect properties in real time.",
+                    "headerAlign": "center",
+                    "pointsLayout": "grid",
+                    "frameStyle": "browser",
+                    "browserUrl": "https://apps.odoo.com/apps/modules/browse?search=index_file_maker",
+                    "imageUrl": "",
+                    "imageCaption": "",
+                    "points": [
+                        "Rich widget catalog: Heroes, Highlights, Comparison Tables, FAQs & Support",
+                        "Dynamic brand color palette switcher & live hexadecimal color inspector",
+                        "Instant source code inspector and 1-click clean index.html download"
+                    ],
+                    "bgColor": "#ffffff",
+                    "accentColor": "#1e293b",
+                    "badgeBgColor": "#1e293b",
+                    "badgeTextColor": "#ffffff",
+                    "badgeBorderColor": "#1e293b",
+                    "badgePreset": "dark",
+                    "titleColor": "#1e293b",
+                    "descColor": "#64748b",
+                    "pointBgColor": "#f8fafc",
+                    "pointBorderColor": "#cbd5e1",
+                    "pointTextColor": "#1e293b",
+                    "frameColor": "#1e293b",
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1792772706296_992",
                 "type": "workflow_steps",
                 "name": "3-Step How It Works",
                 "data": {
-                        "title": "Create Your Index in 3 Simple Steps",
-                        "titleColor": "#1e293b",
-                        "subtitle": "Streamlined visual workflow from blank canvas to published Odoo App Store listing",
-                        "subtitleColor": "#64748b",
-                        "bgColor": "#f8fafc",
-                        "cardBgColor": "#ffffff",
-                        "cardBorderColor": "#e2e8f0",
-                        "cardTitleColor": "#1e293b",
-                        "cardDescColor": "#64748b",
-                        "badgeBgColor": "#000000",
-                        "badgeTextColor": "#ffffff",
-                        "columns": 3,
-                        "align": "center",
-                        "steps": [
-                                {
-                                        "num": "1",
-                                        "title": "Drag & Drop Widgets",
-                                        "desc": "Select pre-styled hero banners, feature grids, screenshots, and comparison tables from the catalog."
-                                },
-                                {
-                                        "num": "2",
-                                        "title": "Customize Content & Theme",
-                                        "desc": "Insert your module features, screenshots, FAQs, and customize colors to match your brand identity."
-                                },
-                                {
-                                        "num": "3",
-                                        "title": "Export index.html",
-                                        "desc": "Download clean, sanitized HTML and drop it directly into your module\u2019s static/description folder."
-                                }
-                        ],
-                        "badgeBorderColor": "#e2e8f0",
-                        "accentColor": "#00A09D",
-                        "iconBgColor": "#e6f6f6"
+                    "title": "Create Your Index in 3 Simple Steps",
+                    "titleColor": "#1e293b",
+                    "subtitle": "Streamlined visual workflow from blank canvas to published Odoo App Store listing",
+                    "subtitleColor": "#64748b",
+                    "bgColor": "#f8fafc",
+                    "cardBgColor": "#ffffff",
+                    "cardBorderColor": "#e2e8f0",
+                    "cardTitleColor": "#1e293b",
+                    "cardDescColor": "#64748b",
+                    "badgeBgColor": "#000000",
+                    "badgeTextColor": "#ffffff",
+                    "columns": 3,
+                    "align": "center",
+                    "steps": [
+                        {
+                            "num": "1",
+                            "title": "Drag & Drop Widgets",
+                            "desc": "Select pre-styled hero banners, feature grids, screenshots, and comparison tables from the catalog."
+                        },
+                        {
+                            "num": "2",
+                            "title": "Customize Content & Theme",
+                            "desc": "Insert your module features, screenshots, FAQs, and customize colors to match your brand identity."
+                        },
+                        {
+                            "num": "3",
+                            "title": "Export index.html",
+                            "desc": "Download clean, sanitized HTML and drop it directly into your module\u2019s static/description folder."
+                        }
+                    ],
+                    "badgeBorderColor": "#e2e8f0",
+                    "accentColor": "#00A09D",
+                    "iconBgColor": "#e6f6f6"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1792772723273_63",
                 "type": "vs_table",
                 "name": "Feature Comparison (VS Table)",
                 "data": {
-                        "title": "Why Choose Index File Maker?",
-                        "subtitle": "See how our visual drag-and-drop builder saves development hours compared to manual HTML coding",
-                        "bgColor": "#ffffff",
-                        "cardBgColor": "#4e3131",
-                        "tableBorderColor": "#8f4000",
-                        "cardBorderColor": "#8f4000",
-                        "dividerColor": "#8f4000",
-                        "headerBgColor": "#b8b8b8",
-                        "headerTextColor": "#000000",
-                        "titleColor": "#1e293b",
-                        "subtitleColor": "#000000",
-                        "accentColor": "#000000",
-                        "col1Title": "Key Capabilities & Features",
-                        "col2Title": "Index File Maker",
-                        "col2Badge": "Recommended",
-                        "col2HeaderBg": "#000000",
-                        "col2HeaderTextColor": "#ffffff",
-                        "col2HighlightBg": "#ffffff",
-                        "col3Title": "Manual HTML Coding",
-                        "rows": [
-                                {
-                                        "feature": "Visual Drag & Drop Canvas",
-                                        "detail": "Build sections interactively with live visual feedback",
-                                        "ourApp": true,
-                                        "competitor": false
-                                },
-                                {
-                                        "feature": "Odoo App Store Guideline Compliance",
-                                        "detail": "Strict adherence to Bootstrap 5, sanitization rules, and hex colors",
-                                        "ourApp": true,
-                                        "competitor": "Error-Prone"
-                                },
-                                {
-                                        "feature": "Pre-Designed Widget Catalog",
-                                        "detail": "Ready-to-use banners, grids, mockups, comparison tables & FAQs",
-                                        "ourApp": true,
-                                        "competitor": false
-                                },
-                                {
-                                        "feature": "Multi-Device Responsive Preview",
-                                        "detail": "Instant toggle between Desktop, Tablet, and Mobile viewports",
-                                        "ourApp": true,
-                                        "competitor": "Manual Testing"
-                                },
-                                {
-                                        "feature": "1-Click Clean Code Export",
-                                        "detail": "Download production-ready index.html with zero disallowed scripts",
-                                        "ourApp": true,
-                                        "competitor": "Slow & Tedious"
-                                },
-                                {
-                                        "feature": "Dedicated Support & Updates",
-                                        "detail": "Regular updates for upcoming Odoo versions with free assistance",
-                                        "ourApp": "Included",
-                                        "competitor": "None"
-                                }
-                        ],
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Why Choose Index File Maker?",
+                    "subtitle": "See how our visual drag-and-drop builder saves development hours compared to manual HTML coding",
+                    "bgColor": "#ffffff",
+                    "cardBgColor": "#4e3131",
+                    "tableBorderColor": "#8f4000",
+                    "cardBorderColor": "#8f4000",
+                    "dividerColor": "#8f4000",
+                    "headerBgColor": "#b8b8b8",
+                    "headerTextColor": "#000000",
+                    "titleColor": "#1e293b",
+                    "subtitleColor": "#000000",
+                    "accentColor": "#000000",
+                    "col1Title": "Key Capabilities & Features",
+                    "col2Title": "Index File Maker",
+                    "col2Badge": "Recommended",
+                    "col2HeaderBg": "#000000",
+                    "col2HeaderTextColor": "#ffffff",
+                    "col2HighlightBg": "#ffffff",
+                    "col3Title": "Manual HTML Coding",
+                    "rows": [
+                        {
+                            "feature": "Visual Drag & Drop Canvas",
+                            "detail": "Build sections interactively with live visual feedback",
+                            "ourApp": true,
+                            "competitor": false
+                        },
+                        {
+                            "feature": "Odoo App Store Guideline Compliance",
+                            "detail": "Strict adherence to Bootstrap 5, sanitization rules, and hex colors",
+                            "ourApp": true,
+                            "competitor": "Error-Prone"
+                        },
+                        {
+                            "feature": "Pre-Designed Widget Catalog",
+                            "detail": "Ready-to-use banners, grids, mockups, comparison tables & FAQs",
+                            "ourApp": true,
+                            "competitor": false
+                        },
+                        {
+                            "feature": "Multi-Device Responsive Preview",
+                            "detail": "Instant toggle between Desktop, Tablet, and Mobile viewports",
+                            "ourApp": true,
+                            "competitor": "Manual Testing"
+                        },
+                        {
+                            "feature": "1-Click Clean Code Export",
+                            "detail": "Download production-ready index.html with zero disallowed scripts",
+                            "ourApp": true,
+                            "competitor": "Slow & Tedious"
+                        },
+                        {
+                            "feature": "Dedicated Support & Updates",
+                            "detail": "Regular updates for upcoming Odoo versions with free assistance",
+                            "ourApp": "Included",
+                            "competitor": "None"
+                        }
+                    ],
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1793201534340_584",
                 "type": "faq_section",
                 "name": "FAQ Accordion Cards",
                 "data": {
-                        "title": "Frequently Asked Questions",
-                        "subtitle": "Everything you need to know about Odoo App Store index generation and compatibility",
-                        "bgColor": "#ffffff",
-                        "headerBg": "#a8a8a8",
-                        "questionColor": "#000000",
-                        "borderColor": "#e2e8f0",
-                        "faqs": [
-                                {
-                                        "q": "Is the generated HTML 100% compliant with Odoo App Store rules?",
-                                        "a": "Yes! All exported code uses standard Bootstrap grid classes and inline styles with zero external scripts or forbidden tags, ensuring 100% compliance with Odoo App Store sanitization guidelines.",
-                                        "isOpen": true
-                                },
-                                {
-                                        "q": "Where should I place the generated index.html in my module?",
-                                        "a": "Save the downloaded file as index.html inside your Odoo module under the static/description/ folder (e.g. your_module/static/description/index.html).",
-                                        "isOpen": false
-                                },
-                                {
-                                        "q": "Can I customize the color palette and typography?",
-                                        "a": "Yes! You can choose from pre-set curated palettes (Odoo Purple, Ocean Blue, Emerald, etc.) or set custom primary and accent hex colors for each individual widget.",
-                                        "isOpen": false
-                                },
-                                {
-                                        "q": "Does this module work on both Community and Enterprise?",
-                                        "a": "Yes, Index File Maker runs smoothly on both Odoo Community and Enterprise editions across Odoo 17, 18, 19, and 20.",
-                                        "isOpen": false
-                                }
-                        ],
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Frequently Asked Questions",
+                    "subtitle": "Everything you need to know about Odoo App Store index generation and compatibility",
+                    "bgColor": "#ffffff",
+                    "headerBg": "#a8a8a8",
+                    "questionColor": "#000000",
+                    "borderColor": "#e2e8f0",
+                    "faqs": [
+                        {
+                            "q": "Is the generated HTML 100% compliant with Odoo App Store rules?",
+                            "a": "Yes! All exported code uses standard Bootstrap grid classes and inline styles with zero external scripts or forbidden tags, ensuring 100% compliance with Odoo App Store sanitization guidelines.",
+                            "isOpen": true
+                        },
+                        {
+                            "q": "Where should I place the generated index.html in my module?",
+                            "a": "Save the downloaded file as index.html inside your Odoo module under the static/description/ folder (e.g. your_module/static/description/index.html).",
+                            "isOpen": false
+                        },
+                        {
+                            "q": "Can I customize the color palette and typography?",
+                            "a": "Yes! You can choose from pre-set curated palettes (Odoo Purple, Ocean Blue, Emerald, etc.) or set custom primary and accent hex colors for each individual widget.",
+                            "isOpen": false
+                        },
+                        {
+                            "q": "Does this module work on both Community and Enterprise?",
+                            "a": "Yes, Index File Maker runs smoothly on both Odoo Community and Enterprise editions across Odoo 17, 18, 19, and 20.",
+                            "isOpen": false
+                        }
+                    ],
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1792772865873_190",
                 "type": "other_apps",
                 "name": "Other Apps Showcase",
                 "data": {
-                        "title": "Other Recommended Odoo Developer Tools",
-                        "subtitle": "Supercharge your Odoo development and business workflow with our premium extensions",
-                        "bgColor": "#ffffff",
-                        "titleColor": "#1e293b",
-                        "columns": "3",
-                        "cardBgColor": "#ffffff",
-                        "cardBorderColor": "#000000",
-                        "priceColor": "#000000",
-                        "btnBgColor": "#000000",
-                        "btnTextColor": "#ffffff",
-                        "apps": [
-                                {
-                                        "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
-                                        "title": "Clipboard History Manager",
-                                        "company": "Nuvexa Technology",
-                                        "price": "$ 25.00",
-                                        "badge": "Bestseller",
-                                        "version": "Odoo 19",
-                                        "btnText": "Get App",
-                                        "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
-                                },
-                                {
-                                        "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
-                                        "title": "Clipboard History Manager",
-                                        "company": "Nuvexa Technology",
-                                        "price": "$ 29.00",
-                                        "badge": "Featured",
-                                        "version": "Odoo 19",
-                                        "btnText": "Get App",
-                                        "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
-                                },
-                                {
-                                        "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
-                                        "title": "Clipboard History Manager",
-                                        "company": "Nuvexa Technology",
-                                        "price": "$ 29.00",
-                                        "badge": "Featured",
-                                        "version": "Odoo 20",
-                                        "btnText": "Get App",
-                                        "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
-                                }
-                        ],
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorder": "all",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Other Recommended Odoo Developer Tools",
+                    "subtitle": "Supercharge your Odoo development and business workflow with our premium extensions",
+                    "bgColor": "#ffffff",
+                    "titleColor": "#1e293b",
+                    "columns": "3",
+                    "cardBgColor": "#ffffff",
+                    "cardBorderColor": "#000000",
+                    "priceColor": "#000000",
+                    "btnBgColor": "#000000",
+                    "btnTextColor": "#ffffff",
+                    "apps": [
+                        {
+                            "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
+                            "title": "Clipboard History Manager",
+                            "company": "Nuvexa Technology",
+                            "price": "$ 25.00",
+                            "badge": "Bestseller",
+                            "version": "Odoo 19",
+                            "btnText": "Get App",
+                            "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
+                        },
+                        {
+                            "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
+                            "title": "Clipboard History Manager",
+                            "company": "Nuvexa Technology",
+                            "price": "$ 25.00",
+                            "badge": "Featured",
+                            "version": "Odoo 19",
+                            "btnText": "Get App",
+                            "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
+                        },
+                        {
+                            "bannerUrl": "https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png",
+                            "title": "Clipboard History Manager",
+                            "company": "Nuvexa Technology",
+                            "price": "$ 25.00",
+                            "badge": "Featured",
+                            "version": "Odoo 20",
+                            "btnText": "Get App",
+                            "appUrl": "https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager"
+                        }
+                    ],
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorder": "all",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1792982428316_442",
                 "type": "support_banner",
                 "name": "Support & Contact Card",
                 "data": {
-                        "title": "Dedicated Support & Custom Widget Development",
-                        "subtitle": "Have a question or need custom widgets for your Odoo module descriptions? Our team is here to help.",
-                        "badge": "Dedicated Support Included",
-                        "bgColor": "#000000",
-                        "textColor": "#ffffff",
-                        "cardBgColor": "#ffffff",
-                        "cardBorderColor": "#e2e8f0",
-                        "iconColor": "#000000",
-                        "channels": [
-                                {
-                                        "icon": "<i class=\"fa fa-envelope\"></i>",
-                                        "label": "Email Support",
-                                        "value": "supportnuvexaonline@gmail.com",
-                                        "url": "mailto:supportnuvexaonline@gmail.com"
-                                },
-                                {
-                                        "icon": "<i class=\"fa fa-life-ring\"></i>",
-                                        "label": "Website",
-                                        "value": "https://nuvexatechnology.netlify.app",
-                                        "url": "https://nuvexatechnology.netlify.app"
-                                },
-                                {
-                                        "icon": "<i class=\"fa fa-bullhorn\"></i>",
-                                        "label": "Contact ",
-                                        "value": "Contact us",
-                                        "url": "mailto:supportnuvexaonline@gmail.com"
-                                }
-                        ],
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#e2e8f0",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "title": "Dedicated Support & Custom Widget Development",
+                    "subtitle": "Have a question or need custom widgets for your Odoo module descriptions? Our team is here to help.",
+                    "badge": "Dedicated Support Included",
+                    "bgColor": "#000000",
+                    "textColor": "#ffffff",
+                    "cardBgColor": "#ffffff",
+                    "cardBorderColor": "#e2e8f0",
+                    "iconColor": "#000000",
+                    "channels": [
+                        {
+                            "icon": "<i class=\"fa fa-envelope\"></i>",
+                            "label": "Email Support",
+                            "value": "supportnuvexaonline@gmail.com",
+                            "url": "mailto:supportnuvexaonline@gmail.com"
+                        },
+                        {
+                            "icon": "<i class=\"fa fa-life-ring\"></i>",
+                            "label": "Website",
+                            "value": "https://nuvexatechnology.netlify.app",
+                            "url": "https://nuvexatechnology.netlify.app"
+                        },
+                        {
+                            "icon": "<i class=\"fa fa-bullhorn\"></i>",
+                            "label": "Contact ",
+                            "value": "Contact us",
+                            "url": "mailto:supportnuvexaonline@gmail.com"
+                        }
+                    ],
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#e2e8f0",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        },
-        {
+            },
+            {
                 "id": "w_1793205975023_550",
                 "type": "footer_brand",
                 "name": "Brand & Copyright Footer",
                 "data": {
-                        "companyName": "Nuvexa Technology",
-                        "companyUrl": "https://yourdomain.com",
-                        "year": "2026",
-                        "copyrightNotice": "All Rights Reserved",
-                        "tagline": "Crafted with <i class=\"fa fa-heart\" style=\"color: #ef4444;\"></i> for the Odoo Global Community",
-                        "logoUrl": "",
-                        "contactInfo": "supportnuvexaonline@gmail.com",
-                        "layout": "split",
-                        "showLinks": true,
-                        "links": [
-                                {
-                                        "label": "Documentation",
-                                        "url": "https://yourdomain.com/docs",
-                                        "icon": "fa-book"
-                                },
-                                {
-                                        "label": "Helpdesk Portal",
-                                        "url": "https://yourdomain.com/helpdesk",
-                                        "icon": "fa-life-ring"
-                                },
-                                {
-                                        "label": "More Odoo Apps",
-                                        "url": "https://apps.odoo.com",
-                                        "icon": "fa-th-large"
-                                },
-                                {
-                                        "label": "Official Website",
-                                        "url": "https://yourdomain.com",
-                                        "icon": "fa-globe"
-                                }
-                        ],
-                        "bgColor": "#1e293b",
-                        "textColor": "#94a3b8",
-                        "companyColor": "#ffffff",
-                        "linkColor": "#38bdf8",
-                        "accentColor": "#ef4444",
-                        "sectionBorder": "all",
-                        "sectionBorderColor": "#334155",
-                        "sectionBorderWidth": "1px",
-                        "sectionBorderStyle": "solid",
-                        "sectionBorderRadius": "14px"
+                    "companyName": "Nuvexa Technology",
+                    "companyUrl": "https://yourdomain.com",
+                    "year": "2026",
+                    "copyrightNotice": "All Rights Reserved",
+                    "tagline": "Crafted with <i class=\"fa fa-heart\" style=\"color: #ef4444;\"></i> for the Odoo Global Community",
+                    "logoUrl": "",
+                    "contactInfo": "supportnuvexaonline@gmail.com",
+                    "layout": "split",
+                    "showLinks": true,
+                    "links": [
+                        {
+                            "label": "Documentation",
+                            "url": "https://yourdomain.com/docs",
+                            "icon": "fa-book"
+                        },
+                        {
+                            "label": "Helpdesk Portal",
+                            "url": "https://yourdomain.com/helpdesk",
+                            "icon": "fa-life-ring"
+                        },
+                        {
+                            "label": "More Odoo Apps",
+                            "url": "https://apps.odoo.com",
+                            "icon": "fa-th-large"
+                        },
+                        {
+                            "label": "Official Website",
+                            "url": "https://yourdomain.com",
+                            "icon": "fa-globe"
+                        }
+                    ],
+                    "bgColor": "#1e293b",
+                    "textColor": "#94a3b8",
+                    "companyColor": "#ffffff",
+                    "linkColor": "#38bdf8",
+                    "accentColor": "#ef4444",
+                    "sectionBorder": "all",
+                    "sectionBorderColor": "#334155",
+                    "sectionBorderWidth": "1px",
+                    "sectionBorderStyle": "solid",
+                    "sectionBorderRadius": "14px"
                 }
-        }
-]
+            }
+        ]
     }
 };

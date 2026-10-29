@@ -529,33 +529,33 @@ export const WIDGET_CATALOG = [
                     apps: [
                         {
                             bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
-                            title: 'Odoo Code Snippets & Builder Pro',
-                            company: 'Your Company',
-                            price: '$ 29.00',
+                            title: 'Clipboard History Manager',
+                            company: 'Nuvexa Technology',
+                            price: '$ 25.00',
                             badge: 'Bestseller',
-                            version: 'Odoo 20',
+                            version: 'Odoo 19',
                             btnText: 'Get App',
-                            appUrl: 'https://apps.odoo.com/apps/modules/browse?search=developer+tools'
+                            appUrl: 'https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager'
                         },
                         {
                             bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
-                            title: 'Automated WhatsApp & SMS Gateway',
-                            company: 'Your Company',
-                            price: '$ 39.00',
+                            title: 'Clipboard History Manager',
+                            company: 'Nuvexa Technology',
+                            price: '$ 25.00',
                             badge: 'Featured',
-                            version: 'Odoo 20',
+                            version: 'Odoo 19',
                             btnText: 'Get App',
-                            appUrl: 'https://apps.odoo.com/apps/modules/browse?search=whatsapp'
+                            appUrl: 'https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager'
                         },
                         {
                             bannerUrl: 'https://apps.odoocdn.com/apps/assets/19.0/clipboard_history_manager/banner.png',
-                            title: 'Universal Document & PDF Watermark',
-                            company: 'Your Company',
-                            price: '$ 19.00',
+                            title: 'Clipboard History Manager',
+                            company: 'Nuvexa Technology',
+                            price: '$ 25.00',
                             badge: 'Popular',
-                            version: 'Odoo 20',
+                            version: 'Odoo 19',
                             btnText: 'Get App',
-                            appUrl: 'https://apps.odoo.com/apps/modules/browse?search=pdf+watermark'
+                            appUrl: 'https://apps.odoo.com/apps/modules/19.0/clipboard_history_manager'
                         }
                     ]
                 }
@@ -613,7 +613,7 @@ export const WIDGET_CATALOG = [
                 desc: 'Fully customizable brand, copyright, quick links & developer signature',
                 icon: 'fa-bookmark',
                 defaultData: {
-                    companyName: 'Your Company Name',
+                    companyName: 'Nuvexa Technology',
                     companyUrl: 'https://yourdomain.com',
                     year: '2026',
                     copyrightNotice: 'All Rights Reserved',
@@ -625,7 +625,7 @@ export const WIDGET_CATALOG = [
                     links: [
                         { label: 'Documentation', url: 'https://yourdomain.com/docs', icon: 'fa-book' },
                         { label: 'Helpdesk Portal', url: 'https://yourdomain.com/helpdesk', icon: 'fa-life-ring' },
-                        { label: 'More Odoo Apps', url: 'https://apps.odoo.com', icon: 'fa-th-large' },
+                        { label: 'More Odoo Apps', url: 'https://apps.odoo.com/apps/modules/browse?author=Nuvexa%20Technology', icon: 'fa-th-large' },
                         { label: 'Official Website', url: 'https://yourdomain.com', icon: 'fa-globe' }
                     ],
                     bgColor: '#1e293b',
