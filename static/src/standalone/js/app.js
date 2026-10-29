@@ -496,12 +496,12 @@ if (document.readyState === 'loading') {
             const form = document.createElement('div');
 
             // Title
-            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section' && widget.type !== 'support_banner') {
+            if (d.title !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'video_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section' && widget.type !== 'support_banner') {
                 form.appendChild(createInputField('Title', d.title, (val) => { d.title = val; updateCanvasLive(); }));
             }
 
             // Subtitle
-            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section' && widget.type !== 'support_banner') {
+            if (d.subtitle !== undefined && widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'video_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section' && widget.type !== 'support_banner') {
                 form.appendChild(createTextareaField('Subtitle / Tagline', d.subtitle, (val) => { d.subtitle = val; updateCanvasLive(); }));
             }
 
@@ -552,7 +552,7 @@ if (document.readyState === 'loading') {
             }
 
             // Single Badge Text (for minimal_header)
-            if (d.badge !== undefined && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase') {
+            if (d.badge !== undefined && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'video_showcase') {
                 form.appendChild(createInputField('Badge Text', d.badge, (val) => { d.badge = val; updateCanvasLive(); }));
             }
 
@@ -661,7 +661,7 @@ if (document.readyState === 'loading') {
 
             // Badge / Chip Colors & Appearance (Dynamic Color Controls & Presets)
             if ((d.badges !== undefined || d.badgeBgColor !== undefined) && widget.type !== 'vs_table') {
-                const isShowcase = (widget.type === 'mobile_showcase' || widget.type === 'desktop_showcase');
+                const isShowcase = (widget.type === 'mobile_showcase' || widget.type === 'desktop_showcase' || widget.type === 'video_showcase');
                 if (d.badgeBgColor === undefined) d.badgeBgColor = (isShowcase ? '#007bff' : '#ffffff');
                 if (d.badgeTextColor === undefined) d.badgeTextColor = (isShowcase ? '#ffffff' : '#714B67');
                 if (d.badgeBorderColor === undefined) d.badgeBorderColor = (isShowcase ? '#007bff' : '#e2e8f0');
@@ -715,10 +715,10 @@ if (document.readyState === 'loading') {
                     <div style="text-align: center; margin-bottom: 12px; padding: 12px 10px; background: ${d.bgColor || '#ffffff'}; border: 1px solid #e2e8f0; border-radius: 8px;">
                         <div style="display: inline-flex; align-items: center; justify-content: center; gap: 12px;">
                             <span id="badge-chip-live-preview" style="background-color: ${d.badgeBgColor}; color: ${d.badgeTextColor} !important; border: 1px solid ${d.badgeBorderColor || d.badgeBgColor}; padding: 0 10px; border-radius: 8px; font-size: 16px; font-weight: 700; min-width: 42px; height: 36px; line-height: 34px; text-align: center; vertical-align: middle; display: inline-block; box-sizing: border-box; flex-shrink: 0;">
-                                ${escapeHTML(d.badgeNumber || (widget.type === 'desktop_showcase' ? '01' : '03'))}
+                                ${escapeHTML(d.badgeNumber || (widget.type === 'desktop_showcase' ? '01' : (widget.type === 'video_showcase' ? '03' : '02')))}
                             </span>
                             <span id="badge-chip-category-preview" style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 36px; vertical-align: middle; display: inline-block;">
-                                ${escapeHTML(d.badgeText || (widget.type === 'desktop_showcase' ? 'Dashboard' : 'Conversation'))}
+                                ${escapeHTML(d.badgeText || (widget.type === 'desktop_showcase' ? 'Dashboard' : (widget.type === 'video_showcase' ? 'Demo Video' : 'Mobile App')))}
                             </span>
                         </div>
                     </div>` : `
@@ -745,9 +745,9 @@ if (document.readyState === 'loading') {
                         previewSpan.style.color = d.badgeTextColor;
                         previewSpan.style.borderColor = d.badgeBorderColor || d.badgeBgColor;
                         if (isShowcase) {
-                            previewSpan.innerText = d.badgeNumber || (widget.type === 'desktop_showcase' ? '01' : '03');
+                            previewSpan.innerText = d.badgeNumber || (widget.type === 'desktop_showcase' ? '01' : (widget.type === 'video_showcase' ? '03' : '02'));
                             const catSpan = badgeColorCard.querySelector('#badge-chip-category-preview');
-                            if (catSpan) catSpan.innerText = d.badgeText || (widget.type === 'desktop_showcase' ? 'Dashboard' : 'Conversation');
+                            if (catSpan) catSpan.innerText = d.badgeText || (widget.type === 'desktop_showcase' ? 'Dashboard' : (widget.type === 'video_showcase' ? 'Demo Video' : 'Mobile App'));
                         }
                     }
                 };
@@ -808,7 +808,7 @@ if (document.readyState === 'loading') {
             }
 
             // Description
-            if (d.desc !== undefined && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase') {
+            if (d.desc !== undefined && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'video_showcase') {
                 form.appendChild(createTextareaField('Description', d.desc, (val) => { d.desc = val; updateCanvasLive(); }));
             }
 
@@ -825,7 +825,7 @@ if (document.readyState === 'loading') {
             }
 
             // Image URL / Upload
-            if (d.imageUrl !== undefined && widget.type !== 'desktop_showcase') {
+            if (d.imageUrl !== undefined && widget.type !== 'desktop_showcase' && widget.type !== 'video_showcase') {
                 const imgGroup = document.createElement('div');
                 imgGroup.className = 'form-group';
                 imgGroup.innerHTML = `
@@ -870,8 +870,8 @@ if (document.readyState === 'loading') {
                 form.appendChild(imgGroup);
             }
 
-            // Colors (for widgets other than highlights_grid, stats_counter, mobile_showcase, desktop_showcase, workflow_steps, vs_table, faq_section, and support_banner)
-            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section' && widget.type !== 'support_banner') {
+            // Colors (for widgets other than highlights_grid, stats_counter, mobile_showcase, desktop_showcase, video_showcase, workflow_steps, vs_table, faq_section, and support_banner)
+            if (widget.type !== 'highlights_grid' && widget.type !== 'stats_counter' && widget.type !== 'mobile_showcase' && widget.type !== 'desktop_showcase' && widget.type !== 'video_showcase' && widget.type !== 'workflow_steps' && widget.type !== 'vs_table' && widget.type !== 'faq_section' && widget.type !== 'support_banner') {
                 if (d.bgColor !== undefined) {
                     form.appendChild(createColorField('Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
                 }
@@ -2338,6 +2338,392 @@ if (document.readyState === 'loading') {
                     </div>
                 `;
                 ptStyleGroup.appendChild(createColorField('Checkmark Icon Color', d.accentColor, (val) => { d.accentColor = val; updateCanvasLive(); }));
+                ptStyleGroup.appendChild(createColorField('Point Card Background', d.pointBgColor, (val) => { d.pointBgColor = val; updateCanvasLive(); }));
+                ptStyleGroup.appendChild(createColorField('Point Card Border Color', d.pointBorderColor, (val) => { d.pointBorderColor = val; updateCanvasLive(); }));
+                ptStyleGroup.appendChild(createColorField('Point Text Color', d.pointTextColor, (val) => { d.pointTextColor = val; updateCanvasLive(); }));
+                form.appendChild(ptStyleGroup);
+            }
+
+            // Dedicated Video Showcase Full Custom Inspector
+            if (widget.type === 'video_showcase') {
+                if (d.badgeNumber === undefined) d.badgeNumber = '03';
+                if (d.badgeText === undefined) d.badgeText = 'Live Demo Video';
+                if (d.title === undefined) d.title = 'Watch the Module in Action';
+                if (d.desc === undefined) d.desc = 'Experience how our intuitive features streamline your everyday workflow through this live video demonstration.';
+                if (d.headerAlign === undefined) d.headerAlign = 'center';
+                if (d.pointsLayout === undefined) d.pointsLayout = 'grid';
+                if (d.frameStyle === undefined) d.frameStyle = 'browser';
+                if (!d.videoUrl) d.videoUrl = 'static/description/video.mp4';
+                if (!d.browserUrl || d.browserUrl.includes('demo_video')) d.browserUrl = d.videoUrl;
+                if (d.posterUrl === undefined) d.posterUrl = '';
+                if (d.videoCaption === undefined) d.videoCaption = '';
+                if (d.autoplay === undefined) d.autoplay = false;
+                if (d.controls === undefined) d.controls = true;
+                if (d.loop === undefined) d.loop = false;
+                if (d.muted === undefined) d.muted = true;
+                if (!Array.isArray(d.points)) d.points = [
+                    'Interactive live demonstration of key module workflows',
+                    'Plays local video files (.mp4, .webm) or external CDN streams',
+                    'Responsive browser frame with playback controls and poster preview'
+                ];
+                if (d.bgColor === undefined) d.bgColor = '#ffffff';
+                if (d.accentColor === undefined) d.accentColor = '#714B67';
+                if (d.badgeBgColor === undefined) d.badgeBgColor = '#714B67';
+                if (d.badgeTextColor === undefined) d.badgeTextColor = '#ffffff';
+                if (d.badgeBorderColor === undefined) d.badgeBorderColor = '#714B67';
+                if (d.titleColor === undefined) d.titleColor = '#1e293b';
+                if (d.descColor === undefined) d.descColor = '#64748b';
+                if (d.pointBgColor === undefined) d.pointBgColor = '#fdf8fc';
+                if (d.pointBorderColor === undefined) d.pointBorderColor = '#f0e6ed';
+                if (d.pointTextColor === undefined) d.pointTextColor = '#1e293b';
+                if (d.frameColor === undefined) d.frameColor = '#1e293b';
+
+                // 1. Header & Step Count Group
+                const badgeGroup = document.createElement('div');
+                badgeGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                badgeGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-tag" style="color: var(--primary);"></i> Count Badge &amp; Category Tag Text
+                    </div>
+                `;
+                badgeGroup.appendChild(createInputField('Count Number (e.g. 01, 02, 03)', d.badgeNumber, (val) => { 
+                    d.badgeNumber = val; 
+                    const prev = document.getElementById('badge-chip-live-preview');
+                    if (prev) prev.innerText = val || '03';
+                    updateCanvasLive(); 
+                }));
+                badgeGroup.appendChild(createInputField('Category / Tag Text (e.g. Demo Video)', d.badgeText, (val) => { 
+                    d.badgeText = val; 
+                    const catPrev = document.getElementById('badge-chip-category-preview');
+                    if (catPrev) catPrev.innerText = val || '';
+                    updateCanvasLive(); 
+                }));
+                form.appendChild(badgeGroup);
+
+                // 2. Title & Short Description Group
+                const titleGroup = document.createElement('div');
+                titleGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                titleGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-header" style="color: var(--primary);"></i> Section Title &amp; Description
+                    </div>
+                `;
+                titleGroup.appendChild(createInputField('Heading Title', d.title, (val) => { d.title = val; updateCanvasLive(); }));
+                titleGroup.appendChild(createColorField('Title Color', d.titleColor, (val) => { d.titleColor = val; updateCanvasLive(); }));
+                titleGroup.appendChild(createTextareaField('Short Description / Subtitle', d.desc, (val) => { d.desc = val; updateCanvasLive(); }));
+                titleGroup.appendChild(createColorField('Description Color', d.descColor, (val) => { d.descColor = val; updateCanvasLive(); }));
+                titleGroup.appendChild(createColorField('Section Background Color', d.bgColor, (val) => { d.bgColor = val; updateCanvasLive(); }));
+                form.appendChild(titleGroup);
+
+                // 3. Layout & Video Frame Display Group
+                const layoutGroup = document.createElement('div');
+                layoutGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                layoutGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-film" style="color: var(--primary);"></i> Frame &amp; Player Layout
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Header Alignment</label>
+                        <select class="form-input" id="vs-align-select" style="font-size: 12px; padding: 6px 10px;">
+                            <option value="center" ${d.headerAlign === 'center' ? 'selected' : ''}>Centered (Default)</option>
+                            <option value="left" ${d.headerAlign === 'left' ? 'selected' : ''}>Left-Aligned</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Video Mockup Frame Style</label>
+                        <select class="form-input" id="vs-frame-select" style="font-size: 12px; padding: 6px 10px;">
+                            <option value="browser" ${d.frameStyle === 'browser' ? 'selected' : ''}>Modern Browser Window (macOS style)</option>
+                            <option value="laptop" ${d.frameStyle === 'laptop' ? 'selected' : ''}>Sleek Laptop Mockup</option>
+                            <option value="minimal" ${d.frameStyle === 'minimal' ? 'selected' : ''}>Clean Border Player</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Bottom Feature Points Layout</label>
+                        <select class="form-input" id="vs-pts-layout-select" style="font-size: 12px; padding: 6px 10px;">
+                            <option value="grid" ${d.pointsLayout === 'grid' ? 'selected' : ''}>Columns Grid (Side-by-Side)</option>
+                            <option value="list" ${d.pointsLayout === 'list' ? 'selected' : ''}>Stacked Full-Width Cards</option>
+                        </select>
+                    </div>
+                `;
+                layoutGroup.querySelector('#vs-align-select').addEventListener('change', (e) => {
+                    d.headerAlign = e.target.value;
+                    updateCanvasLive();
+                });
+                layoutGroup.querySelector('#vs-frame-select').addEventListener('change', (e) => {
+                    d.frameStyle = e.target.value;
+                    updateCanvasLive();
+                    renderPropertyInspector();
+                });
+                layoutGroup.querySelector('#vs-pts-layout-select').addEventListener('change', (e) => {
+                    d.pointsLayout = e.target.value;
+                    updateCanvasLive();
+                });
+
+                if (d.frameStyle === 'browser') {
+                    layoutGroup.appendChild(createInputField('Browser URL Bar Text', d.browserUrl, (val) => { d.browserUrl = val; updateCanvasLive(); }));
+                } else if (d.frameStyle === 'laptop') {
+                    layoutGroup.appendChild(createColorField('Laptop Bezel Color', d.frameColor, (val) => { d.frameColor = val; updateCanvasLive(); }));
+                }
+                form.appendChild(layoutGroup);
+
+                // 4. Video Source & Upload Manager (Local & Remote MP4/WebM)
+                const videoGroup = document.createElement('div');
+                videoGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                videoGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+                        <span style="display: flex; align-items: center; gap: 6px;">
+                            <i class="fa fa-play-circle" style="color: var(--primary); font-size: 15px;"></i> Video Source &amp; Media
+                        </span>
+                        <span style="font-size: 10px; color: #10b981; font-weight: 600;"><i class="fa fa-check-circle"></i> Local MP4 Supported</span>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; margin-bottom: 12px;">
+                        <label class="form-label" style="font-size: 11px; margin-bottom: 4px; font-weight: 600;">Video URL or Relative Path:</label>
+                        <input type="text" class="form-input mb-1" id="vs-video-input" placeholder="e.g. index_file_maker/static/description/demo.mp4" value="${escapeHTML(d.videoUrl)}" style="font-size: 12px; padding: 5px 8px;">
+                        
+                        <div style="display: flex; gap: 6px; margin-top: 6px; margin-bottom: 8px; flex-wrap: wrap;">
+                            <label class="btn btn-outline" style="font-size: 11px; padding: 5px 10px; cursor: pointer; color: var(--primary); border-color: var(--primary); font-weight: 600;">
+                                <i class="fa fa-upload"></i> Upload Local Video (.mp4, .webm)
+                                <input type="file" accept="video/mp4,video/webm" id="vs-file-uploader" style="display: none;">
+                            </label>
+                            ${d.videoUrl ? `<button type="button" class="btn btn-outline" id="btn-clear-vs-video" style="font-size: 11px; padding: 5px 10px; color: #ef4444; border-color: #fca5a5;">Remove Video</button>` : ''}
+                        </div>
+                        
+                        <div style="font-size: 11px; color: #64748b; line-height: 1.4; background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 6px 8px;">
+                            <i class="fa fa-info-circle" style="color: var(--primary);"></i> <b>Local Playback:</b> You can upload a local video file to preview and play immediately in the builder, or specify your module path like <code>static/description/demo.mp4</code>.
+                        </div>
+                    </div>
+
+                    <!-- Poster / Thumbnail Image -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; margin-bottom: 12px;">
+                        <label class="form-label" style="font-size: 11px; margin-bottom: 4px; font-weight: 600;">Video Poster / Thumbnail Image (Optional):</label>
+                        <input type="text" class="form-input mb-1" id="vs-poster-input" placeholder="Poster Image URL / Path (e.g. static/description/poster.png)" value="${escapeHTML(d.posterUrl)}" style="font-size: 12px; padding: 5px 8px;">
+                        <div style="display: flex; gap: 6px; margin-top: 6px; margin-bottom: 6px;">
+                            <label class="btn btn-outline" style="font-size: 10px; padding: 4px 8px; cursor: pointer; color: var(--primary); border-color: var(--primary);">
+                                <i class="fa fa-image"></i> Upload Poster
+                                <input type="file" accept="image/*" id="vs-poster-uploader" style="display: none;">
+                            </label>
+                            ${d.posterUrl ? `<button type="button" class="btn btn-outline" id="btn-clear-vs-poster" style="font-size: 10px; padding: 4px 8px; color: #ef4444; border-color: #fca5a5;">Remove Poster</button>` : ''}
+                        </div>
+                    </div>
+
+                    <!-- Video Caption -->
+                    <div class="form-group mb-2">
+                        <label class="form-label" style="font-size: 11px; margin-bottom: 4px; font-weight: 600;">Optional Video Bottom Caption:</label>
+                        <input type="text" class="form-input" id="vs-cap-input" placeholder="e.g. 60-Second Overview of Automated Invoicing" value="${escapeHTML(d.videoCaption)}" style="font-size: 11px; padding: 5px 8px;">
+                    </div>
+
+                    <!-- Video Player Flags & Controls -->
+                    <div style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px;">
+                        <div style="font-size: 11px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Playback Settings</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                            <label style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-main); cursor: pointer;">
+                                <input type="checkbox" id="chk-vs-controls" ${d.controls !== false ? 'checked' : ''} style="accent-color: var(--primary); width: 15px; height: 15px;">
+                                Show Player Controls
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-main); cursor: pointer;">
+                                <input type="checkbox" id="chk-vs-autoplay" ${d.autoplay ? 'checked' : ''} style="accent-color: var(--primary); width: 15px; height: 15px;">
+                                Autoplay Video
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-main); cursor: pointer;">
+                                <input type="checkbox" id="chk-vs-loop" ${d.loop ? 'checked' : ''} style="accent-color: var(--primary); width: 15px; height: 15px;">
+                                Loop Playback
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-main); cursor: pointer;">
+                                <input type="checkbox" id="chk-vs-muted" ${d.muted ? 'checked' : ''} style="accent-color: var(--primary); width: 15px; height: 15px;">
+                                Start Muted
+                            </label>
+                        </div>
+                    </div>
+                `;
+
+                const vidInp = videoGroup.querySelector('#vs-video-input');
+                vidInp.addEventListener('input', (e) => { 
+                    d.videoUrl = e.target.value.trim();
+                    delete d._blobUrl;
+                    updateCanvasLive(); 
+                });
+
+                const vidFileInp = videoGroup.querySelector('#vs-file-uploader');
+                if (vidFileInp) {
+                    vidFileInp.addEventListener('change', (e) => {
+                        const f = e.target.files[0];
+                        if (f) {
+                            try {
+                                if (d._blobUrl) {
+                                    try { URL.revokeObjectURL(d._blobUrl); } catch (err) {}
+                                }
+                                const blobUrl = URL.createObjectURL(f);
+                                d._blobUrl = blobUrl;
+                                d.videoUrl = 'static/description/' + f.name;
+                                if (!d.browserUrl || d.browserUrl.includes('video.mp4') || d.browserUrl.includes('demo_video')) {
+                                    d.browserUrl = d.videoUrl;
+                                }
+                                vidInp.value = d.videoUrl;
+                                updateCanvasLive();
+                                renderPropertyInspector();
+                                showToast('Local video loaded & playing! Path: ' + d.videoUrl);
+                            } catch (err) {
+                                console.error('Video load error:', err);
+                                showToast('Error loading video file');
+                            }
+                        }
+                    });
+                }
+                const clearVidBtn = videoGroup.querySelector('#btn-clear-vs-video');
+                if (clearVidBtn) {
+                    clearVidBtn.addEventListener('click', () => {
+                        if (d._blobUrl) {
+                            try { URL.revokeObjectURL(d._blobUrl); } catch (err) {}
+                        }
+                        delete d._blobUrl;
+                        d.videoUrl = '';
+                        vidInp.value = '';
+                        updateCanvasLive();
+                        renderPropertyInspector();
+                    });
+                }
+
+                const postInp = videoGroup.querySelector('#vs-poster-input');
+                postInp.addEventListener('input', (e) => { d.posterUrl = e.target.value; updateCanvasLive(); });
+
+                const postFileInp = videoGroup.querySelector('#vs-poster-uploader');
+                if (postFileInp) {
+                    postFileInp.addEventListener('change', (e) => {
+                        const f = e.target.files[0];
+                        if (f) {
+                            const reader = new FileReader();
+                            reader.onload = (evt) => {
+                                d.posterUrl = evt.target.result;
+                                postInp.value = '(Embedded Poster Image)';
+                                updateCanvasLive();
+                                renderPropertyInspector();
+                                showToast('Poster image uploaded!');
+                            };
+                            reader.readAsDataURL(f);
+                        }
+                    });
+                }
+                const clearPostBtn = videoGroup.querySelector('#btn-clear-vs-poster');
+                if (clearPostBtn) {
+                    clearPostBtn.addEventListener('click', () => {
+                        d.posterUrl = '';
+                        updateCanvasLive();
+                        renderPropertyInspector();
+                    });
+                }
+
+                const capInp = videoGroup.querySelector('#vs-cap-input');
+                capInp.addEventListener('input', (e) => { d.videoCaption = e.target.value; updateCanvasLive(); });
+
+                videoGroup.querySelector('#chk-vs-controls').addEventListener('change', (e) => {
+                    d.controls = e.target.checked;
+                    updateCanvasLive();
+                });
+                videoGroup.querySelector('#chk-vs-autoplay').addEventListener('change', (e) => {
+                    d.autoplay = e.target.checked;
+                    updateCanvasLive();
+                });
+                videoGroup.querySelector('#chk-vs-loop').addEventListener('change', (e) => {
+                    d.loop = e.target.checked;
+                    updateCanvasLive();
+                });
+                videoGroup.querySelector('#chk-vs-muted').addEventListener('change', (e) => {
+                    d.muted = e.target.checked;
+                    updateCanvasLive();
+                });
+
+                form.appendChild(videoGroup);
+
+                // 5. Feature Points Manager
+                const ptsGroup = document.createElement('div');
+                ptsGroup.className = 'form-group';
+                ptsGroup.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label class="form-label" style="margin: 0; font-weight: 700; font-size: 13px; color: var(--text-main);">
+                            <i class="fa fa-check-circle" style="color: var(--primary); margin-right: 4px;"></i> Feature Points (${d.points.length})
+                        </label>
+                        <button type="button" class="btn btn-outline" id="btn-add-vs-point" style="font-size: 11px; padding: 4px 10px; color: var(--primary); border-color: var(--primary); cursor: pointer; font-weight: 600;">
+                            <i class="fa fa-plus"></i> Add Point
+                        </button>
+                    </div>
+                    <div class="items-list" id="vs-points-list" style="display: flex; flex-direction: column; gap: 8px;"></div>
+                    <button type="button" class="btn btn-outline" id="btn-add-vs-point-bottom" style="width: 100%; margin-top: 10px; font-size: 12px; padding: 7px; color: var(--primary); border-color: var(--primary); border-style: dashed; font-weight: 600; cursor: pointer;">
+                        <i class="fa fa-plus-circle"></i> + Add Another Point
+                    </button>
+                `;
+
+                const ptsList = ptsGroup.querySelector('#vs-points-list');
+                d.points.forEach((pt, idx) => {
+                    const ptBox = document.createElement('div');
+                    ptBox.className = 'item-card';
+                    ptBox.style.cssText = 'background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px; position: relative;';
+                    ptBox.innerHTML = `
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 10.5px; font-weight: 700; color: var(--primary);">Point #${idx + 1}</span>
+                            <div style="display: flex; gap: 4px;">
+                                <button type="button" class="toolbar-btn btn-pt-up" title="Move Up" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === 0 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-up"></i></button>
+                                <button type="button" class="toolbar-btn btn-pt-down" title="Move Down" style="padding: 2px 6px; font-size: 10px; cursor: pointer;" ${idx === d.points.length - 1 ? 'disabled style="opacity:0.4; cursor:not-allowed;"' : ''}><i class="fa fa-arrow-down"></i></button>
+                                <button type="button" class="toolbar-btn btn-pt-del" title="Delete Point" style="padding: 2px 6px; font-size: 10px; color: #ef4444; cursor: pointer;"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <input type="text" class="form-input pt-text-input" value="${escapeHTML(pt)}" placeholder="Feature Point description..." style="font-size: 12px; padding: 6px 8px;">
+                    `;
+
+                    ptBox.querySelector('.pt-text-input').addEventListener('input', (e) => {
+                        d.points[idx] = e.target.value;
+                        updateCanvasLive();
+                    });
+
+                    const upBtn = ptBox.querySelector('.btn-pt-up');
+                    if (upBtn && idx > 0) {
+                        upBtn.addEventListener('click', () => {
+                            const temp = d.points[idx];
+                            d.points[idx] = d.points[idx - 1];
+                            d.points[idx - 1] = temp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+
+                    const downBtn = ptBox.querySelector('.btn-pt-down');
+                    if (downBtn && idx < d.points.length - 1) {
+                        downBtn.addEventListener('click', () => {
+                            const temp = d.points[idx];
+                            d.points[idx] = d.points[idx + 1];
+                            d.points[idx + 1] = temp;
+                            renderPropertyInspector();
+                            updateCanvasLive();
+                        });
+                    }
+
+                    ptBox.querySelector('.btn-pt-del').addEventListener('click', () => {
+                        d.points.splice(idx, 1);
+                        renderPropertyInspector();
+                        updateCanvasLive();
+                    });
+
+                    ptsList.appendChild(ptBox);
+                });
+
+                const addPtFn = () => {
+                    d.points.push('Interactive video demonstration of key module capabilities');
+                    renderPropertyInspector();
+                    updateCanvasLive();
+                };
+                ptsGroup.querySelector('#btn-add-vs-point').addEventListener('click', addPtFn);
+                ptsGroup.querySelector('#btn-add-vs-point-bottom').addEventListener('click', addPtFn);
+                form.appendChild(ptsGroup);
+
+                // 6. Point Card & Styling
+                const ptStyleGroup = document.createElement('div');
+                ptStyleGroup.style.cssText = 'background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 16px;';
+                ptStyleGroup.innerHTML = `
+                    <div style="font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa fa-paint-brush" style="color: var(--primary);"></i> Point Card Styling
+                    </div>
+                `;
+                ptStyleGroup.appendChild(createColorField('Play/Bullet Icon Color', d.accentColor, (val) => { d.accentColor = val; updateCanvasLive(); }));
                 ptStyleGroup.appendChild(createColorField('Point Card Background', d.pointBgColor, (val) => { d.pointBgColor = val; updateCanvasLive(); }));
                 ptStyleGroup.appendChild(createColorField('Point Card Border Color', d.pointBorderColor, (val) => { d.pointBorderColor = val; updateCanvasLive(); }));
                 ptStyleGroup.appendChild(createColorField('Point Text Color', d.pointTextColor, (val) => { d.pointTextColor = val; updateCanvasLive(); }));

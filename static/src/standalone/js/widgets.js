@@ -184,6 +184,46 @@ const WIDGET_CATALOG = [
                 }
             },
             {
+                type: 'video_showcase',
+                name: 'Video Showcase',
+                desc: 'Responsive video player mockup with browser or clean frame for local/web MP4 demos',
+                icon: 'fa-play-circle',
+                defaultData: {
+                    badgeNumber: '03',
+                    badgeText: 'Live Demo Video',
+                    title: 'Watch the Module in Action',
+                    desc: 'Experience how our intuitive features streamline your everyday workflow through this live video demonstration.',
+                    headerAlign: 'center',
+                    pointsLayout: 'grid',
+                    frameStyle: 'browser',
+                    browserUrl: 'static/description/video.mp4',
+                    videoUrl: 'static/description/video.mp4',
+                    posterUrl: '',
+                    autoplay: false,
+                    controls: true,
+                    loop: false,
+                    muted: true,
+                    videoCaption: '',
+                    points: [
+                        'Interactive live demonstration of key module workflows',
+                        'Plays local video files (.mp4, .webm) or external CDN streams',
+                        'Responsive browser frame with playback controls and poster preview'
+                    ],
+                    bgColor: '#ffffff',
+                    accentColor: '#714B67',
+                    badgeBgColor: '#714B67',
+                    badgeTextColor: '#ffffff',
+                    badgeBorderColor: '#714B67',
+                    badgePreset: 'purple',
+                    titleColor: '#1e293b',
+                    descColor: '#64748b',
+                    pointBgColor: '#fdf8fc',
+                    pointBorderColor: '#f0e6ed',
+                    pointTextColor: '#1e293b',
+                    frameColor: '#1e293b'
+                }
+            },
+            {
                 type: 'workflow_steps',
                 name: '3-Step How It Works',
                 desc: 'Numbered step-by-step onboarding cards with custom colors',

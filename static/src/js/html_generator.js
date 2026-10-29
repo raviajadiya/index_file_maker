@@ -658,6 +658,144 @@ function renderWidgetAppStore(widget, globalBrand, globalAccent) {
 </section>`;
         }
 
+        case 'video_showcase': {
+            const bg = d.bgColor || '#ffffff';
+            const accent = d.accentColor || globalBrand || '#714B67';
+            const badgeBg = d.badgeBgColor || accent || '#714B67';
+            const badgeText = d.badgeTextColor || '#ffffff';
+            const badgeBorder = d.badgeBorderColor || badgeBg;
+            const titleCol = d.titleColor || '#1e293b';
+            const descCol = d.descColor || '#64748b';
+            const pointBg = d.pointBgColor || '#fdf8fc';
+            const pointBorder = d.pointBorderColor || '#f0e6ed';
+            const pointText = d.pointTextColor || '#1e293b';
+            const frameCol = d.frameColor || '#1e293b';
+            const frameStyle = d.frameStyle || 'browser';
+            const headerAlign = d.headerAlign || 'center';
+            const isCenter = headerAlign === 'center';
+            const pointsLayout = d.pointsLayout || 'grid';
+
+            const points = d.points || d.bulletItems || [];
+            const colClass = points.length === 2 ? 'col-12 col-md-6' : (points.length === 4 ? 'col-12 col-md-6 col-lg-3' : 'col-12 col-md-4');
+
+            const pointsHTML = points.map(pt => {
+                if (pointsLayout === 'list') {
+                    return `
+                    <div class="col-12 mb-2">
+                        <div class="d-flex align-items-center p-3" style="background-color: ${pointBg}; border: 1px solid ${pointBorder}; border-radius: 10px;">
+                            <span class="me-3 d-inline-flex align-items-center justify-content-center" style="color: ${accent} !important; font-size: 20px; flex-shrink: 0;">
+                                <i class="fa fa-play-circle" style="color: ${accent}; font-size: 20px; vertical-align: middle;"></i>
+                            </span>
+                            <span style="font-size: 15px; font-weight: 500; color: ${pointText} !important; line-height: 1.4;">${escapeHTML(pt)}</span>
+                        </div>
+                    </div>`;
+                }
+                return `
+                <div class="${colClass} mb-3">
+                    <div class="h-100 d-flex align-items-center p-3" style="background-color: ${pointBg}; border: 1px solid ${pointBorder}; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);">
+                        <span class="me-3 d-inline-flex align-items-center justify-content-center" style="color: ${accent} !important; font-size: 20px; flex-shrink: 0;">
+                            <i class="fa fa-play-circle" style="color: ${accent}; font-size: 20px; vertical-align: middle;"></i>
+                        </span>
+                        <span style="font-size: 15px; font-weight: 500; color: ${pointText} !important; line-height: 1.45;">${escapeHTML(pt)}</span>
+                    </div>
+                </div>`;
+            }).join('');
+
+            const vidPath = d.videoUrl || 'static/description/video.mp4';
+            const renderVideoPlayer = (vidUrl, posterUrl) => {
+                const finalUrl = vidUrl || vidPath;
+                const controlsAttr = d.controls !== false ? 'controls' : '';
+                const autoplayAttr = d.autoplay ? 'autoplay' : '';
+                const loopAttr = d.loop ? 'loop' : '';
+                const mutedAttr = d.muted ? 'muted' : '';
+                const posterAttr = posterUrl ? `poster="${escapeHTML(posterUrl)}"` : '';
+                return `
+                <video src="${escapeHTML(finalUrl)}"
+                       style="width: 100%; height: auto; display: block; max-height: 580px; background-color: #000000; object-fit: contain;"
+                       ${controlsAttr} ${autoplayAttr} ${loopAttr} ${mutedAttr} playsinline preload="metadata" ${posterAttr}>
+                    <source src="${escapeHTML(finalUrl)}" type="video/mp4">
+                    <source src="${escapeHTML(finalUrl)}" type="video/webm">
+                    Your browser does not support HTML5 video.
+                </video>`;
+            };
+
+            let videoMockupHTML = '';
+            if (frameStyle === 'laptop') {
+                videoMockupHTML = `
+                <div style="max-width: 980px; margin: 0 auto; width: 100%;">
+                    <div style="background-color: ${frameCol}; border-radius: 16px 16px 0 0; -webkit-border-radius: 16px 16px 0 0; padding: 14px 14px 0 14px; box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.3);">
+                        <div style="width: 8px; height: 8px; background-color: #475569; border-radius: 50%; margin: 0 auto 10px auto;"></div>
+                        <div style="background-color: #000000; border-radius: 6px 6px 0 0; -webkit-border-radius: 6px 6px 0 0; overflow: hidden; border: 1px solid #334155;">
+                            ${renderVideoPlayer(d.videoUrl, d.posterUrl)}
+                        </div>
+                    </div>
+                    <div style="position: relative; background: linear-gradient(180deg, #94a3b8 0%, #64748b 100%); height: 18px; border-radius: 0 0 18px 18px; -webkit-border-radius: 0 0 18px 18px; box-shadow: 0 12px 30px rgba(0,0,0,0.22);">
+                        <div style="width: 90px; height: 6px; background-color: #cbd5e1; border-radius: 0 0 6px 6px; -webkit-border-radius: 0 0 6px 6px; margin: 0 auto;"></div>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.15); height: 8px; width: 85%; margin: 0 auto; border-radius: 50%; filter: blur(4px);"></div>
+                    ${d.videoCaption ? `<div style="font-size: 12px; color: #64748b; margin-top: 12px; font-weight: 500; text-align: center;">${escapeHTML(d.videoCaption)}</div>` : ''}
+                </div>`;
+            } else if (frameStyle === 'minimal') {
+                videoMockupHTML = `
+                <div style="max-width: 1060px; margin: 0 auto; width: 100%; border-radius: 14px; -webkit-border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.22); border: 1px solid #cbd5e1; background-color: #000000;">
+                    <div style="overflow: hidden; border-radius: 13px; -webkit-border-radius: 13px;">
+                        ${renderVideoPlayer(d.videoUrl, d.posterUrl)}
+                    </div>
+                    ${d.videoCaption ? `<div style="font-size: 12px; color: #64748b; padding: 10px 14px; font-weight: 500; text-align: center; background-color: #f8fafc; border-top: 1px solid #e2e8f0; border-radius: 0 0 13px 13px; -webkit-border-radius: 0 0 13px 13px;">${escapeHTML(d.videoCaption)}</div>` : ''}
+                </div>`;
+            } else {
+                videoMockupHTML = `
+                <div style="max-width: 1060px; margin: 0 auto; width: 100%; border-radius: 14px; -webkit-border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.22); border: 1px solid #cbd5e1; background-color: #ffffff;">
+                    <div class="d-flex align-items-center justify-content-between px-3 py-2" style="background-color: #f1f5f9; border-bottom: 1px solid #e2e8f0; border-radius: 13px 13px 0 0; -webkit-border-radius: 13px 13px 0 0;">
+                        <div class="d-flex align-items-center">
+                            <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #ef4444; display: inline-block; margin-right: 7px;"></span>
+                            <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #f59e0b; display: inline-block; margin-right: 7px;"></span>
+                            <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #10b981; display: inline-block;"></span>
+                        </div>
+                        <div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; padding: 4px 24px; font-size: 12px; color: #64748b; font-weight: 500; max-width: 65%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            <i class="fa fa-film me-1" style="font-size: 11px; color: ${accent};"></i>${escapeHTML(d.videoUrl || d.browserUrl || 'static/description/video.mp4')}
+                        </div>
+                        <div style="width: 44px;"></div>
+                    </div>
+                    <div style="background-color: #000000; overflow: hidden; ${d.videoCaption ? '' : 'border-radius: 0 0 13px 13px; -webkit-border-radius: 0 0 13px 13px;'}">
+                        ${renderVideoPlayer(d.videoUrl, d.posterUrl)}
+                    </div>
+                    ${d.videoCaption ? `<div style="font-size: 12px; color: #64748b; padding: 10px 14px; font-weight: 500; text-align: center; background-color: #f8fafc; border-top: 1px solid #e2e8f0; border-radius: 0 0 13px 13px; -webkit-border-radius: 0 0 13px 13px;">${escapeHTML(d.videoCaption)}</div>` : ''}
+                </div>`;
+            }
+
+            const borderCss = getSectionBorderStyle(d, 'all', '#e2e8f0');
+            return `<section style="background-color: ${bg}; padding: 38px 28px 28px 28px; ${borderCss}">
+    <div class="container py-0">
+        <!-- TOP: Count, Category, Title, Subtitle -->
+        <div class="row ${isCenter ? 'justify-content-center text-center' : ''} mb-4">
+            <div class="col-12 col-lg-10">
+                ${(d.badgeNumber || d.badgeText) ? `
+                <div class="mb-3 ${isCenter ? 'text-center' : ''}" style="text-align: ${isCenter ? 'center' : 'left'}; line-height: 1.2;">
+                    ${d.badgeNumber ? `<span style="background-color: ${badgeBg}; color: ${badgeText} !important; border: 1px solid ${badgeBorder}; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-block; min-width: 42px; height: 36px; line-height: 34px; text-align: center; vertical-align: middle; margin-right: 12px; padding: 0 10px; box-sizing: border-box;">${escapeHTML(d.badgeNumber)}</span>` : ''}
+                    ${d.badgeText ? `<span style="font-size: 22px; font-weight: 700; color: #1e293b !important; line-height: 36px; vertical-align: middle; display: inline-block;">${escapeHTML(d.badgeText)}</span>` : ''}
+                </div>` : ''}
+                <h2 style="font-size: 30px; font-weight: 700; color: ${titleCol} !important; margin: 0 0 10px 0; line-height: 1.3;">${escapeHTML(d.title || '')}</h2>
+                ${d.desc ? `<p style="font-size: 15.5px; font-weight: 400; color: ${descCol} !important; line-height: 1.6; margin: 0 ${isCenter ? 'auto' : ''}; max-width: 800px;">${escapeHTML(d.desc)}</p>` : ''}
+            </div>
+        </div>
+
+        <!-- MIDDLE: Video Mockup Frame -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-12">
+                ${videoMockupHTML}
+            </div>
+        </div>
+
+        <!-- BOTTOM: Feature Points Cards -->
+        ${points.length ? `
+        <div class="row justify-content-center g-3">
+            ${pointsHTML}
+        </div>` : ''}
+    </div>
+</section>`;
+        }
+
         case 'feature_split_right': {
             const bg = d.bgColor || '#f8f9fa';
             const accent = d.accentColor || globalBrand || '#714B67';

@@ -8,7 +8,8 @@
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Google Material Symbols (Odoo Icons .oi) -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -24,17 +25,23 @@
     <!-- TOP HEADER -->
     <header class="topbar">
         <div class="topbar-brand">
-            <button class="btn btn-primary" id="btn-save-template" onclick="saveCurrentTemplate()" title="Save Template to Odoo"
+            <button class="btn btn-primary" id="btn-save-template" onclick="saveCurrentTemplate()"
+                title="Save Template to Odoo"
                 style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; font-size: 13px; font-weight: 700; background: #00A09D; border-color: #00A09D; color: #ffffff; cursor: pointer;">
                 <i class="fa fa-floppy-o"></i> Save
             </button>
-            <button class="btn btn-outline" id="btn-new-template" onclick="startNewTemplate()" title="Create New Blank Template"
+            <button class="btn btn-outline" id="btn-new-template" onclick="startNewTemplate()"
+                title="Create New Blank Template"
                 style="display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; font-size: 12px; font-weight: 600; background: #ffffff; color: #475569; border-color: #cbd5e1; cursor: pointer;">
                 <i class="fa fa-plus"></i> Create New
             </button>
-            <div id="template-info-badge" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;">
-                <span id="template-status-tag" style="font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #e0f2fe; color: #0369a1; text-transform: uppercase;">NEW</span>
-                <span id="template-name-display" style="font-size: 12px; font-weight: 600; color: #334155; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Odoo AppStore Index File Maker</span>
+            <div id="template-info-badge"
+                style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;">
+                <span id="template-status-tag"
+                    style="font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #e0f2fe; color: #0369a1; text-transform: uppercase;">NEW</span>
+                <span id="template-name-display"
+                    style="font-size: 12px; font-weight: 600; color: #334155; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Odoo
+                    AppStore Index File Maker</span>
             </div>
         </div>
 
@@ -176,27 +183,36 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p style="font-size: 14px; color: #64748b; margin-bottom: 16px;">Choose a pre-designed layout to jumpstart your Odoo App Store description:</p>
+                <p style="font-size: 14px; color: #64748b; margin-bottom: 16px;">Choose a pre-designed layout to
+                    jumpstart your Odoo App Store description:</p>
                 <div style="display: flex; flex-direction: column; gap: 12px;">
                     <!-- Template 1: Odoo Theme -->
-                    <div class="item-card" style="cursor: pointer; padding: 16px; border: 1px solid #e2e8f0; border-radius: 10px; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.03);" onclick="loadTemplate('odoo_theme')">
+                    <div class="item-card"
+                        style="cursor: pointer; padding: 16px; border: 1px solid #e2e8f0; border-radius: 10px; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.03);"
+                        onclick="loadTemplate('odoo_theme')">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div style="display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0;">
-                                <div style="width: 44px; height: 44px; border-radius: 10px; background-color: rgba(113, 75, 103, 0.12); color: #714B67; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                                <div
+                                    style="width: 44px; height: 44px; border-radius: 10px; background-color: rgba(113, 75, 103, 0.12); color: #714B67; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
                                     <i class="fa fa-cube"></i>
                                 </div>
                                 <div style="flex: 1; min-width: 0;">
                                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                        <h4 style="font-size: 15px; font-weight: 700; color: #714B67; margin: 0;">Odoo Theme</h4>
-                                        <span style="font-size: 10px; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px;">DEFAULT PURPLE</span>
+                                        <h4 style="font-size: 15px; font-weight: 700; color: #714B67; margin: 0;">Odoo
+                                            Theme</h4>
+                                        <span
+                                            style="font-size: 10px; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px;">DEFAULT
+                                            PURPLE</span>
                                     </div>
                                     <p style="font-size: 12.5px; color: #64748b; margin: 0;">
-                                        Standard Odoo App Store presentation with Purple &amp; Teal branding, comparison table, showcases, and FAQs.
+                                        Standard Odoo App Store presentation with Purple &amp; Teal branding, comparison
+                                        table, showcases, and FAQs.
                                     </p>
                                 </div>
                             </div>
                             <div style="margin-left: 14px; flex-shrink: 0;">
-                                <button class="btn btn-primary" style="font-size: 12px; padding: 6px 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                                <button class="btn btn-primary"
+                                    style="font-size: 12px; padding: 6px 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
                                     <i class="fa fa-folder-open-o"></i> Load Template
                                 </button>
                             </div>
@@ -204,24 +220,32 @@
                     </div>
 
                     <!-- Template 2: Black Theme -->
-                    <div class="item-card" style="cursor: pointer; padding: 16px; border: 1px solid #e2e8f0; border-radius: 10px; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.03);" onclick="loadTemplate('black_theme')">
+                    <div class="item-card"
+                        style="cursor: pointer; padding: 16px; border: 1px solid #e2e8f0; border-radius: 10px; transition: all 0.2s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.03);"
+                        onclick="loadTemplate('black_theme')">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div style="display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0;">
-                                <div style="width: 44px; height: 44px; border-radius: 10px; background-color: rgba(0, 0, 0, 0.08); color: #1e293b; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
+                                <div
+                                    style="width: 44px; height: 44px; border-radius: 10px; background-color: rgba(0, 0, 0, 0.08); color: #1e293b; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;">
                                     <i class="fa fa-moon-o"></i>
                                 </div>
                                 <div style="flex: 1; min-width: 0;">
                                     <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                        <h4 style="font-size: 15px; font-weight: 700; color: #0f172a; margin: 0;">Black Theme</h4>
-                                        <span style="font-size: 10px; font-weight: 700; background: #fef3c7; color: #b45309; padding: 2px 6px; border-radius: 4px;">DARK &amp; GOLD</span>
+                                        <h4 style="font-size: 15px; font-weight: 700; color: #0f172a; margin: 0;">Black
+                                            Theme</h4>
+                                        <span
+                                            style="font-size: 10px; font-weight: 700; background: #fef3c7; color: #b45309; padding: 2px 6px; border-radius: 4px;">DARK
+                                            &amp; GOLD</span>
                                     </div>
                                     <p style="font-size: 12.5px; color: #64748b; margin: 0;">
-                                        High-contrast luxury dark layout with gold accents, 3-step workflow, desktop showcase, and dark banners.
+                                        High-contrast luxury dark layout with gold accents, 3-step workflow, desktop
+                                        showcase, and dark banners.
                                     </p>
                                 </div>
                             </div>
                             <div style="margin-left: 14px; flex-shrink: 0;">
-                                <button class="btn btn-outline" style="font-size: 12px; padding: 6px 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; color: #0f172a; border-color: #cbd5e1;">
+                                <button class="btn btn-outline"
+                                    style="font-size: 12px; padding: 6px 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; color: #0f172a; border-color: #cbd5e1;">
                                     <i class="fa fa-folder-open-o"></i> Load Template
                                 </button>
                             </div>
@@ -229,13 +253,16 @@
                     </div>
 
                     <!-- Template 3: Blank Canvas -->
-                    <div class="item-card" style="cursor: pointer; padding: 12px 16px; border: 1px dashed #cbd5e1; background: #fafafa; border-radius: 8px; margin-top: 4px;" onclick="loadTemplate('blank')">
+                    <div class="item-card"
+                        style="cursor: pointer; padding: 12px 16px; border: 1px dashed #cbd5e1; background: #fafafa; border-radius: 8px; margin-top: 4px;"
+                        onclick="loadTemplate('blank')">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <i class="fa fa-trash-o" style="color: #ef4444; font-size: 16px;"></i>
                                 <div>
                                     <strong style="font-size: 13px; color: #ef4444;">Start from Blank Canvas</strong>
-                                    <span style="font-size: 12px; color: #94a3b8; margin-left: 8px;">Clear canvas and design from scratch</span>
+                                    <span style="font-size: 12px; color: #94a3b8; margin-left: 8px;">Clear canvas and
+                                        design from scratch</span>
                                 </div>
                             </div>
                             <span style="font-size: 12px; color: #94a3b8;"><i class="fa fa-chevron-right"></i></span>
@@ -255,10 +282,12 @@
                     <h3 style="font-size: 16px; font-weight: 700;">Saved Templates in Odoo</h3>
                 </div>
                 <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-primary" style="font-size: 12px; padding: 5px 12px;" onclick="startNewTemplate(); closeModal('saved-templates-modal');">
+                    <button class="btn btn-primary" style="font-size: 12px; padding: 5px 12px;"
+                        onclick="startNewTemplate(); closeModal('saved-templates-modal');">
                         <i class="fa fa-plus"></i> Create New
                     </button>
-                    <button class="btn btn-outline" style="color: #64748b; border-color: #cbd5e1;" onclick="closeModal('saved-templates-modal')">
+                    <button class="btn btn-outline" style="color: #64748b; border-color: #cbd5e1;"
+                        onclick="closeModal('saved-templates-modal')">
                         <i class="fa fa-times"></i>
                     </button>
                 </div>
@@ -267,9 +296,11 @@
                 <p style="font-size: 13px; color: #64748b; margin-bottom: 14px;">
                     Select any previously saved template to load and continue editing in the builder:
                 </p>
-                <div id="saved-templates-list-container" style="display: flex; flex-direction: column; gap: 10px; max-height: 420px; overflow-y: auto;">
+                <div id="saved-templates-list-container"
+                    style="display: flex; flex-direction: column; gap: 10px; max-height: 420px; overflow-y: auto;">
                     <div style="text-align: center; padding: 30px; color: #94a3b8;">
-                        <i class="fa fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 8px; display: block;"></i>
+                        <i class="fa fa-spinner fa-spin"
+                            style="font-size: 24px; margin-bottom: 8px; display: block;"></i>
                         Loading saved templates...
                     </div>
                 </div>
@@ -302,9 +333,9 @@
         }
     </script>
     <!-- Modular JavaScript Files -->
-    <script src="js/widgets.js?v=20.0.68"></script>
-    <script src="js/generator.js?v=20.0.68"></script>
-    <script src="js/app.js?v=20.0.68"></script>
+    <script src="js/widgets.js?v=20.0.70"></script>
+    <script src="js/generator.js?v=20.0.70"></script>
+    <script src="js/app.js?v=20.0.70"></script>
 </body>
 
 </html>
