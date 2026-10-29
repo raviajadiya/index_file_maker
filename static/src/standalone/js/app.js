@@ -279,7 +279,7 @@ if (document.readyState === 'loading') {
                         <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">Your Canvas is Empty</h3>
                         <p style="max-width: 420px; margin-bottom: 24px; font-size: 14px;">Drag widgets from the left library or choose a starter template to begin designing your Odoo App Store description.</p>
                         <button class="btn btn-primary" onclick="openTemplatesModal()">
-                            <i class="fa fa-folder-open-o"></i> Browse Starter Templates
+                            <i class="fa fa-folder-open-o"></i> Browse Templates
                         </button>
                     </div>
                 `;
