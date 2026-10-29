@@ -42,8 +42,8 @@ async function initApp() {
         await loadTemplateFromBackend(tId);
     } else {
         renderWidgetCatalog();
-        // Load default static starter template (Odoo Theme)
-        loadTemplate('odoo_theme', true);
+        // Default to blank canvas on startup
+        loadTemplate('blank', true);
         renderGlobalSettingsPanel();
         updateTemplateHeaderDisplay();
     }
